@@ -4,6 +4,7 @@ import os
 from .tokenizer.tokenizer import Tokenizer
 from .parser.parser import RecursiveDescentParser
 from .utils.tree_walker import TreeWalker
+from .compiler.compiler import Compiler
 
 
 def entry():
@@ -27,3 +28,8 @@ def entry():
     ast_root = RecursiveDescentParser(tokens=tokens).parse()
     tree_walker = TreeWalker(root=ast_root)
     tree_walker.walk_and_print()
+    compiler = Compiler(ast_root=ast_root)
+    opcodes = compiler.compile()
+
+    for opcode in opcodes:
+        print(opcode)
