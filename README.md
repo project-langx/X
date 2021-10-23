@@ -9,3 +9,5 @@ X is a placeholder language with a python and JS like syntax and a shareable byt
 3. **Java**
 4. **Python**
 5. **C#**
+
+What does this list mean? This means that you can compile your X code into any one of these programming languages!!!!
