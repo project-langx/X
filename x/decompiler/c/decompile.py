@@ -20,9 +20,9 @@ class CDecompiler:
         print_string = "\tprintf("
         for op_value in opcode.op_values:
             if opcode.op_dtype == "__string__":
-                print_string += f"\"%s\", \"{op_value}\""
+                print_string += f"\"%s\\n\", \"{op_value}\""
             elif opcode.op_dtype == "__number__":
-                print_string += f"\"%d\", {op_value}"
+                print_string += f"\"%d\\n\", {op_value}"
 
         return print_string + ");"
 
