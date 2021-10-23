@@ -1,38 +1,6 @@
 from ..utils.error import ParseError
+from .node import val_node, print_node
 
-
-class Node:
-    def __init__(self):
-        self.__children = []
-
-    def add_child(self, child):
-        self.__children.append(child)
-
-class ValNode(Node):
-    def __init__(self, value):
-        self.__value = value
-
-    @property
-    def value(self):
-        return self.__value
-
-    @property
-    def children(self):
-        return None
-
-    def __str__(self):
-        return f"ValueNode(value={self.__value})"
-
-class PrintNode(Node):
-    def __init__(self, values):
-        self.__values = values
-
-    @property
-    def children(self):
-        return self.__values
-
-    def __str__(self):
-        return f"PrintNode()"
 
 class RecursiveDescentParser:
     def __init__(self, tokens):
@@ -45,7 +13,7 @@ class RecursiveDescentParser:
 
     def __string(self, current_tok):
         if current_tok.type == "__string__":
-            return ValNode(current_tok.value)
+            return val_node.ValNode(current_tok.value)
 
         raise ParseError(f"Expected string")
 
@@ -61,7 +29,7 @@ class RecursiveDescentParser:
             else:
                 raise ParseError(f"Expected {expected_token}")
 
-        return PrintNode(values=[string_val])
+        return print_node.PrintNode(values=[string_val])
 
     def parse(self):
         current_tok = self.__advance()
