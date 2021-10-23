@@ -5,6 +5,7 @@ from .tokenizer.tokenizer import Tokenizer
 from .parser.parser import RecursiveDescentParser
 from .utils.tree_walker import TreeWalker
 from .compiler.compiler import Compiler
+from .vm.vm import VM
 
 
 def entry():
@@ -43,3 +44,5 @@ def entry():
     if args.compile:
         for opcode in opcodes:
             print(opcode)
+
+    VM(opcodes=opcodes).run()

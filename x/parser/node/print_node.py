@@ -15,5 +15,6 @@ class PrintNode(Node):
         return f"PrintNode()"
 
     def walk(self):
-        opcode = OpCode(OpType.PRINT, self.__values)
+        values = [val.value for val in self.__values]
+        opcode = OpCode(opcode=OpType.PRINT, op_values=values)
         return opcode

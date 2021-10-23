@@ -9,3 +9,11 @@ class OpCode:
             op_values.append(str(op_value))
 
         return f"{self.__opcode}: {op_values}"
+
+    @property
+    def opcode(self):
+        return self.__opcode
+
+    @property
+    def op_values(self):
+        return self.__op_values
