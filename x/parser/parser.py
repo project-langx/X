@@ -15,13 +15,13 @@ class RecursiveDescentParser:
 
     def __string(self):
         if self.__current_tok.type == "__string__":
-            return val_node.ValNode(self.__current_tok.value)
+            return val_node.ValNode(value=self.__current_tok.value, type="__string__")
 
         raise ParseError(f"Expected string")
 
     def __number(self):
         if self.__current_tok.type == "__number__":
-            return val_node.ValNode(self.__current_tok.value)
+            return val_node.ValNode(value=self.__current_tok.value, type="__number__")
 
         raise ParseError(f"Expected number")
 

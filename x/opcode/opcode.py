@@ -1,7 +1,8 @@
 class OpCode:
-    def __init__(self, opcode, op_values):
+    def __init__(self, opcode, op_values, op_dtype):
         self.__opcode = opcode
         self.__op_values = op_values
+        self.__op_dtype = op_dtype
 
     def __str__(self):
         op_values = []
@@ -11,7 +12,7 @@ class OpCode:
         opcode = str(self.__opcode)
         opcode = opcode.split(".")[1]
 
-        return f"{opcode}: {op_values}"
+        return f"{opcode}: {op_values} -> {self.__op_dtype}"
 
     @property
     def opcode(self):
@@ -20,3 +21,7 @@ class OpCode:
     @property
     def op_values(self):
         return self.__op_values
+
+    @property
+    def op_dtype(self):
+        return self.__op_dtype
