@@ -1,4 +1,4 @@
-from error import ParseError
+from ..utils.error import ParseError
 
 
 class Node:
