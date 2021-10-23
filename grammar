@@ -1,0 +1,5 @@
+program -> (statements)*
+statements -> simple_statement 
+simple_statement -> print
+print -> '(' string ')'
+string -> " [a-zA-Z0-9 ]* "
