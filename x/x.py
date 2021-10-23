@@ -2,6 +2,8 @@ import argparse
 import os
 import sys
 
+from x.decompiler.cs.decompile import CsDecompiler
+
 from .tokenizer.tokenizer import Tokenizer
 from .parser.parser import RecursiveDescentParser
 from .utils.tree_walker import TreeWalker
@@ -10,6 +12,7 @@ from .vm.vm import VM
 from .decompiler.c.decompile import CDecompiler
 from .decompiler.cpp.decompile import CppDecompiler
 from .decompiler.java.decompile import JavaDecompiler
+from .decompiler.cs.decompile import CsDecompiler
 from .decompiler.python.decompile import PyDecompiler
 
 
@@ -22,6 +25,7 @@ def entry():
     parser.add_argument('--decompile-c', action='store_true', help='Compile to C code')
     parser.add_argument('--decompile-cpp', action='store_true', help='Compile to C++ code')
     parser.add_argument('--decompile-java', action='store_true', help='Compile to Java code')
+    parser.add_argument('--decompile-cs', action='store_true', help='Compile to C# code')
     parser.add_argument('--decompile-py', action='store_true', help='Compile to Python code')
     args = parser.parse_args()
 
@@ -71,7 +75,7 @@ def entry():
         with open(decompiled_cpp_file_path, 'w') as f:
             f.write("\n".join(decompiled_cpp_code))
 
-        print(f"C code written to {decompiled_cpp_file_path}")
+        print(f"C++ code written to {decompiled_cpp_file_path}")
 
         sys.exit()
     elif args.decompile_java:
@@ -82,7 +86,18 @@ def entry():
         with open(decompiled_java_file_path, 'w') as f:
             f.write("\n".join(decompiled_java_code))
 
-        print(f"C code written to {decompiled_java_file_path}")
+        print(f"Java code written to {decompiled_java_file_path}")
+
+        sys.exit()
+    elif args.decompile_cs:
+        decompiled_cs_file_name = ".".join(args.input.split(".")[:-1]).capitalize()
+        decompiled_cs_code = CsDecompiler(opcodes=opcodes, decompiled_file_name=decompiled_cs_file_name).decompile()
+
+        decompiled_cs_file_path = decompiled_cs_file_name + ".cs"
+        with open(decompiled_cs_file_path, 'w') as f:
+            f.write("\n".join(decompiled_cs_code))
+
+        print(f"C# code written to {decompiled_cs_file_path}")
 
         sys.exit()
     elif args.decompile_py:
@@ -92,7 +107,7 @@ def entry():
         with open(decompiled_py_file_path, 'w') as f:
             f.write("\n".join(decompiled_py_code))
 
-        print(f"C code written to {decompiled_py_file_path}")
+        print(f"Python code written to {decompiled_py_file_path}")
 
         sys.exit()
 
