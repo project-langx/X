@@ -8,7 +8,10 @@ class OpCode:
         for op_value in self.__op_values:
             op_values.append(str(op_value))
 
-        return f"{self.__opcode}: {op_values}"
+        opcode = str(self.__opcode)
+        opcode = opcode.split(".")[1]
+
+        return f"{opcode}: {op_values}"
 
     @property
     def opcode(self):
