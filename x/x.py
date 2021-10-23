@@ -9,7 +9,7 @@ from .compiler.compiler import Compiler
 
 def entry():
     parser = argparse.ArgumentParser(description='X compiler')
-    parser.add_argument('-i', '--input', help='X code file', type=str)
+    parser.add_argument('-i', '--input', type=str, help='X code file')
     parser.add_argument('-t', '--tokens', action='store_true', help='Print tokens')
     parser.add_argument('-p', '--parse', action='store_true', help='Print parse tree')
     parser.add_argument('-c', '--compile', action='store_true', help='Print opcodes')
