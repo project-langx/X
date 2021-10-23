@@ -4,8 +4,8 @@ X is a placeholder language with a python and JS like syntax and a shareable byt
 
 ## Languages Supported
 
-1. C
-2. C++
-3. Java
-4. Python
-5. C#
+1. **C**
+2. **C++**
+3. **Java**
+4. **Python**
+5. **C#**
