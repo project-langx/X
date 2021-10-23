@@ -29,6 +29,15 @@ class Tokenizer:
 
         return "__string__"
 
+    def __is_number(self):
+        while self.__source[self.__pointer].isdigit() or self.__source[self.__pointer] == '.':
+            self.__lexeme += self.__source[self.__pointer]
+            self.__pointer += 1
+
+        self.__pointer -= 1
+
+        return "__number__"
+
     def generate_tokens(self):
         while self.__pointer < len(self.__source):
             self.__lexeme = ""
@@ -40,6 +49,8 @@ class Tokenizer:
                 self.__tokens.append(Token('__right_paren__', "", self.__line_num))
             elif self.__source[self.__pointer] == '"':
                 self.__tokens.append(Token(self.__is_string(), self.__lexeme, self.__line_num))
+            elif self.__source[self.__pointer].isdigit():
+                self.__tokens.append(Token(self.__is_number(), self.__lexeme, self.__line_num))
             elif self.__source[self.__pointer] == "\n":
                 self.__line_num += 1
                 self.__tokens.append(Token('__newline__', "", self.__line_num - 1))
