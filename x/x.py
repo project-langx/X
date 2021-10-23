@@ -26,4 +26,4 @@ def entry():
     tokens = Tokenizer(source).generate_tokens()
     ast_root = RecursiveDescentParser(tokens=tokens).parse()
     tree_walker = TreeWalker(root=ast_root)
-    tree_walker.walk()
+    tree_walker.walk_and_print()
