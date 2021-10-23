@@ -46,4 +46,6 @@ class Tokenizer:
 
             self.__pointer += 1
 
+        self.__tokens.append(Token('__eof__', "", self.__line_num))
+
         return self.__tokens
