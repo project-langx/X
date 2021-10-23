@@ -34,12 +34,12 @@ def entry():
         for token in tokens:
             print(token)
 
-    ast_root = RecursiveDescentParser(tokens=tokens).parse()
+    ast_roots = RecursiveDescentParser(tokens=tokens).parse()
 
     if args.parse:
-        TreeWalker(root=ast_root).walk_and_print()
+        TreeWalker(roots=ast_roots).walk_and_print()
 
-    opcodes = Compiler(ast_root=ast_root).compile()
+    opcodes = Compiler(ast_roots=ast_roots).compile()
 
     if args.compile:
         for opcode in opcodes:

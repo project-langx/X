@@ -42,10 +42,11 @@ class Tokenizer:
                 self.__tokens.append(Token(self.__is_string(), self.__lexeme, self.__line_num))
             elif self.__source[self.__pointer] == "\n":
                 self.__line_num += 1
-                self.__tokens.append(Token('__newline__', "", self.__line_num))
+                self.__tokens.append(Token('__newline__', "", self.__line_num - 1))
 
             self.__pointer += 1
 
-        self.__tokens.append(Token('__eof__', "", self.__line_num))
+        self.__tokens.append(Token('__newline__', "", self.__line_num))
+        self.__tokens.append(Token('__eof__', "", self.__line_num + 1))
 
         return self.__tokens
