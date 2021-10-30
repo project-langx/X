@@ -50,3 +50,23 @@ user@programmer~:$ x -i <filename.x> --decompile-java
 ```bash
 user@programmer~:$ x -i <filename.x> --decompile-py
 ```
+
+## Tools for X language developers
+
+1. Check the tokens for the script
+
+```bash
+user@programmer~:$ x -i <filename>.x -t
+```
+
+2. Check the syntax tree for the script
+
+```bash
+user@programmer~:$ x -i <filename>.x -p
+```
+
+3. Check the compiled bytecodes for the script
+
+```bash
+user@programmer~:$ x -i <filename>.x -c
+```
