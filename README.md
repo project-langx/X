@@ -10,3 +10,9 @@ X is a placeholder language with a python and JS like syntax and a shareable byt
 4. **Python**
 
 What does this list mean? This means that you can compile your X code into any one of these programming languages 😲😲😲😲!
+
+## Pipeline
+
+<div align="center">
+    <img src="images/X-pipeline.png">
+<div>
