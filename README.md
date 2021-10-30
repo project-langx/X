@@ -13,9 +13,9 @@ What does this list mean? This means that you can compile your X code into any o
 
 ## Pipeline
 
-<div align="center">
+<p align="center">
     <img src="images/X-pipeline.png">
-<div>
+<p>
 
 ## Steps to run
 
