@@ -8,4 +8,4 @@ class VM:
     def run(self):
         for opcode in self.__opcodes:
             if opcode.opcode == OpType.PRINT:
-                print(", ".join(opcode.op_values))
+                print(opcode.op_value)

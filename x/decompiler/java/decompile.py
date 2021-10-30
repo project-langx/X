@@ -11,11 +11,10 @@ class JavaDecompiler:
 
     def __decompile_print(self, opcode):
         print_string = "\t\tSystem.out.println("
-        for op_value in opcode.op_values:
-            if opcode.op_dtype == "__string__":
-                print_string += f"\"{op_value}\""
-            elif opcode.op_dtype == "__number__":
-                print_string += f"{op_value}"
+        if opcode.op_dtype == "string":
+            print_string += f"\"{opcode.op_value}\""
+        elif opcode.op_dtype == "number":
+            print_string += f"{opcode.op_value}"
 
         return print_string + ");"
 

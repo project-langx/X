@@ -1,16 +1,29 @@
+from x.opcode.opcode import OpCode
 from x.parser.node.print_node import PrintNode
+from ..opcode.op_type import OpType
 
 
 class Compiler:
-    def __init__(self, ast_roots):
-        self.__ast_roots = ast_roots
+    def __init__(self, ast_root):
+        self.__ast_root = ast_root
+
+        self.__opcodes = []
+
+    def __compile_print_node(self, node):
+        op_dtype = node.dtype
+
+        self.__opcodes.append(OpCode(OpType.PRINT, node.expr, op_dtype))
+
+    def __compile_statement(self, statement):
+        if type(statement) == PrintNode:
+            self.__compile_print_node(statement)
+
+    def __compile_program_node(self, node):
+        for statement in node.statements:
+            self.__compile_statement(statement)
 
     def compile(self):
-        opcodes = []
+        self.__compile_program_node(self.__ast_root)
 
-        for ast_root in self.__ast_roots:
-            opcode = ast_root.walk()
-            opcodes.append(opcode)
-
-        return opcodes
+        return self.__opcodes
         

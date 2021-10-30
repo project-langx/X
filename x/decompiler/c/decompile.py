@@ -18,11 +18,10 @@ class CDecompiler:
 
     def __decompile_print(self, opcode):
         print_string = "\tprintf("
-        for op_value in opcode.op_values:
-            if opcode.op_dtype == "__string__":
-                print_string += f"\"%s\\n\", \"{op_value}\""
-            elif opcode.op_dtype == "__number__":
-                print_string += f"\"%d\\n\", {op_value}"
+        if opcode.op_dtype == "string":
+            print_string += f"\"%s\\n\", \"{opcode.op_value}\""
+        elif opcode.op_dtype == "number":
+            print_string += f"\"%d\\n\", {opcode.op_value}"
 
         return print_string + ");"
 

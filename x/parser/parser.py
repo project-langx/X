@@ -1,55 +1,63 @@
+from .node.program_node import ProgramNode
+from .node.print_node import PrintNode
 from ..utils.error import ParseError
-from .node import val_node, print_node
 
 
-class RecursiveDescentParser:
+class Parser:
     def __init__(self, tokens):
         self.__tokens = tokens
+        
+        self.__current_token = 0
 
-        self.__root = None
-        self.__current_tok = None
+    def __peek(self):
+        return self.__tokens[self.__current_token]
 
-    def __advance(self):
-        current_tok = self.__tokens.pop(0)
-        return current_tok
+    def __consume(self):
+        self.__current_token += 1
+        return self.__tokens[self.__current_token - 1]
+
+    def __is_end(self):
+        return self.__peek().type == "__eof__"
+
+    def __expect(self, token_type):
+        if self.__peek().type == token_type:
+            return self.__consume()
+        else:
+            raise ParseError(f"Expected {token_type}, but is {self.__peek().type}!")
 
     def __string(self):
-        if self.__current_tok.type == "__string__":
-            return val_node.ValNode(value=self.__current_tok.value, type="__string__")
+        string_token = self.__expect("__string__")
 
-        raise ParseError(f"Expected string")
+        return string_token.value, "string"
 
-    def __number(self):
-        if self.__current_tok.type == "__number__":
-            return val_node.ValNode(value=self.__current_tok.value, type="__number__")
-
-        raise ParseError(f"Expected number")
+    def __expr(self):
+        return self.__string()
 
     def __print(self):
-        token_sequence = ["__print__", "__left_paren__", ["__string__", "__number__"], "__right_paren__"]
-        string_val = ""
+        self.__expect("__print__")
+        self.__expect("__left_paren__")
+        expr, dtype = self.__expr()
+        self.__expect("__right_paren__")
+        self.__expect("__newline__")
 
-        for expected_token in token_sequence:
-            if self.__current_tok.type == "__string__":
-                string_val = self.__string()
-                self.__current_tok = self.__advance()
-            elif self.__current_tok.type == "__number__":
-                string_val = self.__number()
-                self.__current_tok = self.__advance()
-            elif self.__current_tok.type == expected_token:
-                self.__current_tok = self.__advance()
-            else:
-                raise ParseError(f"Expected {expected_token}")
+        return PrintNode(expr=expr, dtype=dtype)
 
-        return print_node.PrintNode(values=[string_val])
+    def __single_line_statement(self):
+        if self.__peek().type == '__print__':
+            return self.__print()
+
+        return self.__expr()
+
+    def __statement(self):
+        return self.__single_line_statement()
+
+    def __program(self):
+        statements = []
+
+        while not self.__is_end():
+            statements.append(self.__statement())
+
+        return ProgramNode("<main>", statements)
 
     def parse(self):
-        self.__current_tok = self.__advance()
-        trees = []
-
-        while self.__current_tok.type != "__eof__":
-            self.__root = self.__print()
-            trees.append(self.__root)
-            self.__current_tok = self.__advance()
-
-        return trees
+        return self.__program()

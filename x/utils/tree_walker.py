@@ -1,15 +1,23 @@
-class TreeWalker:
-    def __init__(self, roots):
-        self.__roots = roots
+from ..parser.node.print_node import PrintNode
+from ..parser.node.program_node import ProgramNode
 
-    def walk_and_print_one(self, root):
-        if root.children:
-            print(root, end="\n\t- ")
-            for child in root.children:
-                TreeWalker(child).walk_and_print_one(child)
-        else:
-            print(root)
+
+class TreeWalker:
+    def __init__(self, root):
+        self.__root = root
+
+    def __walk_print_node(self, node):
+        print(f"PrintNode(expr={node.expr})")
+
+    def __walk_statement(self, node):
+        print("\t", end="")
+        if type(node) == PrintNode:
+            self.__walk_print_node(node)
+
+    def __walk_program(self, node):
+        print(f"ProgramNode(method={node.method})")
+        for statement in node.statements:
+            self.__walk_statement(statement)
 
     def walk_and_print(self):
-        for root in self.__roots:
-            self.walk_and_print_one(root)
+        self.__walk_program(self.__root)

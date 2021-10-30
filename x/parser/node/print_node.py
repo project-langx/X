@@ -1,20 +1,15 @@
-from .node import Node
-from ...opcode.opcode import OpCode
-from ...opcode.op_type import OpType
-
-
-class PrintNode(Node):
-    def __init__(self, values):
-        self.__values = values
-
-    @property
-    def children(self):
-        return self.__values
+class PrintNode:
+    def __init__(self, expr, dtype):
+        self.__expr = expr
+        self.__dtype = dtype
 
     def __str__(self):
-        return f"PrintNode()"
+        return f"PrintNode(expr={self.__expr}, dtype='{self.__dtype}')"
 
-    def walk(self):
-        values = [val.value for val in self.__values]
-        opcode = OpCode(opcode=OpType.PRINT, op_values=values, op_dtype=self.__values[0].type)
-        return opcode
+    @property
+    def expr(self):
+        return self.__expr
+
+    @property
+    def dtype(self):
+        return self.__dtype

@@ -2,17 +2,14 @@ import argparse
 import os
 import sys
 
-from x.decompiler.cs.decompile import CsDecompiler
-
 from .tokenizer.tokenizer import Tokenizer
-from .parser.parser import RecursiveDescentParser
+from .parser.parser import Parser
 from .utils.tree_walker import TreeWalker
 from .compiler.compiler import Compiler
 from .vm.vm import VM
 from .decompiler.c.decompile import CDecompiler
 from .decompiler.cpp.decompile import CppDecompiler
 from .decompiler.java.decompile import JavaDecompiler
-from .decompiler.cs.decompile import CsDecompiler
 from .decompiler.python.decompile import PyDecompiler
 
 
@@ -47,12 +44,12 @@ def entry():
         for token in tokens:
             print(token)
 
-    ast_roots = RecursiveDescentParser(tokens=tokens).parse()
+    ast_root = Parser(tokens=tokens).parse()
 
     if args.parse:
-        TreeWalker(roots=ast_roots).walk_and_print()
+        TreeWalker(root=ast_root).walk_and_print()
 
-    opcodes = Compiler(ast_roots=ast_roots).compile()
+    opcodes = Compiler(ast_root=ast_root).compile()
 
     if args.compile:
         for opcode in opcodes:
@@ -87,17 +84,6 @@ def entry():
             f.write("\n".join(decompiled_java_code))
 
         print(f"Java code written to {decompiled_java_file_path}")
-
-        sys.exit()
-    elif args.decompile_cs:
-        decompiled_cs_file_name = ".".join(args.input.split(".")[:-1]).capitalize()
-        decompiled_cs_code = CsDecompiler(opcodes=opcodes, decompiled_file_name=decompiled_cs_file_name).decompile()
-
-        decompiled_cs_file_path = decompiled_cs_file_name + ".cs"
-        with open(decompiled_cs_file_path, 'w') as f:
-            f.write("\n".join(decompiled_cs_code))
-
-        print(f"C# code written to {decompiled_cs_file_path}")
 
         sys.exit()
     elif args.decompile_py:
