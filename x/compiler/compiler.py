@@ -26,4 +26,3 @@ class Compiler:
         self.__compile_program_node(self.__ast_root)
 
         return self.__opcodes
-        

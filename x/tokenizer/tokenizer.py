@@ -1,7 +1,8 @@
 from collections import namedtuple
 
 
-Token = namedtuple('Token', ['type', 'value', 'line_num'])
+Token = namedtuple("Token", ["type", "value", "line_num"])
+
 
 class Tokenizer:
     def __init__(self, source):
@@ -30,7 +31,10 @@ class Tokenizer:
         return "__string__"
 
     def __is_number(self):
-        while self.__source[self.__pointer].isdigit() or self.__source[self.__pointer] == '.':
+        while (
+            self.__source[self.__pointer].isdigit()
+            or self.__source[self.__pointer] == "."
+        ):
             self.__lexeme += self.__source[self.__pointer]
             self.__pointer += 1
 
@@ -42,22 +46,28 @@ class Tokenizer:
         while self.__pointer < len(self.__source):
             self.__lexeme = ""
             if self.__source[self.__pointer].isalpha():
-                self.__tokens.append(Token(self.__is_keyword(), self.__lexeme, self.__line_num))
-            elif self.__source[self.__pointer] == '(':
-                self.__tokens.append(Token('__left_paren__', "", self.__line_num))
-            elif self.__source[self.__pointer] == ')':
-                self.__tokens.append(Token('__right_paren__', "", self.__line_num))
+                self.__tokens.append(
+                    Token(self.__is_keyword(), self.__lexeme, self.__line_num)
+                )
+            elif self.__source[self.__pointer] == "(":
+                self.__tokens.append(Token("__left_paren__", "", self.__line_num))
+            elif self.__source[self.__pointer] == ")":
+                self.__tokens.append(Token("__right_paren__", "", self.__line_num))
             elif self.__source[self.__pointer] == '"':
-                self.__tokens.append(Token(self.__is_string(), self.__lexeme, self.__line_num))
+                self.__tokens.append(
+                    Token(self.__is_string(), self.__lexeme, self.__line_num)
+                )
             elif self.__source[self.__pointer].isdigit():
-                self.__tokens.append(Token(self.__is_number(), self.__lexeme, self.__line_num))
+                self.__tokens.append(
+                    Token(self.__is_number(), self.__lexeme, self.__line_num)
+                )
             elif self.__source[self.__pointer] == "\n":
                 self.__line_num += 1
-                self.__tokens.append(Token('__newline__', "", self.__line_num - 1))
+                self.__tokens.append(Token("__newline__", "", self.__line_num - 1))
 
             self.__pointer += 1
 
-        self.__tokens.append(Token('__newline__', "", self.__line_num))
-        self.__tokens.append(Token('__eof__', "", self.__line_num + 1))
+        self.__tokens.append(Token("__newline__", "", self.__line_num))
+        self.__tokens.append(Token("__eof__", "", self.__line_num + 1))
 
         return self.__tokens

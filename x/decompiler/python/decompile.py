@@ -7,11 +7,10 @@ class PyDecompiler:
 
         self.__decompiled_code = []
 
-
     def __decompile_print(self, opcode):
         print_string = "print("
         if opcode.op_dtype == "string":
-            print_string += f"\"{opcode.op_value}\""
+            print_string += f'"{opcode.op_value}"'
         elif opcode.op_dtype == "number":
             print_string += f"{opcode.op_value}"
 

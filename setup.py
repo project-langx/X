@@ -37,11 +37,7 @@ setup(
     author_email="sdharchou@gmail.com",
     license="MIT",
     packages=find_packages(),
-    entry_points={
-        "console_scripts": [
-            "x = x.x:entry",
-        ]
-    },
+    entry_points={"console_scripts": ["x = x.x:entry",]},
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",

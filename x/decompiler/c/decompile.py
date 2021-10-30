@@ -19,9 +19,9 @@ class CDecompiler:
     def __decompile_print(self, opcode):
         print_string = "\tprintf("
         if opcode.op_dtype == "string":
-            print_string += f"\"%s\\n\", \"{opcode.op_value}\""
+            print_string += f'"%s\\n", "{opcode.op_value}"'
         elif opcode.op_dtype == "number":
-            print_string += f"\"%d\\n\", {opcode.op_value}"
+            print_string += f'"%d\\n", {opcode.op_value}'
 
         return print_string + ");"
 

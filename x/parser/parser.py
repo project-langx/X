@@ -6,7 +6,7 @@ from ..utils.error import ParseError
 class Parser:
     def __init__(self, tokens):
         self.__tokens = tokens
-        
+
         self.__current_token = 0
 
     def __peek(self):
@@ -43,7 +43,7 @@ class Parser:
         return PrintNode(expr=expr, dtype=dtype)
 
     def __single_line_statement(self):
-        if self.__peek().type == '__print__':
+        if self.__peek().type == "__print__":
             return self.__print()
 
         return self.__expr()
