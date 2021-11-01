@@ -9,3 +9,5 @@ class VM:
         for opcode in self.__opcodes:
             if opcode.opcode == OpType.PRINT:
                 print(opcode.op_value)
+            elif opcode.opcode == OpType.EXPR:
+                pass

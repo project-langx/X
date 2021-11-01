@@ -1,5 +1,4 @@
-program -> (statements)*
-statements -> simple_statement 
-simple_statement -> print
-print -> '(' string ')'
-string -> " [a-zA-Z0-9 ]* "
+program -> (statement)*
+statement -> simple_statement
+simple_statement -> print | expr
+print -> '(' expr ')'
