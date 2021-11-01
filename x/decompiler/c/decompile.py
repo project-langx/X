@@ -25,6 +25,12 @@ class CDecompiler:
 
         return print_string + ");"
 
+    def __decompile_expr(self, opcode):
+        if opcode.op_dtype == "string":
+            return f"\t\"{opcode.op_value}\";"
+        elif opcode.op_dtype == "int":
+            return f"\t{opcode.op_value};"
+
     def decompile(self):
         self.__add_includes()
 
@@ -32,6 +38,8 @@ class CDecompiler:
         for opcode in self.__opcodes:
             if opcode.opcode == OpType.PRINT:
                 self.__decompiled_code.append(self.__decompile_print(opcode))
+            elif opcode.opcode == OpType.EXPR:
+                self.__decompiled_code.append(self.__decompile_expr(opcode))
 
         self.__decompiled_code.append("\n\treturn 0; \n}")
         return self.__decompiled_code
