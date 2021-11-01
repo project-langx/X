@@ -91,9 +91,7 @@ class Parser:
             self.__expect("__newline__")
             return print_node
 
-        expr_node = self.__expr()
-        self.__expect("__newline__")
-        return expr_node
+        raise ParseError(f"Empty expressions are not allowed")
 
     def __statement(self):
         return self.__single_line_statement()
