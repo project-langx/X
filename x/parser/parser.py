@@ -1,5 +1,6 @@
 from .node.program_node import ProgramNode
 from .node.print_node import PrintNode
+from .node.expr_node import ExprNode
 from ..utils.error import ParseError
 
 
@@ -30,23 +31,67 @@ class Parser:
 
         return string_token.value, "string"
 
-    def __expr(self):
+    def __number(self):
+        number_token = self.__expect("__number__")
+
+        return number_token.value, "int"
+
+    def __term(self):
+        if self.__peek().type == "__number__":
+            return self.__number()
+
         return self.__string()
+
+    def __factor(self):
+        return self.__term()
+
+    def __mul(self):
+        expr, dtype = self.__factor()
+
+        while self.__peek().type in ["__mul__", "__div__"]:
+            op = self.__consume()
+            right_expr, right_dtype = self.__primary()
+
+            if dtype != right_dtype:
+                raise ParseError(f"Type mismatch: {dtype} and {right_dtype}")
+
+            expr = f"({expr} {op.type} {right_expr})"
+
+        return expr, dtype
+
+    def __sum(self):
+        expr, dtype = self.__mul()
+
+        while self.__peek().type in ["__plus__", "__minus__"]:
+            op = self.__consume()
+            right_expr, right_dtype = self.__mul()
+
+            if dtype != right_dtype:
+                raise ParseError(f"Type mismatch: {dtype} and {right_dtype}")
+
+            expr = f"({expr} {op.type} {right_expr})"
+
+        return expr, dtype
+
+    def __expr(self):
+        expr, dtype = self.__sum()
+        return ExprNode(expr=expr, dtype=dtype)
 
     def __print(self):
         self.__expect("__print__")
         self.__expect("__left_paren__")
-        expr, dtype = self.__expr()
+        expr = self.__expr()
         self.__expect("__right_paren__")
-        self.__expect("__newline__")
 
-        return PrintNode(expr=expr, dtype=dtype)
+        return PrintNode(expr=expr)
 
     def __single_line_statement(self):
         if self.__peek().type == "__print__":
-            return self.__print()
+            print_node = self.__print()
+            self.__expect("__newline__")
+            return print_node
 
-        return self.__expr()
+        raise ParseError(f"Empty expressions are not allowed")
 
     def __statement(self):
         return self.__single_line_statement()

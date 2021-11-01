@@ -1,5 +1,6 @@
-from x.opcode.opcode import OpCode
-from x.parser.node.print_node import PrintNode
+from ..opcode.opcode import OpCode
+from ..parser.node.print_node import PrintNode
+from ..parser.node.expr_node import ExprNode
 from ..opcode.op_type import OpType
 
 
@@ -10,13 +11,20 @@ class Compiler:
         self.__opcodes = []
 
     def __compile_print_node(self, node):
+        op_dtype = node.expr.dtype
+
+        self.__opcodes.append(OpCode(OpType.PRINT, node.expr.expr, op_dtype))
+
+    def __compile_expr_node(self, node):
         op_dtype = node.dtype
 
-        self.__opcodes.append(OpCode(OpType.PRINT, node.expr, op_dtype))
+        self.__opcodes.append(OpCode(OpType.EXPR, node.expr, op_dtype))
 
     def __compile_statement(self, statement):
         if type(statement) == PrintNode:
             self.__compile_print_node(statement)
+        elif type(statement) == ExprNode:
+            self.__compile_expr_node(statement)
 
     def __compile_program_node(self, node):
         for statement in node.statements:

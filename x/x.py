@@ -49,19 +49,25 @@ def entry():
     tokens = Tokenizer(source).generate_tokens()
 
     if args.tokens:
+        print("-" * 50)
         for token in tokens:
             print(token)
+        print("-" * 50)
 
     ast_root = Parser(tokens=tokens).parse()
 
     if args.parse:
+        print("-" * 50)
         TreeWalker(root=ast_root).walk_and_print()
+        print("-" * 50)
 
     opcodes = Compiler(ast_root=ast_root).compile()
 
     if args.compile:
+        print("-" * 50)
         for opcode in opcodes:
             print(opcode)
+        print("-" * 50)
 
     if args.decompile_c:
         decompiled_c_code = CDecompiler(opcodes=opcodes).decompile()

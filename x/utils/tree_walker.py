@@ -1,18 +1,14 @@
 from ..parser.node.print_node import PrintNode
-from ..parser.node.program_node import ProgramNode
+from ..parser.node.expr_node import ExprNode
 
 
 class TreeWalker:
     def __init__(self, root):
         self.__root = root
 
-    def __walk_print_node(self, node):
-        print(f"PrintNode(expr={node.expr})")
-
     def __walk_statement(self, node):
         print("\t", end="")
-        if type(node) == PrintNode:
-            self.__walk_print_node(node)
+        print(node)
 
     def __walk_program(self, node):
         print(f"ProgramNode(method={node.method})")
