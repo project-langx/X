@@ -8,10 +8,7 @@ class VM:
         self.__constant_pool = []
 
     def __pop(self):
-        constant = self.__constant_pool[-1]
-        self.__constant_pool.pop()
-
-        return constant
+        return self.__constant_pool.pop()
 
     def __push(self, constant):
         self.__constant_pool.append(constant)
