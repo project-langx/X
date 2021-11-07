@@ -8,7 +8,10 @@ class OpCode:
         opcode = str(self.__opcode)
         opcode = opcode.split(".")[1]
 
-        return f"{opcode}: {self.__op_value} -> {self.__op_dtype}"
+        if self.__op_value == "" and self.__op_dtype == "":
+            return str(self.__opcode).split(".")[1]
+
+        return f"{opcode} {self.__op_value} {self.__op_dtype}"
 
     @property
     def opcode(self):
