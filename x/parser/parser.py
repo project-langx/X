@@ -1,3 +1,6 @@
+from .node.number_node import NumberNode
+from .node.string_node import StringNode
+from .node.binary_operator_node import BinaryOperatorNode
 from .node.program_node import ProgramNode
 from .node.print_node import PrintNode
 from .node.expr_node import ExprNode
@@ -29,12 +32,12 @@ class Parser:
     def __string(self):
         string_token = self.__expect("__string__")
 
-        return string_token.value, "string"
+        return StringNode(value=string_token.value), "string"
 
     def __number(self):
         number_token = self.__expect("__number__")
 
-        return number_token.value, number_token.dtype
+        return NumberNode(value=number_token.value), number_token.dtype
 
     def __term(self):
         if self.__peek().type == "__number__":
@@ -56,7 +59,7 @@ class Parser:
             if dtype != right_dtype:
                 raise ParseError(f"Type mismatch: {dtype} and {right_dtype}")
 
-            expr = f"({expr} {op_type_to_operator[op.type]} {right_expr})"
+            expr = BinaryOperatorNode(operator=op_type_to_operator[op.type], left=expr, right=right_expr)
 
         return expr, dtype
 
@@ -71,7 +74,7 @@ class Parser:
             if dtype != right_dtype:
                 raise ParseError(f"Type mismatch: {dtype} and {right_dtype}")
 
-            expr = f"({expr} {op_type_to_operator[op.type]} {right_expr})"
+            expr = BinaryOperatorNode(operator=op_type_to_operator[op.type], left=expr, right=right_expr)
 
         return expr, dtype
 
