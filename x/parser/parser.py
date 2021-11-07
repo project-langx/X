@@ -48,21 +48,22 @@ class Parser:
     def __mul(self):
         expr, dtype = self.__factor()
 
+        op_type_to_operator = {"__mul__": "*", "__div__": "/"}
         while self.__peek().type in ["__mul__", "__div__"]:
             op = self.__consume()
-            right_expr, right_dtype = self.__primary()
+            right_expr, right_dtype = self.__mul()
 
             if dtype != right_dtype:
                 raise ParseError(f"Type mismatch: {dtype} and {right_dtype}")
 
-            expr = f"({expr} {op.type} {right_expr})"
+            expr = f"({expr} {op_type_to_operator[op.type]} {right_expr})"
 
         return expr, dtype
 
     def __sum(self):
         expr, dtype = self.__mul()
 
-        op_type_to_operator = {"__add__": "+", "__sub__": "-", "__mul__": "*", "__div__": "/"}
+        op_type_to_operator = {"__add__": "+", "__sub__": "-"}
         while self.__peek().type in ["__add__", "__sub__"]:
             op = self.__consume()
             right_expr, right_dtype = self.__mul()
@@ -70,7 +71,7 @@ class Parser:
             if dtype != right_dtype:
                 raise ParseError(f"Type mismatch: {dtype} and {right_dtype}")
 
-            expr = f"{expr} {op_type_to_operator[op.type]} {right_expr}"
+            expr = f"({expr} {op_type_to_operator[op.type]} {right_expr})"
 
         return expr, dtype
 
