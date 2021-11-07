@@ -51,7 +51,7 @@ class Parser:
     def __mul(self):
         expr, dtype = self.__factor()
 
-        op_type_to_operator = {"__mul__": "*", "__div__": "/"}
+        op_type_to_op_type = {"__mul__": "MUL", "__div__": "DIV"}
         while self.__peek().type in ["__mul__", "__div__"]:
             op = self.__consume()
             right_expr, right_dtype = self.__mul()
@@ -59,14 +59,14 @@ class Parser:
             if dtype != right_dtype:
                 raise ParseError(f"Type mismatch: {dtype} and {right_dtype}")
 
-            expr = BinaryOperatorNode(operator=op_type_to_operator[op.type], left=expr, right=right_expr)
+            expr = BinaryOperatorNode(operator=op_type_to_op_type[op.type], left=expr, right=right_expr)
 
         return expr, dtype
 
     def __sum(self):
         expr, dtype = self.__mul()
 
-        op_type_to_operator = {"__add__": "+", "__sub__": "-"}
+        op_type_to_op_type = {"__add__": "ADD", "__sub__": "SUB"}
         while self.__peek().type in ["__add__", "__sub__"]:
             op = self.__consume()
             right_expr, right_dtype = self.__mul()
@@ -74,7 +74,7 @@ class Parser:
             if dtype != right_dtype:
                 raise ParseError(f"Type mismatch: {dtype} and {right_dtype}")
 
-            expr = BinaryOperatorNode(operator=op_type_to_operator[op.type], left=expr, right=right_expr)
+            expr = BinaryOperatorNode(operator=op_type_to_op_type[op.type], left=expr, right=right_expr)
 
         return expr, dtype
 

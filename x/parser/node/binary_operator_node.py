@@ -15,6 +15,3 @@ class BinaryOperatorNode:
     @property
     def right(self):
         return self.__right
-
-    def __str__(self):
-        return f"BinaryOperatorNode(operator={self.__operator}, left={str(self.__left)}, right={str(self.__right)})"

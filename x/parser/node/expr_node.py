@@ -3,9 +3,6 @@ class ExprNode:
         self.__expr = expr
         self.__dtype = dtype
 
-    def __str__(self):
-        return f"ExprNode(expr={self.__expr}, dtype='{self.__dtype}')"
-
     @property
     def expr(self):
         return self.__expr

@@ -5,6 +5,3 @@ class NumberNode:
     @property
     def value(self):
         return self.__value
-
-    def __str__(self):
-        return f"NumberNode(value={self.__value})"
