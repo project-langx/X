@@ -10,15 +10,15 @@ class Compiler:
 
         self.__opcodes = []
 
-    def __compile_print_node(self, node):
-        op_dtype = node.expr.dtype
-
-        self.__opcodes.append(OpCode(OpType.PRINT, node.expr.expr, op_dtype))
-
     def __compile_expr_node(self, node):
         op_dtype = node.dtype
 
         self.__opcodes.append(OpCode(OpType.EXPR, node.expr, op_dtype))
+
+    def __compile_print_node(self, node):
+        op_dtype = node.expr.dtype
+
+        self.__opcodes.append(OpCode(OpType.PRINT, node.expr.expr, op_dtype))
 
     def __compile_statement(self, statement):
         if type(statement) == PrintNode:
