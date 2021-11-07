@@ -38,11 +38,6 @@ def entry():
         print(f"File {args.input} not found!")
         exit(1)
 
-    extension = os.path.splitext(args.input)[-1][1:]
-    if extension != "x":
-        print(f"File {args.input} is not a X file!")
-        exit(1)
-
     with open(args.input, "r") as f:
         source = f.read()
 
