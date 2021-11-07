@@ -10,7 +10,6 @@ class CDecompiler:
         self.__opcodes = opcodes
 
         self.__constant_pool = []
-
         self.__decompiled_code = []
 
     def __pop(self):
@@ -30,7 +29,7 @@ class CDecompiler:
 
     def __decompile_print(self):
         print_string = "\tprintf("
-        top_const = self.__constant_pool.pop()
+        top_const = self.__pop()
 
         if top_const.dtype == "string":
             print_string += f'"%s\\n", "{top_const.value}"'
@@ -42,8 +41,8 @@ class CDecompiler:
         return print_string + ");"
 
     def __decompile_binary_operation(self, opcode):
-        right = self.__constant_pool.pop()
-        left = self.__constant_pool.pop()
+        right = self.__pop()
+        left = self.__pop()
 
         result = ""
         if opcode.opcode == OpType.ADD:
