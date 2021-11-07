@@ -23,6 +23,8 @@ This requires adding support to the following:
 8. Java Decompiler
 9. Python Decompiler
 
+It is not necessary that every change requires changes in all the components, you can remove the components as required. Don't worry if you are not sure, just keep all the above components.
+
 A **single PR** should be submitted for all the parts. The commits need **to be separate** for all of them.
 
 **New Grammar**
