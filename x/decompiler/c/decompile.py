@@ -46,13 +46,13 @@ class CDecompiler:
 
         result = ""
         if opcode.opcode == OpType.ADD:
-            result = f"{left.value} + {right.value};"
+            result = f"{left.value} + {right.value}"
         elif opcode.opcode == OpType.SUB:
-            result = f"{left.value} - {right.value};"
+            result = f"{left.value} - {right.value}"
         elif opcode.opcode == OpType.MUL:
-            result = f"{left.value} * {right.value};"
+            result = f"{left.value} * {right.value}"
         elif opcode.opcode == OpType.DIV:
-            result = f"{left.value} / {right.value};"
+            result = f"{left.value} / {right.value}"
 
         self.__push(const_val(value=result, dtype=left.dtype))
 
