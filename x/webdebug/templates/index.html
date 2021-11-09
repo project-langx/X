@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>X Debugger</title>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    </head>
+
+    <body>
+        <p>
+            <input type="text" class="input" id="file_path" placeholder="Enter file path to X code file">
+        </p>
+
+        <p>
+            <input type="button" class="button" id="generate_tokens" value="Generate Tokens">
+            <input type="button" class="button" id="generate_ast" value="Generate AST">
+            <input type="button" class="button" id="generate_bytecode" value="Generate ByteCode">
+        </p>
+
+        <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/sweetalert.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/fastquery.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+    </body>
+</html>
