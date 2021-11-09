@@ -1,9 +1,9 @@
 from flask import Flask, request, render_template, jsonify, session
-from jinja2 import Markup
 
 from ..tokenizer.tokenizer import Tokenizer
 from ..parser.parser import Parser
 from ..utils.tree_walker import TreeWalker
+from ..compiler.compiler import Compiler
 
 
 # Instantiate flask app
@@ -70,3 +70,22 @@ def generate_ast():
         session['ast'] = ast
 
         return jsonify({"status": "Success", "url": "/generate-ast"})
+
+@app.route("/generate-bytecode", methods=['GET', 'POST'])
+def generate_bytecode():
+
+    if request.method == "GET":
+        return render_template("bytecode.html", source=session.get('source'), bytecode=session.get("bytecode"))
+    elif request.method == "POST":
+        file_path = request.form['file_path']
+
+        with open(file_path, "r") as f:
+            source = f.read()
+
+        tokens = Tokenizer(source).generate_tokens()
+        ast_root = Parser(tokens).parse()
+        opcodes = Compiler(ast_root).compile()
+        session['source'] = source
+        session['bytecode'] = "<br>".join([str(opcode) for opcode in opcodes])
+
+        return jsonify({"status": "Success", "url": "/generate-bytecode"})
