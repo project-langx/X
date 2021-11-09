@@ -7,10 +7,9 @@
     </head>
 
     <body>
-        {% for i in range(source_lines|length) %}
-            <pre class="code_line">{{source_lines[i]}}</pre>
-            <pre>{{token_lines[i]|safe}}</pre>
-        {% endfor %}
+        <pre class="code_line">{{source}}</pre>
+
+        <pre>{{ast}}</pre>
 
         <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/sweetalert.min.js') }}"></script>

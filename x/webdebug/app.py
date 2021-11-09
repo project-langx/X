@@ -2,6 +2,8 @@ from flask import Flask, request, render_template, jsonify, session
 from jinja2 import Markup
 
 from ..tokenizer.tokenizer import Tokenizer
+from ..parser.parser import Parser
+from ..utils.tree_walker import TreeWalker
 
 
 # Instantiate flask app
@@ -19,7 +21,7 @@ def index():
         return render_template("index.html")
 
 @app.route("/generate-tokens", methods=['GET', 'POST'])
-def debug():
+def generate_tokens():
 
     if request.method == "GET":
         source_lines = session.get("source").split("\n")
@@ -49,3 +51,22 @@ def debug():
         session['tokens'] = tokens
 
         return jsonify({"status": "Success", "url": "/generate-tokens"})
+
+@app.route("/generate-ast", methods=['GET', 'POST'])
+def generate_ast():
+
+    if request.method == "GET":
+        return render_template("ast.html", source=session.get('source'), ast=session.get("ast"))
+    elif request.method == "POST":
+        file_path = request.form['file_path']
+
+        with open(file_path, "r") as f:
+            source = f.read()
+
+        tokens = Tokenizer(source).generate_tokens()
+        ast_root = Parser(tokens).parse()
+        ast = TreeWalker(ast_root).walk()
+        session['source'] = source
+        session['ast'] = ast
+
+        return jsonify({"status": "Success", "url": "/generate-ast"})
