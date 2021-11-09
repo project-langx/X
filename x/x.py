@@ -53,7 +53,7 @@ def entry():
 
     if args.parse:
         print("-" * 50)
-        TreeWalker(root=ast_root).walk_and_print()
+        print(TreeWalker(root=ast_root).walk())
         print("-" * 50)
 
     opcodes = Compiler(ast_root=ast_root).compile()
