@@ -1,4 +1,8 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, session
+from jinja2 import Markup
+
+from ..tokenizer.tokenizer import Tokenizer
+
 
 # Instantiate flask app
 app = Flask(__name__)
@@ -13,3 +17,35 @@ def index():
 
     if request.method == "GET":
         return render_template("index.html")
+
+@app.route("/debug", methods=['GET', 'POST'])
+def debug():
+
+    if request.method == "GET":
+        source_lines = session.get("source").split("\n")
+        token_lines = []
+        token_line = ""
+        current_line_number = 1
+        for token in session.get("tokens"):
+            if token[-1] == current_line_number:
+                token_line += f"Token(type={token[0]}, dtype={token[1]}, value={token[2]}, line_num={token[3]})<br>"
+            else:
+                token_lines.append(token_line)
+                token_line = ""
+                current_line_number += 1
+                token_line += f"Token(type={token[0]}, dtype={token[1]}, value={token[2]}, line_num={token[3]})<br>"
+
+
+        return render_template("debug.html", source_lines=source_lines, token_lines=token_lines)
+
+    elif request.method == "POST":
+        file_path = request.form['file_path']
+
+        with open(file_path, "r") as f:
+            source = f.read()
+
+        tokens = Tokenizer(source).generate_tokens()
+        session['source'] = source
+        session['tokens'] = tokens
+
+        return jsonify({"status": "Success", "url": "/debug"})

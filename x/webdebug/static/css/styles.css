@@ -17,7 +17,10 @@
     border-radius: 10px;
     background: none;
     color: black;
-    font-weight: bold;
     padding: 10px;
     width: 25%;
+}
+
+.code_line {
+    background: #d1f0ff;
 }

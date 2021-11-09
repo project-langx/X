@@ -7,17 +7,14 @@
     </head>
 
     <body>
-        <p>
-            <input type="text" class="input" id="file_path" placeholder="Enter file path to X code file">
-        </p>
-
-        <p>
-            <input type="button" class="button" id="debug" value="Debug Code">
-        </p>
+        {% for i in range(source_lines|length) %}
+            <pre class="code_line">{{source_lines[i]}}</pre>
+            <pre>{{token_lines[i]|safe}}</pre>
+        {% endfor %}
 
         <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/sweetalert.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/fastquery.js') }}"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/debug.js') }}"></script>
     </body>
 </html>
