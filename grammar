@@ -6,3 +6,4 @@ expr -> sum
 sum -> mul ('+' | '-' mul)
 mul -> factor ('*' | '/' factor)
 term -> string | number
+number -> int | float 
