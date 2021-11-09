@@ -18,7 +18,7 @@ def index():
     if request.method == "GET":
         return render_template("index.html")
 
-@app.route("/debug", methods=['GET', 'POST'])
+@app.route("/generate-tokens", methods=['GET', 'POST'])
 def debug():
 
     if request.method == "GET":
@@ -36,7 +36,7 @@ def debug():
                 token_line += f"Token(type={token[0]}, dtype={token[1]}, value={token[2]}, line_num={token[3]})<br>"
 
 
-        return render_template("debug.html", source_lines=source_lines, token_lines=token_lines)
+        return render_template("tokens.html", source_lines=source_lines, token_lines=token_lines)
 
     elif request.method == "POST":
         file_path = request.form['file_path']
@@ -48,4 +48,4 @@ def debug():
         session['source'] = source
         session['tokens'] = tokens
 
-        return jsonify({"status": "Success", "url": "/debug"})
+        return jsonify({"status": "Success", "url": "/generate-tokens"})
