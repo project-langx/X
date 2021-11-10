@@ -27,8 +27,8 @@ def get_version(rel_path):
 
 # This call to setup() does all the work
 setup(
-    name="x",
-    version=get_version("x/__init__.py"),
+    name="langx",
+    version=get_version("langx/__init__.py"),
     description="A placeholder language with shareable bytecode IR",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -38,8 +38,8 @@ setup(
     license="MIT",
     packages=find_packages(),
     entry_points={"console_scripts": [
-        "x = x.x:entry",
-        "xdb = x.webdebug.run_app:run_app",
+        "x = langx.x:entry",
+        "xdb = langx.webdebug.run_app:run_app",
     ]},
     classifiers=[
         "License :: OSI Approved :: MIT License",
