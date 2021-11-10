@@ -11,6 +11,14 @@ X is a placeholder language with a python and JS like syntax and a shareable byt
 
 What does this list mean? This means that you can compile your X code into any one of these programming languages 😲😲😲😲!
 
+## Installation
+
+The latest build of X is available on pypi, install it using:
+
+```bash
+user@programmer~:$ pip install langx
+```
+
 ## Pipeline
 
 <p align="center">
