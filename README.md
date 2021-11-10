@@ -14,7 +14,7 @@ What does this list mean? This means that you can compile your X code into any o
 ## Pipeline
 
 <p align="center">
-    <img src="images/X-pipeline.png">
+    <img src="https://github.com/frankhart2018/X/blob/master/images/X-pipeline.png">
 <p>
 
 ## Steps to run
