@@ -70,3 +70,9 @@ user@programmer~:$ x -i <filename>.x -p
 ```bash
 user@programmer~:$ x -i <filename>.x -c
 ```
+
+4. X also offers a web based debugger called xdb. To use it start the xdb server and follow along
+
+```bash
+user@programmer~:$ xdb
+```
