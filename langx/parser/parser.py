@@ -32,12 +32,12 @@ class Parser:
     def __string(self):
         string_token = self.__expect("__string__")
 
-        return StringNode(value=string_token.value), "string"
+        return StringNode(value=string_token.value, dtype="string"), "string"
 
     def __number(self):
         number_token = self.__expect("__number__")
 
-        return NumberNode(value=number_token.value), number_token.dtype
+        return NumberNode(value=number_token.value, dtype=number_token.dtype), number_token.dtype
 
     def __term(self):
         if self.__peek().type == "__number__":

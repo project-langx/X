@@ -32,3 +32,6 @@ class ExprNode(Node):
         ast_string += f")\n"
 
         return ast_string
+
+    def walk_and_compile(self, opcodes):
+        self.__expr.walk_and_compile(opcodes)

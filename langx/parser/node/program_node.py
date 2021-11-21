@@ -23,3 +23,7 @@ class ProgramNode(Node):
             ast_string += statement.walk_and_print(tab_level)
 
         return ast_string
+
+    def walk_and_compile(self, opcodes):
+        for statement in self.__statements:
+            statement.walk_and_compile(opcodes)
