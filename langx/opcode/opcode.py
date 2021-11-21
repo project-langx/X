@@ -1,7 +1,6 @@
 from typing import Any
 
-
-from .opcode import OpType
+from .op_type import OpType
 
 
 class OpCode:
