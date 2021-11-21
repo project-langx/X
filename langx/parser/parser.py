@@ -37,7 +37,10 @@ class Parser:
     def __number(self):
         number_token = self.__expect("__number__")
 
-        return NumberNode(value=number_token.value, dtype=number_token.dtype), number_token.dtype
+        return (
+            NumberNode(value=number_token.value, dtype=number_token.dtype),
+            number_token.dtype,
+        )
 
     def __term(self):
         if self.__peek().type == "__number__":
@@ -59,7 +62,9 @@ class Parser:
             if dtype != right_dtype:
                 raise ParseError(f"Type mismatch: {dtype} and {right_dtype}")
 
-            expr = BinaryOperatorNode(operator=op_type_to_op_type[op.type], left=expr, right=right_expr)
+            expr = BinaryOperatorNode(
+                operator=op_type_to_op_type[op.type], left=expr, right=right_expr
+            )
 
         return expr, dtype
 
@@ -74,7 +79,9 @@ class Parser:
             if dtype != right_dtype:
                 raise ParseError(f"Type mismatch: {dtype} and {right_dtype}")
 
-            expr = BinaryOperatorNode(operator=op_type_to_op_type[op.type], left=expr, right=right_expr)
+            expr = BinaryOperatorNode(
+                operator=op_type_to_op_type[op.type], left=expr, right=right_expr
+            )
 
         return expr, dtype
 
@@ -96,7 +103,7 @@ class Parser:
             self.__expect("__newline__")
             return print_node
 
-        raise ParseError(f"Empty expressions are not allowed")
+        raise ParseError("Empty expressions are not allowed")
 
     def __statement(self):
         return self.__single_line_statement()

@@ -13,11 +13,11 @@ class PrintNode(Node):
 
     def walk_and_print(self, tab_level):
         ast_string = self._add_tabs(tab_level=tab_level)
-        ast_string += f"PrintNode(\n"
+        ast_string += "PrintNode(\n"
         tab_level += 1
 
         ast_string += self.__expr.walk_and_print(tab_level)
-        
+
         tab_level -= 1
         ast_string += self._add_tabs(tab_level=tab_level)
         ast_string += ")\n"

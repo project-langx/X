@@ -43,7 +43,9 @@ class Tokenizer:
         self.__pointer -= 1
 
         if self.__lexeme.count(".") > 1:
-            raise TokenizerError(message="A number cannot have more than one decimal points!")
+            raise TokenizerError(
+                message="A number cannot have more than one decimal points!"
+            )
 
         if self.__lexeme.count(".") == 1:
             is_float = True
@@ -91,7 +93,7 @@ class Tokenizer:
 
             self.__pointer += 1
 
-        self.__tokens.append(Token("__newline__",  "", "", self.__line_num))
+        self.__tokens.append(Token("__newline__", "", "", self.__line_num))
         self.__tokens.append(Token("__eof__", "", "", self.__line_num + 1))
 
         return self.__tokens

@@ -5,6 +5,7 @@ from ...opcode.op_type import OpType
 
 const_val = namedtuple("Const", ["value", "dtype"])
 
+
 class JavaDecompiler:
     def __init__(self, opcodes, decompiled_file_name):
         self.__opcodes = opcodes

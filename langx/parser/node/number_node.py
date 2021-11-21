@@ -19,4 +19,6 @@ class NumberNode(Node):
         return ast_string
 
     def walk_and_compile(self, opcodes):
-        opcodes.append(OpCode(opcode=OpType.LOAD, op_value=self.__value, op_dtype=self.__dtype))
+        opcodes.append(
+            OpCode(opcode=OpType.LOAD, op_value=self.__value, op_dtype=self.__dtype)
+        )

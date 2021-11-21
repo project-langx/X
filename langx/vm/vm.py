@@ -14,11 +14,11 @@ class VM:
         self.__constant_pool.append(constant)
 
     def __cast_to_type(self, value, dtype):
-        if dtype == 'int':
+        if dtype == "int":
             return int(value)
-        elif dtype == 'float':
+        elif dtype == "float":
             return float(value)
-        elif dtype == 'string':
+        elif dtype == "string":
             return str(value)
 
     def __perform_binary_operation(self, opcode, operation):
@@ -44,4 +44,6 @@ class VM:
             elif opcode.opcode == OpType.LOAD:
                 self.__push(self.__cast_to_type(opcode.op_value, dtype=opcode.op_dtype))
             elif opcode.opcode in [OpType.ADD, OpType.SUB, OpType.MUL, OpType.DIV]:
-                self.__perform_binary_operation(opcode.opcode, operation=opcode.op_value)
+                self.__perform_binary_operation(
+                    opcode.opcode, operation=opcode.op_value
+                )

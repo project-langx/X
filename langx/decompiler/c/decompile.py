@@ -5,6 +5,7 @@ from ...opcode.op_type import OpType
 
 const_val = namedtuple("Const", ["value", "dtype"])
 
+
 class CDecompiler:
     def __init__(self, opcodes):
         self.__opcodes = opcodes
