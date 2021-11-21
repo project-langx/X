@@ -1,20 +1,19 @@
-from collections import namedtuple
+from typing import List, Tuple
+
 from ..utils.error import TokenizerError
-
-
-Token = namedtuple("Token", ["type", "dtype", "value", "line_num"])
+from .token import Token
 
 
 class Tokenizer:
-    def __init__(self, source):
-        self.__source = source
-        self.__line_num = 1
-        self.__pointer = 0
-        self.__lexeme = ""
+    def __init__(self, source: str) -> None:
+        self.__source: str = source
+        self.__line_num: int = 1
+        self.__pointer: int = 0
+        self.__lexeme: str = ""
 
-        self.__tokens = []
+        self.__tokens: List[Token] = []
 
-    def __is_keyword(self):
+    def __is_keyword(self) -> str:
         while self.__source[self.__pointer].isalpha():
             self.__lexeme += self.__source[self.__pointer]
             self.__pointer += 1
@@ -23,7 +22,9 @@ class Tokenizer:
         if self.__lexeme == "print":
             return "__print__"
 
-    def __is_string(self):
+        return ""
+
+    def __is_string(self) -> str:
         self.__pointer += 1
         while self.__source[self.__pointer] != '"':
             self.__lexeme += self.__source[self.__pointer]
@@ -31,8 +32,8 @@ class Tokenizer:
 
         return "__string__"
 
-    def __is_number(self):
-        is_float = False
+    def __is_number(self) -> Tuple[str, str]:
+        is_float: bool = False
         while (
             self.__source[self.__pointer].isdigit()
             or self.__source[self.__pointer] == "."
@@ -52,7 +53,7 @@ class Tokenizer:
 
         return "__number__", "float" if is_float else "int"
 
-    def __operator(self):
+    def __operator(self) -> str:
         if self.__source[self.__pointer] == "+":
             return "__add__"
         elif self.__source[self.__pointer] == "-":
@@ -62,7 +63,9 @@ class Tokenizer:
         elif self.__source[self.__pointer] == "/":
             return "__div__"
 
-    def generate_tokens(self):
+        return ""
+
+    def generate_tokens(self) -> List[Token]:
         while self.__pointer < len(self.__source):
             self.__lexeme = ""
             if self.__source[self.__pointer].isalpha():
