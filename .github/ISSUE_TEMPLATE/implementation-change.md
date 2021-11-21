@@ -27,10 +27,4 @@ It is not necessary that every change requires changes in all the components, yo
 
 A **single PR** should be submitted for all the parts. The commits need **to be separate** for all of them.
 
-**New Grammar**
-
-Copy the entire existing grammar from master and add the required changes to it here, make to surround it with ```. It is completely fine, if you are not able to contribute to this part, just delete this section and we'll figure something out.
-
-**Note**: Changes can be made to the grammar as appropriate. Post the changes to the grammar as a reply in this thread.
-
 **Note**: You can only submit a patch if it is approved by one of the maintainers, otherwise the PR will be rejected.
