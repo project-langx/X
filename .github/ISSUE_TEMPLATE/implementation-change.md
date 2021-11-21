@@ -1,7 +1,7 @@
 ---
-name: Syntactic Change
-about: Describe the new syntactic change or addition you want to see in X
-title: "[SYNTAX]"
+name: Implementation Change
+about: Describe the implementation change
+title: "[IMPL]"
 labels: ''
 assignees: ''
 
@@ -9,9 +9,9 @@ assignees: ''
 
 **Describe the change**
 
-In one or two lines describe the new addition or change in syntax of X that you wish to see.
+In one or two lines describe the new change in implementation of X that you wish to see.
 
-This requires adding support to the following:
+This requires changes to which of following?
 
 - [x] Tokenizer
 - [x] Parser
