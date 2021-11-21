@@ -1,19 +1,22 @@
+from typing import List, Any
+
 from ..opcode.op_type import OpType
+from ..opcode.opcode import OpCode
 
 
 class VM:
-    def __init__(self, opcodes):
-        self.__opcodes = opcodes
+    def __init__(self, opcodes: List[OpCode]) -> None:
+        self.__opcodes: List[OpCode] = opcodes
 
-        self.__constant_pool = []
+        self.__constant_pool: List[str] = []
 
-    def __pop(self):
+    def __pop(self) -> str:
         return self.__constant_pool.pop()
 
-    def __push(self, constant):
+    def __push(self, constant: Any) -> None:
         self.__constant_pool.append(constant)
 
-    def __cast_to_type(self, value, dtype):
+    def __cast_to_type(self, value: str, dtype: str) -> Any:
         if dtype == "int":
             return int(value)
         elif dtype == "float":
@@ -21,9 +24,9 @@ class VM:
         elif dtype == "string":
             return str(value)
 
-    def __perform_binary_operation(self, opcode, operation):
-        right = self.__pop()
-        left = self.__pop()
+    def __perform_binary_operation(self, opcode: str) -> None:
+        right: Any = self.__pop()
+        left: Any = self.__pop()
 
         if opcode == OpType.ADD:
             self.__push(left + right)
@@ -37,7 +40,7 @@ class VM:
             else:
                 self.__push(left / right)
 
-    def run(self):
+    def run(self) -> None:
         for opcode in self.__opcodes:
             if opcode.opcode == OpType.PRINT:
                 print(self.__pop())
@@ -45,5 +48,5 @@ class VM:
                 self.__push(self.__cast_to_type(opcode.op_value, dtype=opcode.op_dtype))
             elif opcode.opcode in [OpType.ADD, OpType.SUB, OpType.MUL, OpType.DIV]:
                 self.__perform_binary_operation(
-                    opcode.opcode, operation=opcode.op_value
+                    opcode.opcode
                 )
