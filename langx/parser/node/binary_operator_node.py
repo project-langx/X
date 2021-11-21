@@ -1,4 +1,6 @@
 from .node import Node
+from ...opcode.opcode import OpCode
+from ...opcode.op_type import OpType
 
 
 class BinaryOperatorNode(Node):
@@ -46,3 +48,9 @@ class BinaryOperatorNode(Node):
         ast_string += f")\n"
 
         return ast_string
+
+    def walk_and_compile(self, opcodes):
+        self.__left.walk_and_compile(opcodes)
+        self.__right.walk_and_compile(opcodes)
+
+        opcodes.append(OpCode(opcode=OpType[self.__operator], op_value="", op_dtype=""))
