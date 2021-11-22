@@ -1,3 +1,6 @@
+from typing import List, Tuple, Dict
+
+from .node.node import Node
 from .node.number_node import NumberNode
 from .node.string_node import StringNode
 from .node.binary_operator_node import BinaryOperatorNode
@@ -5,36 +8,37 @@ from .node.program_node import ProgramNode
 from .node.print_node import PrintNode
 from .node.expr_node import ExprNode
 from ..utils.error import ParseError
+from ..tokenizer.token import Token
 
 
 class Parser:
-    def __init__(self, tokens):
-        self.__tokens = tokens
+    def __init__(self, tokens: List[Token]) -> None:
+        self.__tokens: List[Token] = tokens
 
-        self.__current_token = 0
+        self.__current_token: int = 0
 
-    def __peek(self):
+    def __peek(self) -> Token:
         return self.__tokens[self.__current_token]
 
-    def __consume(self):
+    def __consume(self) -> Token:
         self.__current_token += 1
         return self.__tokens[self.__current_token - 1]
 
-    def __is_end(self):
+    def __is_end(self) -> bool:
         return self.__peek().type == "__eof__"
 
-    def __expect(self, token_type):
+    def __expect(self, token_type: str) -> Token:
         if self.__peek().type == token_type:
             return self.__consume()
         else:
             raise ParseError(f"Expected {token_type}, but is {self.__peek().type}!")
 
-    def __string(self):
+    def __string(self) -> Tuple[Node, str]:
         string_token = self.__expect("__string__")
 
         return StringNode(value=string_token.value, dtype="string"), "string"
 
-    def __number(self):
+    def __number(self) -> Tuple[Node, str]:
         number_token = self.__expect("__number__")
 
         return (
@@ -42,21 +46,21 @@ class Parser:
             number_token.dtype,
         )
 
-    def __term(self):
+    def __term(self) -> Tuple[Node, str]:
         if self.__peek().type == "__number__":
             return self.__number()
 
         return self.__string()
 
-    def __factor(self):
+    def __factor(self) -> Tuple[Node, str]:
         return self.__term()
 
-    def __mul(self):
+    def __mul(self) -> Tuple[Node, str]:
         expr, dtype = self.__factor()
 
-        op_type_to_op_type = {"__mul__": "MUL", "__div__": "DIV"}
+        op_type_to_op_type: Dict[str, str] = {"__mul__": "MUL", "__div__": "DIV"}
         while self.__peek().type in ["__mul__", "__div__"]:
-            op = self.__consume()
+            op: Token = self.__consume()
             right_expr, right_dtype = self.__mul()
 
             if dtype != right_dtype:
@@ -68,12 +72,12 @@ class Parser:
 
         return expr, dtype
 
-    def __sum(self):
+    def __sum(self) -> Tuple[Node, str]:
         expr, dtype = self.__mul()
 
-        op_type_to_op_type = {"__add__": "ADD", "__sub__": "SUB"}
+        op_type_to_op_type: Dict[str, str] = {"__add__": "ADD", "__sub__": "SUB"}
         while self.__peek().type in ["__add__", "__sub__"]:
-            op = self.__consume()
+            op: Token = self.__consume()
             right_expr, right_dtype = self.__mul()
 
             if dtype != right_dtype:
@@ -85,36 +89,36 @@ class Parser:
 
         return expr, dtype
 
-    def __expr(self):
+    def __expr(self) -> Node:
         expr, dtype = self.__sum()
         return ExprNode(expr=expr, dtype=dtype)
 
-    def __print(self):
+    def __print(self) -> Node:
         self.__expect("__print__")
         self.__expect("__left_paren__")
-        expr = self.__expr()
+        expr: Node = self.__expr()
         self.__expect("__right_paren__")
 
         return PrintNode(expr=expr)
 
-    def __single_line_statement(self):
+    def __single_line_statement(self) -> Node:
         if self.__peek().type == "__print__":
-            print_node = self.__print()
+            print_node: Node = self.__print()
             self.__expect("__newline__")
             return print_node
 
         raise ParseError("Empty expressions are not allowed")
 
-    def __statement(self):
+    def __statement(self) -> Node:
         return self.__single_line_statement()
 
-    def __program(self):
-        statements = []
+    def __program(self) -> Node:
+        statements: List[Node] = []
 
         while not self.__is_end():
             statements.append(self.__statement())
 
         return ProgramNode("<main>", statements)
 
-    def parse(self):
+    def parse(self) -> Node:
         return self.__program()

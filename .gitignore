@@ -4,3 +4,4 @@ __pycache__
 langx.egg-info/
 build/
 dist/
+.idea/

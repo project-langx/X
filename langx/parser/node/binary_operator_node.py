@@ -1,28 +1,30 @@
+from typing import List
+
 from .node import Node
 from ...opcode.opcode import OpCode
 from ...opcode.op_type import OpType
 
 
 class BinaryOperatorNode(Node):
-    def __init__(self, operator, left, right):
-        self.__operator = operator
-        self.__left = left
-        self.__right = right
+    def __init__(self, operator: str, left: Node, right: Node) -> None:
+        self.__operator: str = operator
+        self.__left: Node = left
+        self.__right: Node = right
 
     @property
-    def operator(self):
+    def operator(self) -> str:
         return self.__operator
 
     @property
-    def left(self):
+    def left(self) -> Node:
         return self.__left
 
     @property
-    def right(self):
+    def right(self) -> Node:
         return self.__right
 
-    def walk_and_print(self, tab_level):
-        ast_string = self._add_tabs(tab_level=tab_level)
+    def walk_and_print(self, tab_level: int) -> str:
+        ast_string: str = self._add_tabs(tab_level=tab_level)
         ast_string += "BinaryOperatorNode(\n"
         ast_string += self._add_tabs(tab_level=tab_level)
         ast_string += "left=(\n"
@@ -49,7 +51,7 @@ class BinaryOperatorNode(Node):
 
         return ast_string
 
-    def walk_and_compile(self, opcodes):
+    def walk_and_compile(self, opcodes: List[OpCode]) -> None:
         self.__left.walk_and_compile(opcodes)
         self.__right.walk_and_compile(opcodes)
 

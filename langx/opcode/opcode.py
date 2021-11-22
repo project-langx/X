@@ -1,11 +1,16 @@
-class OpCode:
-    def __init__(self, opcode, op_value, op_dtype):
-        self.__opcode = opcode
-        self.__op_value = op_value
-        self.__op_dtype = op_dtype
+from typing import Any
 
-    def __str__(self):
-        opcode = str(self.__opcode)
+from .op_type import OpType
+
+
+class OpCode:
+    def __init__(self, opcode: OpType, op_value: Any, op_dtype: str):
+        self.__opcode: OpType = opcode
+        self.__op_value: str = op_value
+        self.__op_dtype: str = op_dtype
+
+    def __str__(self) -> str:
+        opcode: str = str(self.__opcode)
         opcode = opcode.split(".")[1]
 
         if self.__op_value == "" and self.__op_dtype == "":
@@ -14,13 +19,13 @@ class OpCode:
         return f"{opcode} {self.__op_value} {self.__op_dtype}"
 
     @property
-    def opcode(self):
+    def opcode(self) -> OpType:
         return self.__opcode
 
     @property
-    def op_value(self):
+    def op_value(self) -> Any:
         return self.__op_value
 
     @property
-    def op_dtype(self):
+    def op_dtype(self) -> str:
         return self.__op_dtype
