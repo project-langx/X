@@ -1,7 +1,11 @@
 import argparse
 import os
 import sys
+from typing import List
 
+from .opcode.opcode import OpCode
+from .parser.node.node import Node
+from .tokenizer.token import Token
 from .tokenizer.tokenizer import Tokenizer
 from .parser.parser import Parser
 from .utils.tree_walker import TreeWalker
@@ -13,8 +17,8 @@ from .decompiler.java.decompile import JavaDecompiler
 from .decompiler.python.decompile import PyDecompiler
 
 
-def entry():
-    parser = argparse.ArgumentParser(description="X compiler")
+def entry() -> None:
+    parser: argparse.ArgumentParser = argparse.ArgumentParser(description="X compiler")
     parser.add_argument("-i", "--input", type=str, help="X code file")
     parser.add_argument("-t", "--tokens", action="store_true", help="Print tokens")
     parser.add_argument("-p", "--parse", action="store_true", help="Print parse tree")
@@ -32,16 +36,16 @@ def entry():
     parser.add_argument(
         "--decompile-py", action="store_true", help="Compile to Python code"
     )
-    args = parser.parse_args()
+    args: argparse.Namespace = parser.parse_args()
 
     if not os.path.exists(args.input):
         print(f"File {args.input} not found!")
         exit(1)
 
     with open(args.input, "r") as f:
-        source = f.read()
+        source: str = f.read()
 
-    tokens = Tokenizer(source).generate_tokens()
+    tokens: List[Token] = Tokenizer(source).generate_tokens()
 
     if args.tokens:
         print("-" * 50)
@@ -49,14 +53,14 @@ def entry():
             print(token)
         print("-" * 50)
 
-    ast_root = Parser(tokens=tokens).parse()
+    ast_root: Node = Parser(tokens=tokens).parse()
 
     if args.parse:
         print("-" * 50)
         print(TreeWalker(root=ast_root).walk())
         print("-" * 50)
 
-    opcodes = Compiler(ast_root=ast_root).compile()
+    opcodes: List[OpCode] = Compiler(ast_root=ast_root).compile()
 
     if args.compile:
         print("-" * 50)
@@ -65,9 +69,9 @@ def entry():
         print("-" * 50)
 
     if args.decompile_c:
-        decompiled_c_code = CDecompiler(opcodes=opcodes).decompile()
+        decompiled_c_code: List[str] = CDecompiler(opcodes=opcodes).decompile()
 
-        decompiled_c_file_path = ".".join(args.input.split(".")[:-1]) + ".c"
+        decompiled_c_file_path: str = ".".join(args.input.split(".")[:-1]) + ".c"
         with open(decompiled_c_file_path, "w") as f:
             f.write("\n".join(decompiled_c_code))
 
@@ -75,9 +79,9 @@ def entry():
 
         sys.exit()
     elif args.decompile_cpp:
-        decompiled_cpp_code = CppDecompiler(opcodes=opcodes).decompile()
+        decompiled_cpp_code: List[str] = CppDecompiler(opcodes=opcodes).decompile()
 
-        decompiled_cpp_file_path = ".".join(args.input.split(".")[:-1]) + ".cpp"
+        decompiled_cpp_file_path: str = ".".join(args.input.split(".")[:-1]) + ".cpp"
         with open(decompiled_cpp_file_path, "w") as f:
             f.write("\n".join(decompiled_cpp_code))
 
@@ -85,12 +89,12 @@ def entry():
 
         sys.exit()
     elif args.decompile_java:
-        decompiled_java_file_name = ".".join(args.input.split(".")[:-1]).capitalize()
-        decompiled_java_code = JavaDecompiler(
+        decompiled_java_file_name: str = ".".join(args.input.split(".")[:-1]).capitalize()
+        decompiled_java_code: List[str] = JavaDecompiler(
             opcodes=opcodes, decompiled_file_name=decompiled_java_file_name
         ).decompile()
 
-        decompiled_java_file_path = decompiled_java_file_name + ".java"
+        decompiled_java_file_path: str = decompiled_java_file_name + ".java"
         with open(decompiled_java_file_path, "w") as f:
             f.write("\n".join(decompiled_java_code))
 
@@ -98,9 +102,9 @@ def entry():
 
         sys.exit()
     elif args.decompile_py:
-        decompiled_py_code = PyDecompiler(opcodes=opcodes).decompile()
+        decompiled_py_code: List[str] = PyDecompiler(opcodes=opcodes).decompile()
 
-        decompiled_py_file_path = ".".join(args.input.split(".")[:-1]) + ".py"
+        decompiled_py_file_path: str = ".".join(args.input.split(".")[:-1]) + ".py"
         with open(decompiled_py_file_path, "w") as f:
             f.write("\n".join(decompiled_py_code))
 

@@ -1,5 +1,5 @@
 from collections import namedtuple
-from typing import List, NamedTuple
+from typing import List, NamedTuple, Any
 
 from ...opcode.op_type import OpType
 from ...opcode.opcode import OpCode
@@ -11,7 +11,7 @@ class ConstVal(NamedTuple):
 
 
 class JavaDecompiler:
-    def __init__(self, opcodes: List[OpCode], decompiled_file_name: str):
+    def __init__(self, opcodes: List[OpCode], decompiled_file_name: str) -> None:
         self.__opcodes: List[OpCode] = opcodes
         self.__decompiled_file_name: str = decompiled_file_name
 
@@ -21,7 +21,7 @@ class JavaDecompiler:
     def __pop(self) -> ConstVal:
         return self.__constant_pool.pop()
 
-    def __push(self, value) -> None:
+    def __push(self, value: Any) -> None:
         self.__constant_pool.append(value)
 
     def __decompile_print(self) -> str:

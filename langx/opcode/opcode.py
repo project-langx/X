@@ -19,7 +19,7 @@ class OpCode:
         return f"{opcode} {self.__op_value} {self.__op_dtype}"
 
     @property
-    def opcode(self) -> str:
+    def opcode(self) -> OpType:
         return self.__opcode
 
     @property

@@ -24,7 +24,7 @@ class VM:
         elif dtype == "string":
             return str(value)
 
-    def __perform_binary_operation(self, opcode: str) -> None:
+    def __perform_binary_operation(self, opcode: OpType) -> None:
         right: Any = self.__pop()
         left: Any = self.__pop()
 
