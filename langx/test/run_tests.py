@@ -1,20 +1,21 @@
 import unittest
+from typing import List, Any
 
 from .utils.test_error import TestError
 from .utils.test_tree_walker import TestTreeWalker
 
 
-def run_tests():
-    test_classes_to_run = [TestError, TestTreeWalker]
+def run_tests() -> None:
+    test_classes_to_run: List[Any] = [TestError, TestTreeWalker]
 
-    loader = unittest.TestLoader()
+    loader: unittest.TestLoader = unittest.TestLoader()
 
-    suites_list = []
+    suites_list: List[unittest.TestSuite] = []
     for test_class in test_classes_to_run:
-        suite = loader.loadTestsFromTestCase(test_class)
+        suite: unittest.TestSuite = loader.loadTestsFromTestCase(test_class)
         suites_list.append(suite)
 
-    big_suite = unittest.TestSuite(suites_list)
+    big_suite: unittest.TestSuite = unittest.TestSuite(suites_list)
 
-    runner = unittest.TextTestRunner()
-    results = runner.run(big_suite)
+    runner: unittest.TextTestRunner = unittest.TextTestRunner()
+    runner.run(big_suite)
