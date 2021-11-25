@@ -20,6 +20,7 @@ class TokenType(Enum):
     # Special
     NEWLINE: int = 9
     EOF: int = 10
+    UNK: int = 11
 
     def __str__(self) -> str:
-        return f"__{self.name.lower()}__"
+        return f"__{self.name.lower()}__: {self.value}"
