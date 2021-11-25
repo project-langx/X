@@ -1,8 +1,8 @@
 import unittest
 from typing import List, Any
 
-from .utils.test_error import TestError
-from .utils.test_tree_walker import TestTreeWalker
+from .utils_test.test_error import TestError
+from .utils_test.test_tree_walker import TestTreeWalker
 
 
 def run_tests() -> None:
