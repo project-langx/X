@@ -80,7 +80,7 @@ class Tokenizer:
             elif self.__source[self.__pointer] in ["+", "-", "*", "/"]:
                 operator = self.__operator()
                 self.__tokens.append(
-                    Token(operator, "", self.__source[self.__pointer], self.__line_num)
+                    Token(operator, "", "", self.__line_num)
                 )
             elif self.__source[self.__pointer] == '"':
                 self.__tokens.append(
