@@ -9,6 +9,7 @@ from .node.print_node import PrintNode
 from .node.expr_node import ExprNode
 from ..utils.error import ParseError
 from ..tokenizer.token import Token
+from ..tokenizer.token_type import TokenType
 
 
 class Parser:
@@ -25,21 +26,21 @@ class Parser:
         return self.__tokens[self.__current_token - 1]
 
     def __is_end(self) -> bool:
-        return self.__peek().type == "__eof__"
+        return self.__peek().type == TokenType.EOF
 
-    def __expect(self, token_type: str) -> Token:
+    def __expect(self, token_type: TokenType) -> Token:
         if self.__peek().type == token_type:
             return self.__consume()
         else:
             raise ParseError(f"Expected {token_type}, but is {self.__peek().type}!")
 
     def __string(self) -> Tuple[Node, str]:
-        string_token = self.__expect("__string__")
+        string_token = self.__expect(TokenType.STRING)
 
         return StringNode(value=string_token.value, dtype="string"), "string"
 
     def __number(self) -> Tuple[Node, str]:
-        number_token = self.__expect("__number__")
+        number_token = self.__expect(TokenType.NUMBER)
 
         return (
             NumberNode(value=number_token.value, dtype=number_token.dtype),
@@ -47,7 +48,7 @@ class Parser:
         )
 
     def __term(self) -> Tuple[Node, str]:
-        if self.__peek().type == "__number__":
+        if self.__peek().type == TokenType.NUMBER:
             return self.__number()
 
         return self.__string()
@@ -58,8 +59,8 @@ class Parser:
     def __mul(self) -> Tuple[Node, str]:
         expr, dtype = self.__factor()
 
-        op_type_to_op_type: Dict[str, str] = {"__mul__": "MUL", "__div__": "DIV"}
-        while self.__peek().type in ["__mul__", "__div__"]:
+        op_type_to_op_type: Dict[TokenType, str] = {TokenType.MUL: "MUL", TokenType.DIV: "DIV"}
+        while self.__peek().type in [TokenType.MUL, TokenType.DIV]:
             op: Token = self.__consume()
             right_expr, right_dtype = self.__mul()
 
@@ -75,8 +76,8 @@ class Parser:
     def __sum(self) -> Tuple[Node, str]:
         expr, dtype = self.__mul()
 
-        op_type_to_op_type: Dict[str, str] = {"__add__": "ADD", "__sub__": "SUB"}
-        while self.__peek().type in ["__add__", "__sub__"]:
+        op_type_to_op_type: Dict[TokenType, str] = {TokenType.ADD: "ADD", TokenType.SUB: "SUB"}
+        while self.__peek().type in [TokenType.ADD, TokenType.SUB]:
             op: Token = self.__consume()
             right_expr, right_dtype = self.__mul()
 
@@ -94,17 +95,17 @@ class Parser:
         return ExprNode(expr=expr, dtype=dtype)
 
     def __print(self) -> Node:
-        self.__expect("__print__")
-        self.__expect("__left_paren__")
+        self.__expect(TokenType.PRINT)
+        self.__expect(TokenType.LEFT_PAREN)
         expr: Node = self.__expr()
-        self.__expect("__right_paren__")
+        self.__expect(TokenType.RIGHT_PAREN)
 
         return PrintNode(expr=expr)
 
     def __single_line_statement(self) -> Node:
-        if self.__peek().type == "__print__":
+        if self.__peek().type == TokenType.PRINT:
             print_node: Node = self.__print()
-            self.__expect("__newline__")
+            self.__expect(TokenType.NEWLINE)
             return print_node
 
         raise ParseError("Empty expressions are not allowed")
