@@ -31,13 +31,13 @@ def generate_tokens():
         token_line = ""
         current_line_number = 1
         for token in session.get("tokens"):
-            if token[-1] == current_line_number:
-                token_line += f"Token(type={token[0]}, dtype={token[1]}, value={token[2]}, line_num={token[3]})<br>"
+            if int(token.split("=")[-1].split(")")[0]) == current_line_number:
+                token_line += f"{str(token)}<br>"
             else:
                 token_lines.append(token_line)
                 token_line = ""
                 current_line_number += 1
-                token_line += f"Token(type={token[0]}, dtype={token[1]}, value={token[2]}, line_num={token[3]})<br>"
+                token_line += f"{str(token)}<br>"
 
         return render_template(
             "tokens.html", source_lines=source_lines, token_lines=token_lines
@@ -50,8 +50,9 @@ def generate_tokens():
             source = f.read()
 
         tokens = Tokenizer(source).generate_tokens()
+
         session["source"] = source
-        session["tokens"] = tokens
+        session["tokens"] = [str(token) for token in tokens]
 
         return jsonify({"status": "Success", "url": "/generate-tokens"})
 
