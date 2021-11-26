@@ -47,6 +47,4 @@ class VM:
             elif opcode.opcode == OpType.LOAD:
                 self.__push(self.__cast_to_type(opcode.op_value, dtype=opcode.op_dtype))
             elif opcode.opcode in [OpType.ADD, OpType.SUB, OpType.MUL, OpType.DIV]:
-                self.__perform_binary_operation(
-                    opcode.opcode
-                )
+                self.__perform_binary_operation(opcode.opcode)

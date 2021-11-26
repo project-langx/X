@@ -59,7 +59,10 @@ class Parser:
     def __mul(self) -> Tuple[Node, str]:
         expr, dtype = self.__factor()
 
-        op_type_to_op_type: Dict[TokenType, str] = {TokenType.MUL: "MUL", TokenType.DIV: "DIV"}
+        op_type_to_op_type: Dict[TokenType, str] = {
+            TokenType.MUL: "MUL",
+            TokenType.DIV: "DIV",
+        }
         while self.__peek().type in [TokenType.MUL, TokenType.DIV]:
             op: Token = self.__consume()
             right_expr, right_dtype = self.__mul()
@@ -76,7 +79,10 @@ class Parser:
     def __sum(self) -> Tuple[Node, str]:
         expr, dtype = self.__mul()
 
-        op_type_to_op_type: Dict[TokenType, str] = {TokenType.ADD: "ADD", TokenType.SUB: "SUB"}
+        op_type_to_op_type: Dict[TokenType, str] = {
+            TokenType.ADD: "ADD",
+            TokenType.SUB: "SUB",
+        }
         while self.__peek().type in [TokenType.ADD, TokenType.SUB]:
             op: Token = self.__consume()
             right_expr, right_dtype = self.__mul()

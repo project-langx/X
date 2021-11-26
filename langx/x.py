@@ -89,7 +89,9 @@ def entry() -> None:
 
         sys.exit()
     elif args.decompile_java:
-        decompiled_java_file_name: str = ".".join(args.input.split(".")[:-1]).capitalize()
+        decompiled_java_file_name: str = ".".join(
+            args.input.split(".")[:-1]
+        ).capitalize()
         decompiled_java_code: List[str] = JavaDecompiler(
             opcodes=opcodes, decompiled_file_name=decompiled_java_file_name
         ).decompile()

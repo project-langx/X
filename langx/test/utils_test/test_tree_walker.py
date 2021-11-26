@@ -31,44 +31,93 @@ class TestTreeWalker(unittest.TestCase):
     def test_walk_binary_operator_node(self) -> None:
         left_node: Node = NumberNode(value="3", dtype="int")
         right_node: Node = NumberNode(value="4", dtype="int")
-        binary_operator_node: Node = BinaryOperatorNode(operator="__add__", left=left_node, right=right_node)
+        binary_operator_node: Node = BinaryOperatorNode(
+            operator="__add__", left=left_node, right=right_node
+        )
 
         tree_walker: TreeWalker = TreeWalker(root=binary_operator_node)
-        self.assertEqual(tree_walker.walk().split("\n"), ['BinaryOperatorNode(', 'left=(', '\tNumberNode(value=3)',
-                                                          ')', "op='__add__'", 'right=(',
-                                                          '\tNumberNode(value=4)', ')', ''])
+        self.assertEqual(
+            tree_walker.walk().split("\n"),
+            [
+                "BinaryOperatorNode(",
+                "left=(",
+                "\tNumberNode(value=3)",
+                ")",
+                "op='__add__'",
+                "right=(",
+                "\tNumberNode(value=4)",
+                ")",
+                "",
+            ],
+        )
 
     def test_walk_expr_node(self) -> None:
         left_node: Node = NumberNode(value="3", dtype="int")
         right_node: Node = NumberNode(value="4", dtype="int")
-        binary_operator_node: Node = BinaryOperatorNode(operator="__add__", left=left_node, right=right_node)
+        binary_operator_node: Node = BinaryOperatorNode(
+            operator="__add__", left=left_node, right=right_node
+        )
         expr_node: Node = ExprNode(expr=binary_operator_node, dtype="int")
 
         tree_walker: TreeWalker = TreeWalker(root=expr_node)
-        self.assertEqual(tree_walker.walk().split("\n"), ['ExprNode(', 'expr=(', '\tBinaryOperatorNode(',
-                                                          '\tleft=(', '\t\tNumberNode(value=3)', '\t)',
-                                                          "\top='__add__'", '\tright=(', '\t\tNumberNode(value=4)',
-                                                          '\t)', ')', "dtype='int'", ')', ''])
+        self.assertEqual(
+            tree_walker.walk().split("\n"),
+            [
+                "ExprNode(",
+                "expr=(",
+                "\tBinaryOperatorNode(",
+                "\tleft=(",
+                "\t\tNumberNode(value=3)",
+                "\t)",
+                "\top='__add__'",
+                "\tright=(",
+                "\t\tNumberNode(value=4)",
+                "\t)",
+                ")",
+                "dtype='int'",
+                ")",
+                "",
+            ],
+        )
 
     def test_walk_print_node(self) -> None:
         left_node: Node = NumberNode(value="3", dtype="int")
         right_node: Node = NumberNode(value="4", dtype="int")
-        binary_operator_node: Node = BinaryOperatorNode(operator="__add__", left=left_node, right=right_node)
+        binary_operator_node: Node = BinaryOperatorNode(
+            operator="__add__", left=left_node, right=right_node
+        )
         expr_node: Node = ExprNode(expr=binary_operator_node, dtype="int")
         print_node: Node = PrintNode(expr=expr_node)
 
         tree_walker: TreeWalker = TreeWalker(root=print_node)
-        self.assertEqual(tree_walker.walk().split("\n"), ['PrintNode(', '\tExprNode(', '\texpr=(',
-                                                          '\t\tBinaryOperatorNode(', '\t\tleft=(',
-                                                          '\t\t\tNumberNode(value=3)', '\t\t)',
-                                                          "\t\top='__add__'", '\t\tright=(',
-                                                          '\t\t\tNumberNode(value=4)', '\t\t)', '\t)',
-                                                          "\tdtype='int'", '\t)', ')', ''])
+        self.assertEqual(
+            tree_walker.walk().split("\n"),
+            [
+                "PrintNode(",
+                "\tExprNode(",
+                "\texpr=(",
+                "\t\tBinaryOperatorNode(",
+                "\t\tleft=(",
+                "\t\t\tNumberNode(value=3)",
+                "\t\t)",
+                "\t\top='__add__'",
+                "\t\tright=(",
+                "\t\t\tNumberNode(value=4)",
+                "\t\t)",
+                "\t)",
+                "\tdtype='int'",
+                "\t)",
+                ")",
+                "",
+            ],
+        )
 
     def test_walk_program_node(self) -> None:
         left_node: Node = NumberNode(value="3", dtype="int")
         right_node: Node = NumberNode(value="4", dtype="int")
-        binary_operator_node: Node = BinaryOperatorNode(operator="__add__", left=left_node, right=right_node)
+        binary_operator_node: Node = BinaryOperatorNode(
+            operator="__add__", left=left_node, right=right_node
+        )
         expr_node: Node = ExprNode(expr=binary_operator_node, dtype="int")
         print_node: Node = PrintNode(expr=expr_node)
 
@@ -79,11 +128,28 @@ class TestTreeWalker(unittest.TestCase):
         program_node: Node = ProgramNode(method="main", statements=statements)
 
         tree_walker: TreeWalker = TreeWalker(root=program_node)
-        self.assertEqual(tree_walker.walk().split("\n"), ['ProgramNode(method=main)', '\tPrintNode(',
-                                                          '\t\tExprNode(', '\t\texpr=(',
-                                                          '\t\t\tBinaryOperatorNode(', '\t\t\tleft=(',
-                                                          '\t\t\t\tNumberNode(value=3)', '\t\t\t)',
-                                                          "\t\t\top='__add__'", '\t\t\tright=(',
-                                                          '\t\t\t\tNumberNode(value=4)', '\t\t\t)',
-                                                          '\t\t)', "\t\tdtype='int'", '\t\t)', '\t)',
-                                                          '\tPrintNode(', '\t\tStringNode(value=hello)', '\t)', ''])
+        self.assertEqual(
+            tree_walker.walk().split("\n"),
+            [
+                "ProgramNode(method=main)",
+                "\tPrintNode(",
+                "\t\tExprNode(",
+                "\t\texpr=(",
+                "\t\t\tBinaryOperatorNode(",
+                "\t\t\tleft=(",
+                "\t\t\t\tNumberNode(value=3)",
+                "\t\t\t)",
+                "\t\t\top='__add__'",
+                "\t\t\tright=(",
+                "\t\t\t\tNumberNode(value=4)",
+                "\t\t\t)",
+                "\t\t)",
+                "\t\tdtype='int'",
+                "\t\t)",
+                "\t)",
+                "\tPrintNode(",
+                "\t\tStringNode(value=hello)",
+                "\t)",
+                "",
+            ],
+        )

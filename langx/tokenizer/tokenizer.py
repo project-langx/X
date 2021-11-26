@@ -74,14 +74,16 @@ class Tokenizer:
                     Token(self.__is_keyword(), "", self.__lexeme, self.__line_num)
                 )
             elif self.__source[self.__pointer] == "(":
-                self.__tokens.append(Token(TokenType.LEFT_PAREN, "", "", self.__line_num))
+                self.__tokens.append(
+                    Token(TokenType.LEFT_PAREN, "", "", self.__line_num)
+                )
             elif self.__source[self.__pointer] == ")":
-                self.__tokens.append(Token(TokenType.RIGHT_PAREN, "", "", self.__line_num))
+                self.__tokens.append(
+                    Token(TokenType.RIGHT_PAREN, "", "", self.__line_num)
+                )
             elif self.__source[self.__pointer] in ["+", "-", "*", "/"]:
                 operator = self.__operator()
-                self.__tokens.append(
-                    Token(operator, "", "", self.__line_num)
-                )
+                self.__tokens.append(Token(operator, "", "", self.__line_num))
             elif self.__source[self.__pointer] == '"':
                 self.__tokens.append(
                     Token(self.__is_string(), "string", self.__lexeme, self.__line_num)
@@ -93,7 +95,9 @@ class Tokenizer:
                 )
             elif self.__source[self.__pointer] == "\n":
                 self.__line_num += 1
-                self.__tokens.append(Token(TokenType.NEWLINE, "", "", self.__line_num - 1))
+                self.__tokens.append(
+                    Token(TokenType.NEWLINE, "", "", self.__line_num - 1)
+                )
 
             self.__pointer += 1
 
