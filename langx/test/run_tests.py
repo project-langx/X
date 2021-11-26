@@ -4,10 +4,11 @@ from typing import List, Any
 from .utils_test.test_error import TestError
 from .utils_test.test_tree_walker import TestTreeWalker
 from .tokenizer_test.test_token import TestToken
+from .tokenizer_test.test_token_type import TestTokenType
 
 
 def run_tests() -> None:
-    test_classes_to_run: List[Any] = [TestError, TestTreeWalker, TestToken]
+    test_classes_to_run: List[Any] = [TestError, TestTreeWalker, TestToken, TestTokenType]
 
     loader: unittest.TestLoader = unittest.TestLoader()
 
