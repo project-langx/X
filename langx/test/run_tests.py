@@ -7,11 +7,12 @@ from .tokenizer_test.test_token import TestToken
 from .tokenizer_test.test_token_type import TestTokenType
 from .tokenizer_test.test_tokenizer import TestTokenizer
 from .opcode_test.test_op_type import TestOpType
+from .opcode_test.test_opcode import TestOpCode
 
 
 def run_tests() -> None:
     test_classes_to_run: List[Any] = [TestError, TestTreeWalker, TestToken, TestTokenType, TestTokenizer]
-    test_classes_to_run += [TestOpType]
+    test_classes_to_run += [TestOpType, TestOpCode]
 
     loader: unittest.TestLoader = unittest.TestLoader()
 

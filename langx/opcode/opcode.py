@@ -4,7 +4,7 @@ from .op_type import OpType
 
 
 class OpCode:
-    def __init__(self, opcode: OpType, op_value: Any, op_dtype: str):
+    def __init__(self, opcode: OpType, op_value: str, op_dtype: str):
         self.__opcode: OpType = opcode
         self.__op_value: str = op_value
         self.__op_dtype: str = op_dtype
