@@ -8,6 +8,7 @@ from .tokenizer_test.test_token_type import TestTokenType
 from .tokenizer_test.test_tokenizer import TestTokenizer
 from .opcode_test.test_op_type import TestOpType
 from .opcode_test.test_opcode import TestOpCode
+from .table_test.test_symbol_table import TestSymbolTable
 
 
 def run_tests() -> None:
@@ -17,6 +18,7 @@ def run_tests() -> None:
         TestToken,
         TestTokenType,
         TestTokenizer,
+        TestSymbolTable,
     ]
     test_classes_to_run += [TestOpType, TestOpCode]
 
