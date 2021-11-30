@@ -1,5 +1,6 @@
 import unittest
 from typing import List
+from unittest.case import expectedFailure
 
 from ...parser.node.number_node import NumberNode
 from ...parser.node.string_node import StringNode
@@ -36,9 +37,8 @@ class TestTreeWalker(unittest.TestCase):
         )
 
         tree_walker: TreeWalker = TreeWalker(root=binary_operator_node)
-        self.assertEqual(
-            tree_walker.walk().split("\n"),
-            [
+
+        expected_list: List[str] = [
                 "BinaryOperatorNode(",
                 "left=(",
                 "\tNumberNode(value=3)",
@@ -48,7 +48,11 @@ class TestTreeWalker(unittest.TestCase):
                 "\tNumberNode(value=4)",
                 ")",
                 "",
-            ],
+            ]
+
+        self.assertEqual(
+            tree_walker.walk().split("\n"),
+            expected_list,
         )
 
     def test_walk_expr_node(self) -> None:
@@ -60,9 +64,8 @@ class TestTreeWalker(unittest.TestCase):
         expr_node: Node = ExprNode(expr=binary_operator_node, dtype="int")
 
         tree_walker: TreeWalker = TreeWalker(root=expr_node)
-        self.assertEqual(
-            tree_walker.walk().split("\n"),
-            [
+
+        expected_list: List[str] = [
                 "ExprNode(",
                 "expr=(",
                 "\tBinaryOperatorNode(",
@@ -77,7 +80,11 @@ class TestTreeWalker(unittest.TestCase):
                 "dtype='int'",
                 ")",
                 "",
-            ],
+            ]
+
+        self.assertEqual(
+            tree_walker.walk().split("\n"),
+            expected_list,
         )
 
     def test_walk_print_node(self) -> None:
@@ -90,9 +97,8 @@ class TestTreeWalker(unittest.TestCase):
         print_node: Node = PrintNode(expr=expr_node)
 
         tree_walker: TreeWalker = TreeWalker(root=print_node)
-        self.assertEqual(
-            tree_walker.walk().split("\n"),
-            [
+
+        expected_list: List[str] = [
                 "PrintNode(",
                 "\tExprNode(",
                 "\texpr=(",
@@ -109,7 +115,11 @@ class TestTreeWalker(unittest.TestCase):
                 "\t)",
                 ")",
                 "",
-            ],
+            ]
+
+        self.assertEqual(
+            tree_walker.walk().split("\n"),
+            expected_list,
         )
 
     def test_walk_program_node(self) -> None:
@@ -128,9 +138,8 @@ class TestTreeWalker(unittest.TestCase):
         program_node: Node = ProgramNode(method="main", statements=statements)
 
         tree_walker: TreeWalker = TreeWalker(root=program_node)
-        self.assertEqual(
-            tree_walker.walk().split("\n"),
-            [
+
+        expected_list: List[str] = [
                 "ProgramNode(method=main)",
                 "\tPrintNode(",
                 "\t\tExprNode(",
@@ -151,5 +160,9 @@ class TestTreeWalker(unittest.TestCase):
                 "\t\tStringNode(value=hello)",
                 "\t)",
                 "",
-            ],
+            ]
+
+        self.assertEqual(
+            tree_walker.walk().split("\n"),
+            expected_list,
         )

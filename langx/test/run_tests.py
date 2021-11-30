@@ -9,6 +9,7 @@ from .tokenizer_test.test_tokenizer import TestTokenizer
 from .opcode_test.test_op_type import TestOpType
 from .opcode_test.test_opcode import TestOpCode
 from .table_test.test_symbol_table import TestSymbolTable
+from .compiler_test.test_compiler import TestCompiler
 
 
 def run_tests() -> None:
@@ -20,7 +21,7 @@ def run_tests() -> None:
         TestTokenizer,
         TestSymbolTable,
     ]
-    test_classes_to_run += [TestOpType, TestOpCode]
+    test_classes_to_run += [TestOpType, TestOpCode, TestCompiler]
 
     loader: unittest.TestLoader = unittest.TestLoader()
 

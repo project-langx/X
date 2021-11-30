@@ -23,7 +23,7 @@ class OpCode:
         return self.__opcode
 
     @property
-    def op_value(self) -> Any:
+    def op_value(self) -> str:
         return self.__op_value
 
     @property
