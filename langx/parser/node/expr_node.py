@@ -17,6 +17,15 @@ class ExprNode(Node):
     def dtype(self) -> str:
         return self.__dtype
 
+    def __eq__(self, __o: object) -> bool:
+        if self is __o:
+            return True
+
+        if not isinstance(__o, ExprNode):
+            return False
+
+        return self.expr == __o.expr and self.dtype == __o.dtype
+
     def walk_and_print(self, tab_level: int) -> str:
         ast_string: str = self._add_tabs(tab_level=tab_level)
         ast_string += "ExprNode(\n"

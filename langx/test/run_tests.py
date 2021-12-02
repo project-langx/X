@@ -27,8 +27,19 @@ def run_tests() -> None:
         TestTokenizer,
         TestSymbolTable,
     ]
-    test_classes_to_run += [TestOpType, TestOpCode, TestCompiler, TestBinaryOperatorNode, TestExprNode]
-    test_classes_to_run += [TestNumberNode, TestPrintNode, TestProgramNode, TestStringNode]
+    test_classes_to_run += [
+        TestOpType,
+        TestOpCode,
+        TestCompiler,
+        TestBinaryOperatorNode,
+        TestExprNode,
+    ]
+    test_classes_to_run += [
+        TestNumberNode,
+        TestPrintNode,
+        TestProgramNode,
+        TestStringNode,
+    ]
 
     loader: unittest.TestLoader = unittest.TestLoader()
 

@@ -17,6 +17,19 @@ class ProgramNode(Node):
     def statements(self) -> List[Node]:
         return self.__statements
 
+    def __eq__(self, __o: object) -> bool:
+        if self is __o:
+            return True
+
+        if not isinstance(__o, ProgramNode):
+            return False
+
+        for self_statement, o_statement in zip(self.statements, __o.statements):
+            if self_statement != o_statement:
+                return False
+
+        return True
+
     def walk_and_print(self, tab_level: int) -> str:
         ast_string: str = self._add_tabs(tab_level=tab_level)
         ast_string += f"ProgramNode(method={self.__method})\n"

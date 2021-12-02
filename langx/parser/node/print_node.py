@@ -13,6 +13,15 @@ class PrintNode(Node):
     def expr(self) -> Node:
         return self.__expr
 
+    def __eq__(self, __o: object) -> bool:
+        if self is __o:
+            return True
+
+        if not isinstance(__o, PrintNode):
+            return False
+
+        return self.expr == __o.expr
+
     def walk_and_print(self, tab_level: int) -> str:
         ast_string: str = self._add_tabs(tab_level=tab_level)
         ast_string += "PrintNode(\n"
