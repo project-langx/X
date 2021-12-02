@@ -11,6 +11,7 @@ from .opcode_test.test_opcode import TestOpCode
 from .table_test.test_symbol_table import TestSymbolTable
 from .compiler_test.test_compiler import TestCompiler
 from .node_test.test_binary_operator_node import TestBinaryOperatorNode
+from .node_test.test_expr_node import TestExprNode
 
 
 def run_tests() -> None:
@@ -22,7 +23,7 @@ def run_tests() -> None:
         TestTokenizer,
         TestSymbolTable,
     ]
-    test_classes_to_run += [TestOpType, TestOpCode, TestCompiler, TestBinaryOperatorNode]
+    test_classes_to_run += [TestOpType, TestOpCode, TestCompiler, TestBinaryOperatorNode, TestExprNode]
 
     loader: unittest.TestLoader = unittest.TestLoader()
 
