@@ -15,6 +15,7 @@ from .node_test.test_expr_node import TestExprNode
 from .node_test.test_number_node import TestNumberNode
 from .node_test.test_print_node import TestPrintNode
 from .node_test.test_program_node import TestProgramNode
+from .node_test.test_string_node import TestStringNode
 
 
 def run_tests() -> None:
@@ -27,7 +28,7 @@ def run_tests() -> None:
         TestSymbolTable,
     ]
     test_classes_to_run += [TestOpType, TestOpCode, TestCompiler, TestBinaryOperatorNode, TestExprNode]
-    test_classes_to_run += [TestNumberNode, TestPrintNode, TestProgramNode]
+    test_classes_to_run += [TestNumberNode, TestPrintNode, TestProgramNode, TestStringNode]
 
     loader: unittest.TestLoader = unittest.TestLoader()
 
