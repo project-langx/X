@@ -1,6 +1,6 @@
 import unittest
 
-from ...opcode.op_type import OpType
+from langx.opcode.op_type import OpType
 
 
 class TestOpType(unittest.TestCase):

@@ -41,7 +41,6 @@ setup(
         "console_scripts": [
             "x = langx.x:entry",
             "xdb = langx.webdebug.run_app:run_app",
-            "xtest = langx.test.run_tests:run_tests",
         ]
     },
     classifiers=[

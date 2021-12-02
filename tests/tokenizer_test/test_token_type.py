@@ -1,6 +1,6 @@
 import unittest
 
-from ...tokenizer.token_type import TokenType
+from langx.tokenizer.token_type import TokenType
 
 
 class TestTokenType(unittest.TestCase):

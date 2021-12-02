@@ -2,14 +2,14 @@ import unittest
 from typing import List
 from unittest.case import expectedFailure
 
-from ...parser.node.number_node import NumberNode
-from ...parser.node.string_node import StringNode
-from ...parser.node.binary_operator_node import BinaryOperatorNode
-from ...parser.node.expr_node import ExprNode
-from ...parser.node.print_node import PrintNode
-from ...parser.node.program_node import ProgramNode
-from ...parser.node.node import Node
-from ...utils.tree_walker import TreeWalker
+from langx.parser.node.number_node import NumberNode
+from langx.parser.node.string_node import StringNode
+from langx.parser.node.binary_operator_node import BinaryOperatorNode
+from langx.parser.node.expr_node import ExprNode
+from langx.parser.node.print_node import PrintNode
+from langx.parser.node.program_node import ProgramNode
+from langx.parser.node.node import Node
+from langx.utils.tree_walker import TreeWalker
 
 
 class TestTreeWalker(unittest.TestCase):

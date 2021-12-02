@@ -1,6 +1,6 @@
 import unittest
 
-from ...table.symbol_table import SymbolTable
+from langx.table.symbol_table import SymbolTable
 
 
 class TestSymbolTable(unittest.TestCase):

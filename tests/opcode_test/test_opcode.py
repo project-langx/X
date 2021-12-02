@@ -1,7 +1,7 @@
 import unittest
 
-from ...opcode.op_type import OpType
-from ...opcode.opcode import OpCode
+from langx.opcode.op_type import OpType
+from langx.opcode.opcode import OpCode
 
 
 class TestOpCode(unittest.TestCase):

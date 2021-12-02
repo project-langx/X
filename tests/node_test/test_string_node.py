@@ -1,9 +1,9 @@
 import unittest
 from typing import List
 
-from ...parser.node.string_node import StringNode
-from ...opcode.op_type import OpType
-from ...opcode.opcode import OpCode
+from langx.parser.node.string_node import StringNode
+from langx.opcode.op_type import OpType
+from langx.opcode.opcode import OpCode
 
 
 class TestStringNode(unittest.TestCase):

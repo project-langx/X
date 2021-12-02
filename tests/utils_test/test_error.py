@@ -1,6 +1,6 @@
 import unittest
 
-from ...utils.error import Error, TokenizerError, ParseError
+from langx.utils.error import Error, TokenizerError, ParseError
 
 
 class TestError(unittest.TestCase):

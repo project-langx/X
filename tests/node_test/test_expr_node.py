@@ -1,10 +1,10 @@
 import unittest
 from typing import List
 
-from ...parser.node.expr_node import ExprNode
-from ...parser.node.number_node import NumberNode
-from ...opcode.op_type import OpType
-from ...opcode.opcode import OpCode
+from langx.parser.node.expr_node import ExprNode
+from langx.parser.node.number_node import NumberNode
+from langx.opcode.op_type import OpType
+from langx.opcode.opcode import OpCode
 
 
 class TestExprNode(unittest.TestCase):

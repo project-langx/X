@@ -1,9 +1,9 @@
 import unittest
 from typing import List
 
-from ...tokenizer.tokenizer import Tokenizer
-from ...tokenizer.token import Token
-from ...tokenizer.token_type import TokenType
+from langx.tokenizer.tokenizer import Tokenizer
+from langx.tokenizer.token import Token
+from langx.tokenizer.token_type import TokenType
 
 
 class TestTokenizer(unittest.TestCase):
