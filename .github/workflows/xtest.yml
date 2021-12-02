@@ -28,6 +28,6 @@ jobs:
           # Install build deps
           python3 -m pip install setuptools wheel twine
           # Install the package from setup.py
-          pip install -e .
+          pip3 install --user -e .
           # Run xtest
           xtest
