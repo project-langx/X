@@ -29,7 +29,5 @@ jobs:
           python3 -m pip install setuptools wheel twine
           # Install the package from setup.py
           pip install -e .
-          
-      - name: "Run xtest"
-        run: |
+          # Run xtest
           xtest
