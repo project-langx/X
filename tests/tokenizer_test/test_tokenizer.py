@@ -12,7 +12,7 @@ class TestTokenizer(unittest.TestCase):
         tokens: List[Token] = tokenizer.generate_tokens()
 
         self.assertEqual(
-            tokens[0], Token(type=TokenType.PRINT, dtype="", value="print", line_num=1)
+            tokens[0], Token(type=TokenType.PRINT, dtype="", value="", line_num=1)
         )
 
     def test_tokenizer_left_paren(self) -> None:

@@ -71,7 +71,7 @@ class Tokenizer:
             self.__lexeme = ""
             if self.__source[self.__pointer].isalpha():
                 self.__tokens.append(
-                    Token(self.__is_keyword(), "", self.__lexeme, self.__line_num)
+                    Token(self.__is_keyword(), "", "", self.__line_num)
                 )
             elif self.__source[self.__pointer] == "(":
                 self.__tokens.append(
