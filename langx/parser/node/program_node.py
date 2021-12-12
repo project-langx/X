@@ -33,7 +33,7 @@ class ProgramNode(Node, CheckClass):
             if self_statement != o_statement:
                 return False
 
-        return True
+        return self.method == __o.method
 
     def walk_and_print(self, tab_level: int) -> str:
         ast_string: str = self._add_tabs(tab_level=tab_level)

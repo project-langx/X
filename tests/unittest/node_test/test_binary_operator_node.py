@@ -44,6 +44,33 @@ class TestBinaryOperatorNode(unittest.TestCase):
             self.binary_operator_node.right, NumberNode(value="2", dtype="int")
         )
 
+    def test_eq_null_other(self) -> None:
+        self.assertFalse(self.binary_operator_node == None)
+
+    def test_eq_self_other(self) -> None:
+        self.assertTrue(self.binary_operator_node == self.binary_operator_node)
+
+    def test_eq_not_binary_operator_node(self) -> None:
+        self.assertFalse(self.binary_operator_node == "")
+
+    def test_eq_not_equal_node(self) -> None:
+        self.assertFalse(
+            self.binary_operator_node == BinaryOperatorNode(
+                operator="ADD",
+                left=NumberNode(value="1", dtype="int"),
+                right=NumberNode(value="3", dtype="int"),
+            )
+        )
+
+    def test_eq_equal_node(self) -> None:
+        self.assertTrue(
+            self.binary_operator_node == BinaryOperatorNode(
+                operator="ADD",
+                left=NumberNode(value="1", dtype="int"),
+                right=NumberNode(value="2", dtype="int"),
+            )
+        )
+
     def test_walk_and_print(self) -> None:
         self.assertEqual(
             self.binary_operator_node.walk_and_print(tab_level=0),

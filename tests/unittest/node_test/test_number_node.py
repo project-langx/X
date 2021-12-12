@@ -17,6 +17,25 @@ class TestNumberNode(unittest.TestCase):
     def test_value_property(self) -> None:
         self.assertEqual(self.number_node.value, "1")
 
+    def test_eq_null_other(self) -> None:
+        self.assertFalse(self.number_node == None)
+
+    def test_eq_self_other(self) -> None:
+        self.assertTrue(self.number_node == self.number_node)
+
+    def test_eq_not_binary_operator_node(self) -> None:
+        self.assertFalse(self.number_node == "")
+
+    def test_eq_not_equal_node(self) -> None:
+        self.assertFalse(
+            self.number_node == NumberNode("2", dtype="int")
+        )
+
+    def test_eq_equal_node(self) -> None:
+        self.assertTrue(
+            self.number_node == NumberNode("1", dtype="int")
+        )
+
     def test_walk_and_print(self) -> None:
         self.assertEqual(
             self.number_node.walk_and_print(tab_level=0), "NumberNode(value=1)\n"

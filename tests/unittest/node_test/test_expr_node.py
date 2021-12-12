@@ -29,6 +29,29 @@ class TestExprNode(unittest.TestCase):
     def test_dtype_property(self) -> None:
         self.assertEqual(self.expr_node.dtype, "int")
 
+    def test_eq_null_other(self) -> None:
+        self.assertFalse(self.expr_node == None)
+
+    def test_eq_self_other(self) -> None:
+        self.assertTrue(self.expr_node == self.expr_node)
+
+    def test_eq_not_binary_operator_node(self) -> None:
+        self.assertFalse(self.expr_node == "")
+
+    def test_eq_not_equal_node(self) -> None:
+        self.assertFalse(
+            self.expr_node == ExprNode(
+                expr=NumberNode(value="2", dtype="int"), dtype="int"
+            )
+        )
+
+    def test_eq_equal_node(self) -> None:
+        self.assertTrue(
+            self.expr_node == ExprNode(
+                expr=NumberNode(value="1", dtype="int"), dtype="int"
+            )
+        )
+
     def test_walk_and_print(self) -> None:
         self.assertEqual(
             self.expr_node.walk_and_print(tab_level=0),

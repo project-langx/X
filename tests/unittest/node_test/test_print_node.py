@@ -24,6 +24,29 @@ class TestPrintNode(unittest.TestCase):
             ExprNode(expr=NumberNode(value="1", dtype="int"), dtype="int",),
         )
 
+    def test_eq_null_other(self) -> None:
+        self.assertFalse(self.print_node == None)
+
+    def test_eq_self_other(self) -> None:
+        self.assertTrue(self.print_node == self.print_node)
+
+    def test_eq_not_binary_operator_node(self) -> None:
+        self.assertFalse(self.print_node == "")
+
+    def test_eq_not_equal_node(self) -> None:
+        self.assertFalse(
+            self.print_node == PrintNode(
+                expr=ExprNode(expr=NumberNode(value="2", dtype="int"), dtype="int",)
+            )
+        )
+
+    def test_eq_equal_node(self) -> None:
+        self.assertTrue(
+            self.print_node == PrintNode(
+                expr=ExprNode(expr=NumberNode(value="1", dtype="int"), dtype="int",)
+            )
+        )
+
     def test_walk_and_print(self) -> None:
         self.assertEqual(
             self.print_node.walk_and_print(tab_level=0),
