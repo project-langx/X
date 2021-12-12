@@ -15,6 +15,22 @@ class TestBinaryOperatorNode(unittest.TestCase):
             right=NumberNode(value="2", dtype="int"),
         )
 
+    def test_null_operator(self):
+        with self.assertRaises(AssertionError):
+            BinaryOperatorNode(operator=None, left=NumberNode(value="1", dtype="str"), right=NumberNode(value="2", dtype="int"))
+
+    def test_empty_operator(self):
+        with self.assertRaises(AssertionError):
+            BinaryOperatorNode(operator="", left=NumberNode(value="1", dtype="int"), right=NumberNode(value="2", dtype="int"))
+
+    def test_null_left(self):
+        with self.assertRaises(AssertionError):
+            BinaryOperatorNode(operator="ADD", left=None, right=NumberNode(value="2", dtype="int"))
+
+    def test_null_right(self):
+        with self.assertRaises(AssertionError):
+            BinaryOperatorNode(operator="ADD", left=NumberNode(value="1", dtype="int"), right=None)
+
     def test_operator_property(self) -> None:
         self.assertEqual(self.binary_operator_node.operator, "ADD")
 
@@ -33,6 +49,10 @@ class TestBinaryOperatorNode(unittest.TestCase):
             self.binary_operator_node.walk_and_print(tab_level=0),
             "BinaryOperatorNode(\nleft=(\n\tNumberNode(value=1)\n)\nop='ADD'\nright=(\n\tNumberNode(value=2)\n)\n",
         )
+
+    def test_walk_and_compile_null_opcodes(self) -> None:
+        with self.assertRaises(AssertionError):
+            self.binary_operator_node.walk_and_compile(opcodes=None)
 
     def test_walk_and_compile(self) -> None:
         opcodes: List[OpCode] = []

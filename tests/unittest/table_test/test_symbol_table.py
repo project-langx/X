@@ -7,6 +7,18 @@ class TestSymbolTable(unittest.TestCase):
     def setUp(self) -> None:
         self.table = SymbolTable()
 
+    def test_add_null_id_name(self):
+        with self.assertRaises(AssertionError):
+            self.table.add(None, "1")
+
+    def test_add_empty_id_name(self):
+        with self.assertRaises(AssertionError):
+            self.table.add("", "1")
+
+    def test_add_null_value(self):
+        with self.assertRaises(AssertionError):
+            self.table.add("x", None)
+
     def test_add_first_entry(self) -> None:
         self.table.add("x", "1")
 
@@ -24,6 +36,14 @@ class TestSymbolTable(unittest.TestCase):
 
         self.assertEqual(self.table.get("x"), "1")
         self.assertEqual(self.table.get("y"), "2")
+
+    def test_get_null_id_name(self):
+        with self.assertRaises(AssertionError):
+            self.table.get(None)
+
+    def test_get_empty_id_name(self):
+        with self.assertRaises(AssertionError):
+            self.table.get("")
 
     def test_get_id_non_existent(self) -> None:
         self.assertIsNone(self.table.get("x"))

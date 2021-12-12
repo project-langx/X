@@ -3,10 +3,12 @@ from typing import List, Tuple
 from ..utils.error import TokenizerError
 from .token import Token
 from .token_type import TokenType
+from ..utils.check_class import CheckClass
 
 
-class Tokenizer:
+class Tokenizer(CheckClass):
     def __init__(self, source: str) -> None:
+        super().__init__(source=source)
         self.__source: str = source
         self.__line_num: int = 1
         self.__pointer: int = 0

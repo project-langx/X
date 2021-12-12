@@ -2,10 +2,12 @@ from typing import List
 
 from .node import Node
 from ...opcode.opcode import OpCode
+from ...utils.check_class import CheckClass
 
 
-class ProgramNode(Node):
+class ProgramNode(Node, CheckClass):
     def __init__(self, method: str, statements: List[Node]) -> None:
+        CheckClass.__init__(self, method=method, statements=statements, check_empty_str=True, check_empty_list=True)
         self.__method: str = method
         self.__statements: List[Node] = statements
 
@@ -18,6 +20,9 @@ class ProgramNode(Node):
         return self.__statements
 
     def __eq__(self, __o: object) -> bool:
+        if __o == None:
+            return False
+            
         if self is __o:
             return True
 
@@ -41,5 +46,7 @@ class ProgramNode(Node):
         return ast_string
 
     def walk_and_compile(self, opcodes: List[OpCode]) -> None:
+        assert opcodes != None
+        
         for statement in self.__statements:
             statement.walk_and_compile(opcodes)

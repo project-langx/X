@@ -10,6 +10,14 @@ class TestStringNode(unittest.TestCase):
     def setUp(self) -> None:
         self.string_node = StringNode(value="Hello World", dtype="str")
 
+    def test_null_value(self):
+        with self.assertRaises(AssertionError):
+            StringNode(value=None, dtype="str")
+
+    def test_null_dtype(self):
+        with self.assertRaises(AssertionError):
+            StringNode(value="Hello World", dtype=None)
+
     def test_value_property(self) -> None:
         self.assertEqual(self.string_node.value, "Hello World")
 
@@ -18,6 +26,10 @@ class TestStringNode(unittest.TestCase):
             self.string_node.walk_and_print(tab_level=0),
             "StringNode(value=Hello World)\n",
         )
+
+    def test_walk_and_compile_null_opcodes(self) -> None:
+        with self.assertRaises(AssertionError):
+            self.string_node.walk_and_compile(None)
 
     def test_walk_and_compile(self) -> None:
         opcodes: List[OpCode] = []

@@ -10,10 +10,12 @@ from .node.expr_node import ExprNode
 from ..utils.error import ParseError
 from ..tokenizer.token import Token
 from ..tokenizer.token_type import TokenType
+from ..utils.check_class import CheckClass
 
 
-class Parser:
+class Parser(CheckClass):
     def __init__(self, tokens: List[Token]) -> None:
+        super().__init__(tokens=tokens, check_empty_list=True)
         self.__tokens: List[Token] = tokens
 
         self.__current_token: int = 0

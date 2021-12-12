@@ -2,10 +2,12 @@ from typing import List, Any
 
 from ..opcode.op_type import OpType
 from ..opcode.opcode import OpCode
+from ..utils.check_class import CheckClass
 
 
-class VM:
+class VM(CheckClass):
     def __init__(self, opcodes: List[OpCode]) -> None:
+        super().__init__(opcodes=opcodes, check_empty_list=True)
         self.__opcodes: List[OpCode] = opcodes
 
         self.__constant_pool: List[str] = []

@@ -7,6 +7,10 @@ from langx.tokenizer.token_type import TokenType
 
 
 class TestTokenizer(unittest.TestCase):
+    def test_tokenizer_null_source(self) -> None:
+        with self.assertRaises(AssertionError):
+            Tokenizer(None)
+
     def test_tokenizer_print(self) -> None:
         tokenizer: Tokenizer = Tokenizer("print(")
         tokens: List[Token] = tokenizer.generate_tokens()

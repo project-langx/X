@@ -15,6 +15,14 @@ class TestVM(unittest.TestCase):
         ast = Parser(tokens).parse()
         return Compiler(ast).compile()
 
+    def test_vm_null_opcodes(self) -> None:
+        with self.assertRaises(AssertionError):
+            VM(opcodes=None)
+
+    def test_vm_empty_opcodes(self) -> None:
+        with self.assertRaises(AssertionError):
+            VM(opcodes=[])
+
     def test_vm_print_number(self):
         opcodes = self.__get_opcodes_from_source("print(1)")
 

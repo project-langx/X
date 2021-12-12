@@ -1,4 +1,5 @@
 import unittest
+from langx.parser.parser import Parser
 
 from langx.tokenizer.token_type import TokenType
 from langx.tokenizer.tokenizer import Tokenizer
@@ -7,6 +8,14 @@ from langx.tokenizer.tokenizer import Tokenizer
 class TestParser(unittest.TestCase):
     def __get_tokens_from_source(self, source):
         return Tokenizer(source=source).generate_tokens()
+
+    def test_null_tokens_list(self):
+        with self.assertRaises(AssertionError):
+            Parser(tokens=None)
+
+    def test_empty_tokens_list(self):
+        with self.assertRaises(AssertionError):
+            Parser(tokens=[])
 
     def test_parse_print_number(self):
         tokens = self.__get_tokens_from_source("print(1)")

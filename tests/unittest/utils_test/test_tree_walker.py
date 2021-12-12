@@ -13,6 +13,10 @@ from langx.utils.tree_walker import TreeWalker
 
 
 class TestTreeWalker(unittest.TestCase):
+    def test_null_root(self) -> None:
+        with self.assertRaises(AssertionError):
+            TreeWalker(root=None)
+
     def test_walk_number_node(self) -> None:
         int_node: Node = NumberNode(value="3", dtype="int")
         float_node: Node = NumberNode(value="3.14", dtype="float")

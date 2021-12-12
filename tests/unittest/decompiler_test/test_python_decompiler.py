@@ -12,6 +12,14 @@ class TestCDecompiler(unittest.TestCase):
         ast = Parser(tokens).parse()
         return Compiler(ast).compile()
 
+    def test_null_opcodes_list(self):
+        with self.assertRaises(AssertionError):
+            PyDecompiler(opcodes=None)
+
+    def test_empty_opcodes_list(self):
+        with self.assertRaises(AssertionError):
+            PyDecompiler(opcodes=[])
+
     def test_decompile_print_number(self):
         opcodes = self.__get_opcodes_from_source("print(1)")
 

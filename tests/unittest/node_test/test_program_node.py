@@ -20,6 +20,30 @@ class TestProgramNode(unittest.TestCase):
             ],
         )
 
+    def test_null_method(self):
+        with self.assertRaises(AssertionError):
+            ProgramNode(method=None, statements=[
+                PrintNode(
+                    expr=ExprNode(expr=NumberNode(value="1", dtype="int"), dtype="int",)
+                ),
+            ])
+
+    def test_empty_method(self):
+        with self.assertRaises(AssertionError):
+            ProgramNode(method="", statements=[
+                PrintNode(
+                    expr=ExprNode(expr=NumberNode(value="1", dtype="int"), dtype="int",)
+                ),
+            ])
+
+    def test_null_statements_list(self):
+        with self.assertRaises(AssertionError):
+            ProgramNode(method="<main>", statements=None)
+
+    def test_empty_statements_list(self):
+        with self.assertRaises(AssertionError):
+            ProgramNode(method="<main>", statements=[])
+
     def test_method_property(self) -> None:
         self.assertEqual(self.program_node.method, "<main>")
 
@@ -42,6 +66,10 @@ class TestProgramNode(unittest.TestCase):
             self.program_node.walk_and_print(tab_level=0),
             "ProgramNode(method=<main>)\n\tPrintNode(\n\t\tExprNode(\n\t\texpr=(\n\t\t\tNumberNode(value=1)\n\t\t)\n\t\tdtype='int'\n\t\t)\n\t)\n",
         )
+
+    def test_walk_and_compile_null_opcodes(self) -> None:
+        with self.assertRaises(AssertionError):
+            self.program_node.walk_and_compile(None)
 
     def test_walk_and_compile(self) -> None:
         opcodes: List[OpCode] = []

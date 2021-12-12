@@ -14,6 +14,10 @@ class TestPrintNode(unittest.TestCase):
             expr=ExprNode(expr=NumberNode(value="1", dtype="int"), dtype="int",)
         )
 
+    def test_null_expr(self):
+        with self.assertRaises(AssertionError):
+            PrintNode(expr=None)
+
     def test_expr_property(self) -> None:
         self.assertEqual(
             self.print_node.expr,
@@ -25,6 +29,10 @@ class TestPrintNode(unittest.TestCase):
             self.print_node.walk_and_print(tab_level=0),
             "PrintNode(\n\tExprNode(\n\texpr=(\n\t\tNumberNode(value=1)\n\t)\n\tdtype='int'\n\t)\n)\n",
         )
+
+    def test_walk_and_compile_null_opcodes(self) -> None:
+        with self.assertRaises(AssertionError):
+            self.print_node.walk_and_compile(None)
 
     def test_walk_and_compile(self) -> None:
         opcodes: List[OpCode] = []

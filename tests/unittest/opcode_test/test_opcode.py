@@ -9,6 +9,18 @@ class TestOpCode(unittest.TestCase):
         self.opcode_with_dtype = OpCode(OpType.LOAD, "Hello World", "string")
         self.opcode_no_dtype = OpCode(OpType.ADD, "", "")
 
+    def test_null_opcode(self):
+        with self.assertRaises(AssertionError):
+            OpCode(None, "", "")
+
+    def test_null_op_value(self):
+        with self.assertRaises(AssertionError):
+            OpCode(OpType.LOAD, None, "")
+
+    def test_null_op_dtype(self):
+        with self.assertRaises(AssertionError):
+            OpCode(OpType.LOAD, "", None)
+
     def test_opcode_str_with_dtype(self) -> None:
         self.assertEqual(str(self.opcode_with_dtype), "LOAD Hello World string")
         self.assertEqual(str(self.opcode_no_dtype), "ADD")

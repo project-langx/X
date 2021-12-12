@@ -2,10 +2,12 @@ from typing import List
 
 from ...opcode.opcode import OpCode
 from .node import Node
+from ...utils.check_class import CheckClass
 
 
-class ExprNode(Node):
+class ExprNode(Node, CheckClass):
     def __init__(self, expr: Node, dtype: str) -> None:
+        CheckClass.__init__(self, expr=expr, dtype=dtype, check_empty_str=True)
         self.__expr = expr
         self.__dtype = dtype
 
@@ -18,6 +20,9 @@ class ExprNode(Node):
         return self.__dtype
 
     def __eq__(self, __o: object) -> bool:
+        if __o == None:
+            return False
+
         if self is __o:
             return True
 
@@ -46,4 +51,6 @@ class ExprNode(Node):
         return ast_string
 
     def walk_and_compile(self, opcodes: List[OpCode]) -> None:
+        assert opcodes != None
+
         self.__expr.walk_and_compile(opcodes)

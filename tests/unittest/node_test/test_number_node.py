@@ -10,6 +10,10 @@ class TestNumberNode(unittest.TestCase):
     def setUp(self) -> None:
         self.number_node = NumberNode("1", dtype="int")
 
+    def test_null_value(self):
+        with self.assertRaises(AssertionError):
+            NumberNode(value=None, dtype="int")
+
     def test_value_property(self) -> None:
         self.assertEqual(self.number_node.value, "1")
 
@@ -17,6 +21,10 @@ class TestNumberNode(unittest.TestCase):
         self.assertEqual(
             self.number_node.walk_and_print(tab_level=0), "NumberNode(value=1)\n"
         )
+
+    def test_walk_and_compile_null_opcodes(self) -> None:
+        with self.assertRaises(AssertionError):
+            self.number_node.walk_and_compile(None)
 
     def test_walk_and_compile(self) -> None:
         opcodes: List[OpCode] = []

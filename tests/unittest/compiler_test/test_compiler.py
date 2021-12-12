@@ -10,6 +10,10 @@ from langx.compiler.compiler import Compiler
 
 
 class TestCompiler(unittest.TestCase):
+    def test_null_ast_root(self):
+        with self.assertRaises(AssertionError):
+            Compiler(ast_root=None)
+
     def test_simple_number_print(self) -> None:
         ast_root = ProgramNode(
             method="<main>",

@@ -12,6 +12,18 @@ class TestCDecompiler(unittest.TestCase):
         ast = Parser(tokens).parse()
         return Compiler(ast).compile()
 
+    def test_null_opcodes_list(self):
+        with self.assertRaises(AssertionError):
+            JavaDecompiler(opcodes=None, decompiled_file_name="Test")
+
+    def test_empty_opcodes_list(self):
+        with self.assertRaises(AssertionError):
+            JavaDecompiler(opcodes=[], decompiled_file_name="Test")
+
+    def test_null_decompiled_file_name(self):
+        with self.assertRaises(AssertionError):
+            JavaDecompiler(opcodes=[], decompiled_file_name=None)
+
     def test_decompile_print_number(self):
         opcodes = self.__get_opcodes_from_source("print(1)")
 
