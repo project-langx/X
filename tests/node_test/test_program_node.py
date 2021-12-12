@@ -116,7 +116,7 @@ class TestProgramNode(unittest.TestCase):
     def test_walk_and_print(self) -> None:
         self.assertEqual(
             self.program_node.walk_and_print(tab_level=0),
-            "ProgramNode(method=<main>)\n\tPrintNode(\n\t\tExprNode(\n\t\texpr=(\n\t\t\tNumberNode(value=1)\n\t\t)\n\t\tdtype='int'\n\t\t)\n\t)\n",
+            "ProgramNode(method=<main>)\n\tPrintNode(\n\t\tExprNode(\n\t\texpr=(\n\t\t\tNumberNode(value=1, dtype='int')\n\t\t)\n\t\tdtype='int'\n\t\t)\n\t)\n",
         )
 
     @typing.no_type_check

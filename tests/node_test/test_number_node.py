@@ -36,7 +36,7 @@ class TestNumberNode(unittest.TestCase):
 
     def test_walk_and_print(self) -> None:
         self.assertEqual(
-            self.number_node.walk_and_print(tab_level=0), "NumberNode(value=1)\n"
+            self.number_node.walk_and_print(tab_level=0), "NumberNode(value=1, dtype='int')\n"
         )
 
     @typing.no_type_check

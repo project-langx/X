@@ -44,7 +44,7 @@ class TestStringNode(unittest.TestCase):
     def test_walk_and_print(self) -> None:
         self.assertEqual(
             self.string_node.walk_and_print(tab_level=0),
-            "StringNode(value=Hello World)\n",
+            "StringNode(value=Hello World, dtype='str')\n",
         )
 
     @typing.no_type_check

@@ -92,7 +92,7 @@ class TestBinaryOperatorNode(unittest.TestCase):
     def test_walk_and_print(self) -> None:
         self.assertEqual(
             self.binary_operator_node.walk_and_print(tab_level=0),
-            "BinaryOperatorNode(\nleft=(\n\tNumberNode(value=1)\n)\nop='ADD'\nright=(\n\tNumberNode(value=2)\n)\n",
+            "BinaryOperatorNode(\nleft=(\n\tNumberNode(value=1, dtype='int')\n)\nop='ADD'\nright=(\n\tNumberNode(value=2, dtype='int')\n)\n",
         )
 
     @typing.no_type_check

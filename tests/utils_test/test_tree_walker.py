@@ -23,16 +23,16 @@ class TestTreeWalker(unittest.TestCase):
         float_node: Node = NumberNode(value="3.14", dtype="float")
 
         tree_walker: TreeWalker = TreeWalker(root=int_node)
-        self.assertEqual(tree_walker.walk(), "NumberNode(value=3)\n")
+        self.assertEqual(tree_walker.walk(), "NumberNode(value=3, dtype='int')\n")
 
         tree_walker = TreeWalker(root=float_node)
-        self.assertEqual(tree_walker.walk(), "NumberNode(value=3.14)\n")
+        self.assertEqual(tree_walker.walk(), "NumberNode(value=3.14, dtype='float')\n")
 
     def test_walk_string_node(self) -> None:
         string_node: Node = StringNode(value="hello", dtype="str")
 
         tree_walker: TreeWalker = TreeWalker(root=string_node)
-        self.assertEqual(tree_walker.walk(), "StringNode(value=hello)\n")
+        self.assertEqual(tree_walker.walk(), "StringNode(value=hello, dtype='str')\n")
 
     def test_walk_binary_operator_node(self) -> None:
         left_node: Node = NumberNode(value="3", dtype="int")
@@ -46,11 +46,11 @@ class TestTreeWalker(unittest.TestCase):
         expected_list: List[str] = [
             "BinaryOperatorNode(",
             "left=(",
-            "\tNumberNode(value=3)",
+            "\tNumberNode(value=3, dtype='int')",
             ")",
             "op='__add__'",
             "right=(",
-            "\tNumberNode(value=4)",
+            "\tNumberNode(value=4, dtype='int')",
             ")",
             "",
         ]
@@ -74,11 +74,11 @@ class TestTreeWalker(unittest.TestCase):
             "expr=(",
             "\tBinaryOperatorNode(",
             "\tleft=(",
-            "\t\tNumberNode(value=3)",
+            "\t\tNumberNode(value=3, dtype='int')",
             "\t)",
             "\top='__add__'",
             "\tright=(",
-            "\t\tNumberNode(value=4)",
+            "\t\tNumberNode(value=4, dtype='int')",
             "\t)",
             ")",
             "dtype='int'",
@@ -107,11 +107,11 @@ class TestTreeWalker(unittest.TestCase):
             "\texpr=(",
             "\t\tBinaryOperatorNode(",
             "\t\tleft=(",
-            "\t\t\tNumberNode(value=3)",
+            "\t\t\tNumberNode(value=3, dtype='int')",
             "\t\t)",
             "\t\top='__add__'",
             "\t\tright=(",
-            "\t\t\tNumberNode(value=4)",
+            "\t\t\tNumberNode(value=4, dtype='int')",
             "\t\t)",
             "\t)",
             "\tdtype='int'",
@@ -148,18 +148,18 @@ class TestTreeWalker(unittest.TestCase):
             "\t\texpr=(",
             "\t\t\tBinaryOperatorNode(",
             "\t\t\tleft=(",
-            "\t\t\t\tNumberNode(value=3)",
+            "\t\t\t\tNumberNode(value=3, dtype='int')",
             "\t\t\t)",
             "\t\t\top='__add__'",
             "\t\t\tright=(",
-            "\t\t\t\tNumberNode(value=4)",
+            "\t\t\t\tNumberNode(value=4, dtype='int')",
             "\t\t\t)",
             "\t\t)",
             "\t\tdtype='int'",
             "\t\t)",
             "\t)",
             "\tPrintNode(",
-            "\t\tStringNode(value=hello)",
+            "\t\tStringNode(value=hello, dtype='str')",
             "\t)",
             "",
         ]

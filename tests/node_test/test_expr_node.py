@@ -56,7 +56,7 @@ class TestExprNode(unittest.TestCase):
     def test_walk_and_print(self) -> None:
         self.assertEqual(
             self.expr_node.walk_and_print(tab_level=0),
-            "ExprNode(\nexpr=(\n\tNumberNode(value=1)\n)\ndtype='int'\n)\n",
+            "ExprNode(\nexpr=(\n\tNumberNode(value=1, dtype='int')\n)\ndtype='int'\n)\n",
         )
 
     @typing.no_type_check
