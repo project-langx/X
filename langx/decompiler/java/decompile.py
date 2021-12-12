@@ -1,14 +1,10 @@
 from collections import namedtuple
 from typing import List, NamedTuple, Any
 
+from ...value.value import Value
 from ...opcode.op_type import OpType
 from ...opcode.opcode import OpCode
 from ...utils.check_class import CheckClass
-
-
-class ConstVal(NamedTuple):
-    value: str
-    dtype: str
 
 
 class JavaDecompiler(CheckClass):
@@ -21,18 +17,18 @@ class JavaDecompiler(CheckClass):
         self.__opcodes: List[OpCode] = opcodes
         self.__decompiled_file_name: str = decompiled_file_name
 
-        self.__constant_pool: List[ConstVal] = []
+        self.__constant_pool: List[Value] = []
         self.__decompiled_code: List[str] = []
 
-    def __pop(self) -> ConstVal:
+    def __pop(self) -> Value:
         return self.__constant_pool.pop()
 
-    def __push(self, value: Any) -> None:
+    def __push(self, value: Value) -> None:
         self.__constant_pool.append(value)
 
     def __decompile_print(self) -> str:
         print_string: str = "\t\tSystem.out.println("
-        top_const: ConstVal = self.__pop()
+        top_const: Value = self.__pop()
 
         if top_const.dtype == "string":
             print_string += f'"{top_const.value}"'
@@ -42,8 +38,8 @@ class JavaDecompiler(CheckClass):
         return print_string + ");"
 
     def __decompile_binary_operation(self, opcode: OpCode) -> None:
-        right: ConstVal = self.__pop()
-        left: ConstVal = self.__pop()
+        right: Value = self.__pop()
+        left: Value = self.__pop()
 
         result: str = ""
         if opcode.opcode == OpType.ADD:
@@ -55,7 +51,7 @@ class JavaDecompiler(CheckClass):
         elif opcode.opcode == OpType.DIV:
             result = f"{left.value} / {right.value}"
 
-        self.__push(ConstVal(value=result, dtype=left.dtype))
+        self.__push(Value(value=result, dtype=left.dtype))
 
     def decompile(self) -> List[str]:
         self.__decompiled_code.append(f"class {self.__decompiled_file_name}" + " {")
@@ -65,7 +61,9 @@ class JavaDecompiler(CheckClass):
             if opcode.opcode == OpType.PRINT:
                 self.__decompiled_code.append(self.__decompile_print())
             elif opcode.opcode == OpType.LOAD:
-                self.__constant_pool.append(ConstVal(opcode.op_value, opcode.op_dtype))
+                self.__constant_pool.append(
+                    Value(value=opcode.op_value, dtype=opcode.op_dtype)
+                )
             elif opcode.opcode in [OpType.ADD, OpType.SUB, OpType.MUL, OpType.DIV]:
                 self.__decompile_binary_operation(opcode)
 
