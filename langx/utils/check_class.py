@@ -1,5 +1,8 @@
+from typing import Any, Dict, List
+
+
 class CheckClass:
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         for arg in args:
             assert arg != None
 
