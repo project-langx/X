@@ -5,3 +5,4 @@ langx.egg-info/
 build/
 dist/
 .idea/
+.mypy_cache/

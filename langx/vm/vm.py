@@ -2,10 +2,12 @@ from typing import List, Any
 
 from ..opcode.op_type import OpType
 from ..opcode.opcode import OpCode
+from ..utils.check_class import CheckClass
 
 
-class VM:
+class VM(CheckClass):
     def __init__(self, opcodes: List[OpCode]) -> None:
+        super().__init__(opcodes=opcodes, check_empty_list=True)
         self.__opcodes: List[OpCode] = opcodes
 
         self.__constant_pool: List[str] = []
@@ -47,6 +49,4 @@ class VM:
             elif opcode.opcode == OpType.LOAD:
                 self.__push(self.__cast_to_type(opcode.op_value, dtype=opcode.op_dtype))
             elif opcode.opcode in [OpType.ADD, OpType.SUB, OpType.MUL, OpType.DIV]:
-                self.__perform_binary_operation(
-                    opcode.opcode
-                )
+                self.__perform_binary_operation(opcode.opcode)

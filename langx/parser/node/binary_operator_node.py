@@ -3,10 +3,12 @@ from typing import List
 from .node import Node
 from ...opcode.opcode import OpCode
 from ...opcode.op_type import OpType
+from ...utils.check_class import CheckClass
 
 
-class BinaryOperatorNode(Node):
+class BinaryOperatorNode(Node, CheckClass):
     def __init__(self, operator: str, left: Node, right: Node) -> None:
+        CheckClass.__init__(self, operator=operator, left=left, right=right, check_empty_str=True)
         self.__operator: str = operator
         self.__left: Node = left
         self.__right: Node = right
@@ -22,6 +24,22 @@ class BinaryOperatorNode(Node):
     @property
     def right(self) -> Node:
         return self.__right
+
+    def __eq__(self, __o: object) -> bool:
+        if __o == None:
+            return False
+
+        if self is __o:
+            return True
+
+        if not isinstance(__o, BinaryOperatorNode):
+            return False
+
+        return (
+            self.operator == __o.operator
+            and self.left == __o.left
+            and self.right == __o.right
+        )
 
     def walk_and_print(self, tab_level: int) -> str:
         ast_string: str = self._add_tabs(tab_level=tab_level)
@@ -52,6 +70,8 @@ class BinaryOperatorNode(Node):
         return ast_string
 
     def walk_and_compile(self, opcodes: List[OpCode]) -> None:
+        assert opcodes != None
+
         self.__left.walk_and_compile(opcodes)
         self.__right.walk_and_compile(opcodes)
 

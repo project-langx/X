@@ -1,10 +1,12 @@
 from typing import Any
 
 from .op_type import OpType
+from ..utils.check_class import CheckClass
 
 
-class OpCode:
-    def __init__(self, opcode: OpType, op_value: Any, op_dtype: str):
+class OpCode(CheckClass):
+    def __init__(self, opcode: OpType, op_value: str, op_dtype: str):
+        super().__init__(opcode=opcode, op_value=op_value, op_dtype=op_dtype)
         self.__opcode: OpType = opcode
         self.__op_value: str = op_value
         self.__op_dtype: str = op_dtype
@@ -23,7 +25,7 @@ class OpCode:
         return self.__opcode
 
     @property
-    def op_value(self) -> Any:
+    def op_value(self) -> str:
         return self.__op_value
 
     @property

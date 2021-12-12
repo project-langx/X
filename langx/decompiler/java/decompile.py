@@ -3,6 +3,7 @@ from typing import List, NamedTuple, Any
 
 from ...opcode.op_type import OpType
 from ...opcode.opcode import OpCode
+from ...utils.check_class import CheckClass
 
 
 class ConstVal(NamedTuple):
@@ -10,8 +11,9 @@ class ConstVal(NamedTuple):
     dtype: str
 
 
-class JavaDecompiler:
+class JavaDecompiler(CheckClass):
     def __init__(self, opcodes: List[OpCode], decompiled_file_name: str) -> None:
+        super().__init__(opcodes=opcodes, decompiled_file_name=decompiled_file_name, check_empty_list=True)
         self.__opcodes: List[OpCode] = opcodes
         self.__decompiled_file_name: str = decompiled_file_name
 

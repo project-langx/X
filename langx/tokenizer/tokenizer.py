@@ -2,10 +2,13 @@ from typing import List, Tuple
 
 from ..utils.error import TokenizerError
 from .token import Token
+from .token_type import TokenType
+from ..utils.check_class import CheckClass
 
 
-class Tokenizer:
+class Tokenizer(CheckClass):
     def __init__(self, source: str) -> None:
+        super().__init__(source=source)
         self.__source: str = source
         self.__line_num: int = 1
         self.__pointer: int = 0
@@ -13,26 +16,26 @@ class Tokenizer:
 
         self.__tokens: List[Token] = []
 
-    def __is_keyword(self) -> str:
+    def __is_keyword(self) -> TokenType:
         while self.__source[self.__pointer].isalpha():
             self.__lexeme += self.__source[self.__pointer]
             self.__pointer += 1
         self.__pointer -= 1
 
         if self.__lexeme == "print":
-            return "__print__"
+            return TokenType.PRINT
 
-        return ""
+        return TokenType.UNK
 
-    def __is_string(self) -> str:
+    def __is_string(self) -> TokenType:
         self.__pointer += 1
         while self.__source[self.__pointer] != '"':
             self.__lexeme += self.__source[self.__pointer]
             self.__pointer += 1
 
-        return "__string__"
+        return TokenType.STRING
 
-    def __is_number(self) -> Tuple[str, str]:
+    def __is_number(self) -> Tuple[TokenType, str]:
         is_float: bool = False
         while (
             self.__source[self.__pointer].isdigit()
@@ -51,36 +54,38 @@ class Tokenizer:
         if self.__lexeme.count(".") == 1:
             is_float = True
 
-        return "__number__", "float" if is_float else "int"
+        return TokenType.NUMBER, "float" if is_float else "int"
 
-    def __operator(self) -> str:
+    def __operator(self) -> TokenType:
         if self.__source[self.__pointer] == "+":
-            return "__add__"
+            return TokenType.ADD
         elif self.__source[self.__pointer] == "-":
-            return "__sub__"
+            return TokenType.SUB
         elif self.__source[self.__pointer] == "*":
-            return "__mul__"
+            return TokenType.MUL
         elif self.__source[self.__pointer] == "/":
-            return "__div__"
+            return TokenType.DIV
 
-        return ""
+        return TokenType.UNK
 
     def generate_tokens(self) -> List[Token]:
         while self.__pointer < len(self.__source):
             self.__lexeme = ""
             if self.__source[self.__pointer].isalpha():
                 self.__tokens.append(
-                    Token(self.__is_keyword(), "", self.__lexeme, self.__line_num)
+                    Token(self.__is_keyword(), "", "", self.__line_num)
                 )
             elif self.__source[self.__pointer] == "(":
-                self.__tokens.append(Token("__left_paren__", "", "", self.__line_num))
+                self.__tokens.append(
+                    Token(TokenType.LEFT_PAREN, "", "", self.__line_num)
+                )
             elif self.__source[self.__pointer] == ")":
-                self.__tokens.append(Token("__right_paren__", "", "", self.__line_num))
+                self.__tokens.append(
+                    Token(TokenType.RIGHT_PAREN, "", "", self.__line_num)
+                )
             elif self.__source[self.__pointer] in ["+", "-", "*", "/"]:
                 operator = self.__operator()
-                self.__tokens.append(
-                    Token(operator, "", self.__source[self.__pointer], self.__line_num)
-                )
+                self.__tokens.append(Token(operator, "", "", self.__line_num))
             elif self.__source[self.__pointer] == '"':
                 self.__tokens.append(
                     Token(self.__is_string(), "string", self.__lexeme, self.__line_num)
@@ -92,11 +97,13 @@ class Tokenizer:
                 )
             elif self.__source[self.__pointer] == "\n":
                 self.__line_num += 1
-                self.__tokens.append(Token("__newline__", "", "", self.__line_num - 1))
+                self.__tokens.append(
+                    Token(TokenType.NEWLINE, "", "", self.__line_num - 1)
+                )
 
             self.__pointer += 1
 
-        self.__tokens.append(Token("__newline__", "", "", self.__line_num))
-        self.__tokens.append(Token("__eof__", "", "", self.__line_num + 1))
+        self.__tokens.append(Token(TokenType.NEWLINE, "", "", self.__line_num))
+        self.__tokens.append(Token(TokenType.EOF, "", "", self.__line_num + 1))
 
         return self.__tokens
