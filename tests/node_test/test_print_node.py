@@ -1,3 +1,4 @@
+import typing
 import unittest
 from typing import List
 
@@ -14,7 +15,8 @@ class TestPrintNode(unittest.TestCase):
             expr=ExprNode(expr=NumberNode(value="1", dtype="int"), dtype="int",)
         )
 
-    def test_null_expr(self):
+    @typing.no_type_check
+    def test_null_expr(self) -> None:
         with self.assertRaises(AssertionError):
             PrintNode(expr=None)
 
@@ -35,14 +37,16 @@ class TestPrintNode(unittest.TestCase):
 
     def test_eq_not_equal_node(self) -> None:
         self.assertFalse(
-            self.print_node == PrintNode(
+            self.print_node
+            == PrintNode(
                 expr=ExprNode(expr=NumberNode(value="2", dtype="int"), dtype="int",)
             )
         )
 
     def test_eq_equal_node(self) -> None:
         self.assertTrue(
-            self.print_node == PrintNode(
+            self.print_node
+            == PrintNode(
                 expr=ExprNode(expr=NumberNode(value="1", dtype="int"), dtype="int",)
             )
         )
@@ -53,6 +57,7 @@ class TestPrintNode(unittest.TestCase):
             "PrintNode(\n\tExprNode(\n\texpr=(\n\t\tNumberNode(value=1)\n\t)\n\tdtype='int'\n\t)\n)\n",
         )
 
+    @typing.no_type_check
     def test_walk_and_compile_null_opcodes(self) -> None:
         with self.assertRaises(AssertionError):
             self.print_node.walk_and_compile(None)

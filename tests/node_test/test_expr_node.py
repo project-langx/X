@@ -1,3 +1,4 @@
+import typing
 import unittest
 from typing import List
 
@@ -11,15 +12,17 @@ class TestExprNode(unittest.TestCase):
     def setUp(self) -> None:
         self.expr_node = ExprNode(expr=NumberNode(value="1", dtype="int"), dtype="int")
 
-    def test_null_expr(self):
+    @typing.no_type_check
+    def test_null_expr(self) -> None:
         with self.assertRaises(AssertionError):
             ExprNode(expr=None, dtype="int")
 
-    def test_null_dtype(self):
+    @typing.no_type_check
+    def test_null_dtype(self) -> None:
         with self.assertRaises(AssertionError):
             ExprNode(expr=NumberNode(value="1", dtype="int"), dtype=None)
 
-    def test_empty_dtype(self):
+    def test_empty_dtype(self) -> None:
         with self.assertRaises(AssertionError):
             ExprNode(expr=NumberNode(value="1", dtype="int"), dtype="")
 
@@ -40,16 +43,14 @@ class TestExprNode(unittest.TestCase):
 
     def test_eq_not_equal_node(self) -> None:
         self.assertFalse(
-            self.expr_node == ExprNode(
-                expr=NumberNode(value="2", dtype="int"), dtype="int"
-            )
+            self.expr_node
+            == ExprNode(expr=NumberNode(value="2", dtype="int"), dtype="int")
         )
 
     def test_eq_equal_node(self) -> None:
         self.assertTrue(
-            self.expr_node == ExprNode(
-                expr=NumberNode(value="1", dtype="int"), dtype="int"
-            )
+            self.expr_node
+            == ExprNode(expr=NumberNode(value="1", dtype="int"), dtype="int")
         )
 
     def test_walk_and_print(self) -> None:
@@ -58,9 +59,10 @@ class TestExprNode(unittest.TestCase):
             "ExprNode(\nexpr=(\n\tNumberNode(value=1)\n)\ndtype='int'\n)\n",
         )
 
+    @typing.no_type_check
     def test_walk_and_compile_null_opcodes(self) -> None:
         with self.assertRaises(AssertionError):
-            self.expr_node.walk_and_compile(None)
+            self.expr_node.walk_and_compile(opcodes=None)
 
     def test_walk_and_compile(self) -> None:
         opcodes: List[OpCode] = []

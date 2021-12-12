@@ -1,3 +1,4 @@
+import typing
 import unittest
 from typing import List
 
@@ -7,6 +8,7 @@ from langx.tokenizer.token_type import TokenType
 
 
 class TestTokenizer(unittest.TestCase):
+    @typing.no_type_check
     def test_tokenizer_null_source(self) -> None:
         with self.assertRaises(AssertionError):
             Tokenizer(None)

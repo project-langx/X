@@ -1,3 +1,4 @@
+import typing
 import unittest
 from typing import List
 
@@ -20,27 +21,39 @@ class TestProgramNode(unittest.TestCase):
             ],
         )
 
-    def test_null_method(self):
+    @typing.no_type_check
+    def test_null_method(self) -> None:
         with self.assertRaises(AssertionError):
-            ProgramNode(method=None, statements=[
-                PrintNode(
-                    expr=ExprNode(expr=NumberNode(value="1", dtype="int"), dtype="int",)
-                ),
-            ])
+            ProgramNode(
+                method=None,
+                statements=[
+                    PrintNode(
+                        expr=ExprNode(
+                            expr=NumberNode(value="1", dtype="int"), dtype="int",
+                        )
+                    ),
+                ],
+            )
 
-    def test_empty_method(self):
+    def test_empty_method(self) -> None:
         with self.assertRaises(AssertionError):
-            ProgramNode(method="", statements=[
-                PrintNode(
-                    expr=ExprNode(expr=NumberNode(value="1", dtype="int"), dtype="int",)
-                ),
-            ])
+            ProgramNode(
+                method="",
+                statements=[
+                    PrintNode(
+                        expr=ExprNode(
+                            expr=NumberNode(value="1", dtype="int"), dtype="int",
+                        )
+                    ),
+                ],
+            )
 
-    def test_null_statements_list(self):
+    @typing.no_type_check
+    def test_null_statements_list(self) -> None:
         with self.assertRaises(AssertionError):
             ProgramNode(method="<main>", statements=None)
 
-    def test_empty_statements_list(self):
+    def test_empty_statements_list(self) -> None:
         with self.assertRaises(AssertionError):
             ProgramNode(method="<main>", statements=[])
 
@@ -72,11 +85,14 @@ class TestProgramNode(unittest.TestCase):
 
     def test_eq_not_equal_node(self) -> None:
         self.assertFalse(
-            self.program_node == ProgramNode(
+            self.program_node
+            == ProgramNode(
                 method="<mai>",
                 statements=[
                     PrintNode(
-                        expr=ExprNode(expr=NumberNode(value="1", dtype="int"), dtype="int",)
+                        expr=ExprNode(
+                            expr=NumberNode(value="1", dtype="int"), dtype="int",
+                        )
                     ),
                 ],
             )
@@ -84,11 +100,14 @@ class TestProgramNode(unittest.TestCase):
 
     def test_eq_equal_node(self) -> None:
         self.assertTrue(
-            self.program_node == ProgramNode(
+            self.program_node
+            == ProgramNode(
                 method="<main>",
                 statements=[
                     PrintNode(
-                        expr=ExprNode(expr=NumberNode(value="1", dtype="int"), dtype="int",)
+                        expr=ExprNode(
+                            expr=NumberNode(value="1", dtype="int"), dtype="int",
+                        )
                     ),
                 ],
             )
@@ -100,6 +119,7 @@ class TestProgramNode(unittest.TestCase):
             "ProgramNode(method=<main>)\n\tPrintNode(\n\t\tExprNode(\n\t\texpr=(\n\t\t\tNumberNode(value=1)\n\t\t)\n\t\tdtype='int'\n\t\t)\n\t)\n",
         )
 
+    @typing.no_type_check
     def test_walk_and_compile_null_opcodes(self) -> None:
         with self.assertRaises(AssertionError):
             self.program_node.walk_and_compile(None)

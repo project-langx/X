@@ -6,9 +6,9 @@ from ...opcode.op_type import OpType
 from ...utils.check_class import CheckClass
 
 
-class NumberNode(Node, CheckClass):
+class NumberNode(CheckClass, Node):
     def __init__(self, value: str, dtype: str) -> None:
-        CheckClass.__init__(self, value=value, dtype=dtype)
+        super().__init__(self, value=value, dtype=dtype)
         self.__value: str = value
         self.__dtype: str = dtype
 
@@ -19,7 +19,7 @@ class NumberNode(Node, CheckClass):
     def __eq__(self, __o: object) -> bool:
         if __o == None:
             return False
-            
+
         if self is __o:
             return True
 
@@ -33,10 +33,6 @@ class NumberNode(Node, CheckClass):
         ast_string += f"NumberNode(value={self.__value})\n"
 
         return ast_string
-
-    def test_walk_and_compile_null_opcodes(self) -> None:
-        with self.assertRaises(AssertionError):
-            self.expr_node.walk_and_compile(None)
 
     def walk_and_compile(self, opcodes: List[OpCode]) -> None:
         assert opcodes != None

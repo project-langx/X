@@ -6,9 +6,11 @@ from ...opcode.op_type import OpType
 from ...utils.check_class import CheckClass
 
 
-class BinaryOperatorNode(Node, CheckClass):
+class BinaryOperatorNode(CheckClass, Node):
     def __init__(self, operator: str, left: Node, right: Node) -> None:
-        CheckClass.__init__(self, operator=operator, left=left, right=right, check_empty_str=True)
+        super().__init__(
+            self, operator=operator, left=left, right=right, check_empty_str=True
+        )
         self.__operator: str = operator
         self.__left: Node = left
         self.__right: Node = right

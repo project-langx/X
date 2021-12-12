@@ -1,3 +1,4 @@
+import typing
 import unittest
 from typing import List
 
@@ -10,7 +11,8 @@ class TestNumberNode(unittest.TestCase):
     def setUp(self) -> None:
         self.number_node = NumberNode("1", dtype="int")
 
-    def test_null_value(self):
+    @typing.no_type_check
+    def test_null_value(self) -> None:
         with self.assertRaises(AssertionError):
             NumberNode(value=None, dtype="int")
 
@@ -27,20 +29,17 @@ class TestNumberNode(unittest.TestCase):
         self.assertFalse(self.number_node == "")
 
     def test_eq_not_equal_node(self) -> None:
-        self.assertFalse(
-            self.number_node == NumberNode("2", dtype="int")
-        )
+        self.assertFalse(self.number_node == NumberNode("2", dtype="int"))
 
     def test_eq_equal_node(self) -> None:
-        self.assertTrue(
-            self.number_node == NumberNode("1", dtype="int")
-        )
+        self.assertTrue(self.number_node == NumberNode("1", dtype="int"))
 
     def test_walk_and_print(self) -> None:
         self.assertEqual(
             self.number_node.walk_and_print(tab_level=0), "NumberNode(value=1)\n"
         )
 
+    @typing.no_type_check
     def test_walk_and_compile_null_opcodes(self) -> None:
         with self.assertRaises(AssertionError):
             self.number_node.walk_and_compile(None)

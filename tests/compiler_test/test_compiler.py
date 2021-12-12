@@ -1,5 +1,9 @@
 import unittest
+import typing
+from typing import List
+from langx.opcode.opcode import OpCode
 
+from langx.parser.node.node import Node
 from langx.parser.node.program_node import ProgramNode
 from langx.parser.node.print_node import PrintNode
 from langx.parser.node.expr_node import ExprNode
@@ -10,12 +14,13 @@ from langx.compiler.compiler import Compiler
 
 
 class TestCompiler(unittest.TestCase):
-    def test_null_ast_root(self):
+    @typing.no_type_check
+    def test_null_ast_root(self) -> None:
         with self.assertRaises(AssertionError):
             Compiler(ast_root=None)
 
     def test_simple_number_print(self) -> None:
-        ast_root = ProgramNode(
+        ast_root: Node = ProgramNode(
             method="<main>",
             statements=[
                 PrintNode(
@@ -26,15 +31,15 @@ class TestCompiler(unittest.TestCase):
             ],
         )
 
-        compiler = Compiler(ast_root=ast_root)
-        opcodes = compiler.compile()
+        compiler: Compiler = Compiler(ast_root=ast_root)
+        opcodes: List[OpCode] = compiler.compile()
 
         self.assertEqual(len(opcodes), 2)
         self.assertEqual(str(opcodes[0]), "LOAD Hello World! str")
         self.assertEqual(str(opcodes[1]), "PRINT")
 
     def test_simple_number_print_with_number(self) -> None:
-        ast_root = ProgramNode(
+        ast_root: Node = ProgramNode(
             method="<main>",
             statements=[
                 PrintNode(
@@ -43,8 +48,8 @@ class TestCompiler(unittest.TestCase):
             ],
         )
 
-        compiler = Compiler(ast_root=ast_root)
-        opcodes = compiler.compile()
+        compiler: Compiler = Compiler(ast_root=ast_root)
+        opcodes: List[OpCode] = compiler.compile()
 
         self.assertEqual(len(opcodes), 2)
         self.assertEqual(str(opcodes[0]), "LOAD 1 int")
@@ -69,10 +74,10 @@ class TestCompiler(unittest.TestCase):
         self.assertEqual(str(opcodes[1]), "PRINT")
 
     def test_expression_with_binary_operators(self) -> None:
-        operators = ["ADD", "SUB", "MUL", "DIV"]
+        operators: List[str] = ["ADD", "SUB", "MUL", "DIV"]
 
         for operator in operators:
-            ast_root = ProgramNode(
+            ast_root: Node = ProgramNode(
                 method="<main>",
                 statements=[
                     PrintNode(
@@ -88,8 +93,8 @@ class TestCompiler(unittest.TestCase):
                 ],
             )
 
-            compiler = Compiler(ast_root=ast_root)
-            opcodes = compiler.compile()
+            compiler: Compiler = Compiler(ast_root=ast_root)
+            opcodes: List[OpCode] = compiler.compile()
 
             self.assertEqual(len(opcodes), 4)
             self.assertEqual(str(opcodes[0]), "LOAD 1 int")

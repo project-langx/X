@@ -1,6 +1,6 @@
+import typing
 import unittest
 from typing import List
-from unittest.case import expectedFailure
 
 from langx.parser.node.number_node import NumberNode
 from langx.parser.node.string_node import StringNode
@@ -13,6 +13,7 @@ from langx.utils.tree_walker import TreeWalker
 
 
 class TestTreeWalker(unittest.TestCase):
+    @typing.no_type_check
     def test_null_root(self) -> None:
         with self.assertRaises(AssertionError):
             TreeWalker(root=None)

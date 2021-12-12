@@ -1,3 +1,4 @@
+import typing
 import unittest
 
 from langx.opcode.op_type import OpType
@@ -9,15 +10,18 @@ class TestOpCode(unittest.TestCase):
         self.opcode_with_dtype = OpCode(OpType.LOAD, "Hello World", "string")
         self.opcode_no_dtype = OpCode(OpType.ADD, "", "")
 
-    def test_null_opcode(self):
+    @typing.no_type_check
+    def test_null_opcode(self) -> None:
         with self.assertRaises(AssertionError):
             OpCode(None, "", "")
 
-    def test_null_op_value(self):
+    @typing.no_type_check
+    def test_null_op_value(self) -> None:
         with self.assertRaises(AssertionError):
             OpCode(OpType.LOAD, None, "")
 
-    def test_null_op_dtype(self):
+    @typing.no_type_check
+    def test_null_op_dtype(self) -> None:
         with self.assertRaises(AssertionError):
             OpCode(OpType.LOAD, "", None)
 

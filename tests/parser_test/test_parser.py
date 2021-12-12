@@ -1,24 +1,28 @@
+import typing
 import unittest
-from langx.parser.parser import Parser
+from typing import List
 
+from langx.parser.parser import Parser
+from langx.tokenizer.token import Token
 from langx.tokenizer.token_type import TokenType
 from langx.tokenizer.tokenizer import Tokenizer
 
 
 class TestParser(unittest.TestCase):
-    def __get_tokens_from_source(self, source):
+    def __get_tokens_from_source(self, source: str) -> List[Token]:
         return Tokenizer(source=source).generate_tokens()
 
-    def test_null_tokens_list(self):
+    @typing.no_type_check
+    def test_null_tokens_list(self) -> None:
         with self.assertRaises(AssertionError):
             Parser(tokens=None)
 
-    def test_empty_tokens_list(self):
+    def test_empty_tokens_list(self) -> None:
         with self.assertRaises(AssertionError):
             Parser(tokens=[])
 
-    def test_parse_print_number(self):
-        tokens = self.__get_tokens_from_source("print(1)")
+    def test_parse_print_number(self) -> None:
+        tokens: List[Token] = self.__get_tokens_from_source("print(1)")
 
         self.assertEqual(len(tokens), 6)
         self.assertEqual(tokens[0].type, TokenType.PRINT)
@@ -26,8 +30,8 @@ class TestParser(unittest.TestCase):
         self.assertEqual(tokens[2].type, TokenType.NUMBER)
         self.assertEqual(tokens[3].type, TokenType.RIGHT_PAREN)
 
-    def test_parse_print_string(self):
-        tokens = self.__get_tokens_from_source("print(\"hello\")")
+    def test_parse_print_string(self) -> None:
+        tokens: List[Token] = self.__get_tokens_from_source('print("hello")')
 
         self.assertEqual(len(tokens), 6)
         self.assertEqual(tokens[0].type, TokenType.PRINT)
@@ -35,8 +39,8 @@ class TestParser(unittest.TestCase):
         self.assertEqual(tokens[2].type, TokenType.STRING)
         self.assertEqual(tokens[3].type, TokenType.RIGHT_PAREN)
 
-    def test_parse_print_number_expr(self):
-        tokens = self.__get_tokens_from_source("print(1 + 2 * 3 / 4 - 5)")
+    def test_parse_print_number_expr(self) -> None:
+        tokens: List[Token] = self.__get_tokens_from_source("print(1 + 2 * 3 / 4 - 5)")
 
         self.assertEqual(len(tokens), 14)
         self.assertEqual(tokens[0].type, TokenType.PRINT)
@@ -51,4 +55,3 @@ class TestParser(unittest.TestCase):
         self.assertEqual(tokens[9].type, TokenType.SUB)
         self.assertEqual(tokens[10].type, TokenType.NUMBER)
         self.assertEqual(tokens[11].type, TokenType.RIGHT_PAREN)
-        

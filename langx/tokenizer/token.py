@@ -1,10 +1,9 @@
 from typing import NamedTuple
 
 from .token_type import TokenType
-from ..utils.check_class import CheckClass
 
 
-class Token(NamedTuple, CheckClass):
+class Token(NamedTuple):
     type: TokenType
     dtype: str
     value: str

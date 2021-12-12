@@ -1,3 +1,4 @@
+import typing
 import unittest
 from typing import List
 
@@ -15,21 +16,36 @@ class TestBinaryOperatorNode(unittest.TestCase):
             right=NumberNode(value="2", dtype="int"),
         )
 
-    def test_null_operator(self):
+    @typing.no_type_check
+    def test_null_operator(self) -> None:
         with self.assertRaises(AssertionError):
-            BinaryOperatorNode(operator=None, left=NumberNode(value="1", dtype="str"), right=NumberNode(value="2", dtype="int"))
+            BinaryOperatorNode(
+                operator=None,
+                left=NumberNode(value="1", dtype="str"),
+                right=NumberNode(value="2", dtype="int"),
+            )
 
-    def test_empty_operator(self):
+    def test_empty_operator(self) -> None:
         with self.assertRaises(AssertionError):
-            BinaryOperatorNode(operator="", left=NumberNode(value="1", dtype="int"), right=NumberNode(value="2", dtype="int"))
+            BinaryOperatorNode(
+                operator="",
+                left=NumberNode(value="1", dtype="int"),
+                right=NumberNode(value="2", dtype="int"),
+            )
 
-    def test_null_left(self):
+    @typing.no_type_check
+    def test_null_left(self) -> None:
         with self.assertRaises(AssertionError):
-            BinaryOperatorNode(operator="ADD", left=None, right=NumberNode(value="2", dtype="int"))
+            BinaryOperatorNode(
+                operator="ADD", left=None, right=NumberNode(value="2", dtype="int")
+            )
 
-    def test_null_right(self):
+    @typing.no_type_check
+    def test_null_right(self) -> None:
         with self.assertRaises(AssertionError):
-            BinaryOperatorNode(operator="ADD", left=NumberNode(value="1", dtype="int"), right=None)
+            BinaryOperatorNode(
+                operator="ADD", left=NumberNode(value="1", dtype="int"), right=None
+            )
 
     def test_operator_property(self) -> None:
         self.assertEqual(self.binary_operator_node.operator, "ADD")
@@ -55,7 +71,8 @@ class TestBinaryOperatorNode(unittest.TestCase):
 
     def test_eq_not_equal_node(self) -> None:
         self.assertFalse(
-            self.binary_operator_node == BinaryOperatorNode(
+            self.binary_operator_node
+            == BinaryOperatorNode(
                 operator="ADD",
                 left=NumberNode(value="1", dtype="int"),
                 right=NumberNode(value="3", dtype="int"),
@@ -64,7 +81,8 @@ class TestBinaryOperatorNode(unittest.TestCase):
 
     def test_eq_equal_node(self) -> None:
         self.assertTrue(
-            self.binary_operator_node == BinaryOperatorNode(
+            self.binary_operator_node
+            == BinaryOperatorNode(
                 operator="ADD",
                 left=NumberNode(value="1", dtype="int"),
                 right=NumberNode(value="2", dtype="int"),
@@ -77,6 +95,7 @@ class TestBinaryOperatorNode(unittest.TestCase):
             "BinaryOperatorNode(\nleft=(\n\tNumberNode(value=1)\n)\nop='ADD'\nright=(\n\tNumberNode(value=2)\n)\n",
         )
 
+    @typing.no_type_check
     def test_walk_and_compile_null_opcodes(self) -> None:
         with self.assertRaises(AssertionError):
             self.binary_operator_node.walk_and_compile(opcodes=None)

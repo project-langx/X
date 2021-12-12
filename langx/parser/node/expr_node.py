@@ -5,9 +5,9 @@ from .node import Node
 from ...utils.check_class import CheckClass
 
 
-class ExprNode(Node, CheckClass):
+class ExprNode(CheckClass, Node):
     def __init__(self, expr: Node, dtype: str) -> None:
-        CheckClass.__init__(self, expr=expr, dtype=dtype, check_empty_str=True)
+        super().__init__(self, expr=expr, dtype=dtype, check_empty_str=True)
         self.__expr = expr
         self.__dtype = dtype
 

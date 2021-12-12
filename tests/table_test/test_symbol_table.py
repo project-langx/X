@@ -1,3 +1,4 @@
+import typing
 import unittest
 
 from langx.table.symbol_table import SymbolTable
@@ -7,15 +8,17 @@ class TestSymbolTable(unittest.TestCase):
     def setUp(self) -> None:
         self.table = SymbolTable()
 
-    def test_add_null_id_name(self):
+    @typing.no_type_check
+    def test_add_null_id_name(self) -> None:
         with self.assertRaises(AssertionError):
             self.table.add(None, "1")
 
-    def test_add_empty_id_name(self):
+    def test_add_empty_id_name(self) -> None:
         with self.assertRaises(AssertionError):
             self.table.add("", "1")
 
-    def test_add_null_value(self):
+    @typing.no_type_check
+    def test_add_null_value(self) -> None:
         with self.assertRaises(AssertionError):
             self.table.add("x", None)
 
@@ -37,11 +40,12 @@ class TestSymbolTable(unittest.TestCase):
         self.assertEqual(self.table.get("x"), "1")
         self.assertEqual(self.table.get("y"), "2")
 
-    def test_get_null_id_name(self):
+    @typing.no_type_check
+    def test_get_null_id_name(self) -> None:
         with self.assertRaises(AssertionError):
             self.table.get(None)
 
-    def test_get_empty_id_name(self):
+    def test_get_empty_id_name(self) -> None:
         with self.assertRaises(AssertionError):
             self.table.get("")
 

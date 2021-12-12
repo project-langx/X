@@ -1,4 +1,5 @@
 import unittest
+import typing
 from typing import List
 
 from langx.parser.node.string_node import StringNode
@@ -10,11 +11,13 @@ class TestStringNode(unittest.TestCase):
     def setUp(self) -> None:
         self.string_node = StringNode(value="Hello World", dtype="str")
 
-    def test_null_value(self):
+    @typing.no_type_check
+    def test_null_value(self) -> None:
         with self.assertRaises(AssertionError):
             StringNode(value=None, dtype="str")
 
-    def test_null_dtype(self):
+    @typing.no_type_check
+    def test_null_dtype(self) -> None:
         with self.assertRaises(AssertionError):
             StringNode(value="Hello World", dtype=None)
 
@@ -31,9 +34,7 @@ class TestStringNode(unittest.TestCase):
         self.assertFalse(self.string_node == "")
 
     def test_eq_not_equal_node(self) -> None:
-        self.assertFalse(
-            self.string_node == StringNode(value="Hell Worl", dtype="str")
-        )
+        self.assertFalse(self.string_node == StringNode(value="Hell Worl", dtype="str"))
 
     def test_eq_equal_node(self) -> None:
         self.assertTrue(
@@ -46,6 +47,7 @@ class TestStringNode(unittest.TestCase):
             "StringNode(value=Hello World)\n",
         )
 
+    @typing.no_type_check
     def test_walk_and_compile_null_opcodes(self) -> None:
         with self.assertRaises(AssertionError):
             self.string_node.walk_and_compile(None)

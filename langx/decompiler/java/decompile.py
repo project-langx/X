@@ -13,7 +13,11 @@ class ConstVal(NamedTuple):
 
 class JavaDecompiler(CheckClass):
     def __init__(self, opcodes: List[OpCode], decompiled_file_name: str) -> None:
-        super().__init__(opcodes=opcodes, decompiled_file_name=decompiled_file_name, check_empty_list=True)
+        super().__init__(
+            opcodes=opcodes,
+            decompiled_file_name=decompiled_file_name,
+            check_empty_list=True,
+        )
         self.__opcodes: List[OpCode] = opcodes
         self.__decompiled_file_name: str = decompiled_file_name
 
