@@ -13,15 +13,15 @@ In one or two lines describe the new addition or change in syntax of X that you 
 
 This requires adding support to the following:
 
-- [x] Tokenizer
-- [x] Parser
-- [x] Tree Walker
-- [x] Compiler
-- [x] Virtual Machine
-- [x] C Decompiler
-- [x] C++ Decompiler
-- [x] Java Decompiler
-- [x] Python Decompiler
+- [ ] Tokenizer
+- [ ] Parser
+- [ ] Tree Walker
+- [ ] Compiler
+- [ ] Virtual Machine
+- [ ] C Decompiler
+- [ ] C++ Decompiler
+- [ ] Java Decompiler
+- [ ] Python Decompiler
 
 It is not necessary that every change requires changes in all the components, you can uncheck the components as required. Don't worry if you are not sure, just keep all the above components.
 
