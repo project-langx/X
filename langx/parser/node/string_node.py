@@ -30,7 +30,7 @@ class StringNode(CheckClass, Node):
 
     def walk_and_print(self, tab_level: int) -> str:
         ast_string: str = self._add_tabs(tab_level=tab_level)
-        ast_string += f"StringNode(value={self.__value})\n"
+        ast_string += f"StringNode(value={self.__value}, dtype='{self.__dtype}')\n"
 
         return ast_string
 
