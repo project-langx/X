@@ -1,9 +1,11 @@
 program -> (statement)*
 statement -> simple_statement
-simple_statement -> print 
+simple_statement -> print | var_declaration | var_assignment
+var_declaration -> 'var' identifier ('=' expr)
+var_assignment -> identifier '=' expr
 print -> '( expr ')'
 expr -> sum
 sum -> mul ('+' | '-' mul)
 mul -> factor ('*' | '/' factor)
-term -> string | number
+term -> string | number | identifier
 number -> int | float 

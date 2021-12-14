@@ -24,8 +24,10 @@ class Tokenizer(CheckClass):
 
         if self.__lexeme == "print":
             return TokenType.PRINT
+        elif self.__lexeme == "var":
+            return TokenType.VAR
 
-        return TokenType.UNK
+        return TokenType.IDENTIFIER
 
     def __is_string(self) -> TokenType:
         self.__pointer += 1
@@ -38,8 +40,9 @@ class Tokenizer(CheckClass):
     def __is_number(self) -> Tuple[TokenType, str]:
         is_float: bool = False
         while (
-            self.__source[self.__pointer].isdigit()
-            or self.__source[self.__pointer] == "."
+            self.__pointer < len(self.__source) and
+            (self.__source[self.__pointer].isdigit()
+            or self.__source[self.__pointer] == ".")
         ):
             self.__lexeme += self.__source[self.__pointer]
             self.__pointer += 1
@@ -65,6 +68,8 @@ class Tokenizer(CheckClass):
             return TokenType.MUL
         elif self.__source[self.__pointer] == "/":
             return TokenType.DIV
+        elif self.__source[self.__pointer] == "=":
+            return TokenType.ASSIGNMENT
 
         return TokenType.UNK
 
@@ -83,7 +88,7 @@ class Tokenizer(CheckClass):
                 self.__tokens.append(
                     Token(TokenType.RIGHT_PAREN, "", "", self.__line_num)
                 )
-            elif self.__source[self.__pointer] in ["+", "-", "*", "/"]:
+            elif self.__source[self.__pointer] in ["+", "-", "*", "/", "="]:
                 operator = self.__operator()
                 self.__tokens.append(Token(operator, "", "", self.__line_num))
             elif self.__source[self.__pointer] == '"':
