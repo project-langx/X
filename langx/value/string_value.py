@@ -1,15 +1,17 @@
 from .typed_value import TypedValue
+from ..utils.check_class import CheckClass
 
 
-class StringValue(TypedValue):
+class StringValue(CheckClass, TypedValue):
     def __init__(self, value: str) -> None:
+        super().__init__(value=value, check_empty_str=True)
         self.__value: str = value
 
     def get_value(self) -> str:
         return str(self.__value)
 
     def add(self, o: TypedValue) -> TypedValue:
-        o = StringValue(value=o.get_value())
+        assert o != None
 
         return StringValue(value=self.get_value() + o.get_value())
 
