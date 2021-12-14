@@ -1,8 +1,9 @@
-from typing import List, Any
+from typing import List, Union
 
 from ..opcode.op_type import OpType
 from ..opcode.opcode import OpCode
 from ..utils.check_class import CheckClass
+from ..value.value import Value
 
 
 class VM(CheckClass):
@@ -10,25 +11,17 @@ class VM(CheckClass):
         super().__init__(opcodes=opcodes, check_empty_list=True)
         self.__opcodes: List[OpCode] = opcodes
 
-        self.__constant_pool: List[str] = []
+        self.__constant_pool: List[Value] = []
 
-    def __pop(self) -> str:
+    def __pop(self) -> Value:
         return self.__constant_pool.pop()
 
-    def __push(self, constant: Any) -> None:
+    def __push(self, constant: Value) -> None:
         self.__constant_pool.append(constant)
 
-    def __cast_to_type(self, value: str, dtype: str) -> Any:
-        if dtype == "int":
-            return int(value)
-        elif dtype == "float":
-            return float(value)
-        elif dtype == "string":
-            return str(value)
-
     def __perform_binary_operation(self, opcode: OpType) -> None:
-        right: Any = self.__pop()
-        left: Any = self.__pop()
+        right: Value = self.__pop()
+        left: Value = self.__pop()
 
         if opcode == OpType.ADD:
             self.__push(left + right)
@@ -37,7 +30,7 @@ class VM(CheckClass):
         elif opcode == OpType.MUL:
             self.__push(left * right)
         elif opcode == OpType.DIV:
-            if type(left) == int and type(right) == int:
+            if left.dtype == "int" and right.dtype == "int":
                 self.__push(left // right)
             else:
                 self.__push(left / right)
@@ -45,8 +38,8 @@ class VM(CheckClass):
     def run(self) -> None:
         for opcode in self.__opcodes:
             if opcode.opcode == OpType.PRINT:
-                print(self.__pop())
+                print(self.__pop().value)
             elif opcode.opcode == OpType.LOAD:
-                self.__push(self.__cast_to_type(opcode.op_value, dtype=opcode.op_dtype))
+                self.__push(Value(value=opcode.op_value, dtype=opcode.op_dtype))
             elif opcode.opcode in [OpType.ADD, OpType.SUB, OpType.MUL, OpType.DIV]:
                 self.__perform_binary_operation(opcode.opcode)
