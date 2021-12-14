@@ -33,30 +33,40 @@ class Value(CheckClass):
         raise TypeError(f"Unsupported type: {value.dtype}")
 
     def __add__(self, o: "Value") -> "Value":
+        assert o != None
+
         return Value(
             value=str(self.__cast(self).add(self.__cast(o)).get_value()),
             dtype=self.dtype,
         )
 
     def __sub__(self, o: "Value") -> "Value":
+        assert o != None
+
         return Value(
             value=str(self.__cast(self).sub(self.__cast(o)).get_value()),
             dtype=self.dtype,
         )
 
     def __mul__(self, o: "Value") -> "Value":
+        assert o != None
+
         return Value(
             value=str(self.__cast(self).mul(self.__cast(o)).get_value()),
             dtype=self.dtype,
         )
 
     def __truediv__(self, o: "Value") -> "Value":
+        assert o != None
+
         return Value(
             value=str(self.__cast(self).truediv(self.__cast(o)).get_value()),
             dtype=self.dtype,
         )
 
     def __floordiv__(self, o: "Value") -> "Value":
+        assert o != None
+
         return Value(
             value=str(self.__cast(self).floordiv(self.__cast(o)).get_value()),
             dtype=self.dtype,
