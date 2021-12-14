@@ -26,7 +26,9 @@ class TestFloatValue(unittest.TestCase):
 
     def test_add(self) -> None:
         float_value: FloatValue = FloatValue(value="123.456")
-        self.assertEqual(float_value.add(o=FloatValue(value="456.789")).get_value(), "580.245")
+        self.assertEqual(
+            float_value.add(o=FloatValue(value="456.789")).get_value(), "580.245"
+        )
 
     @typing.no_type_check
     def test_sub_null_other(self) -> None:
@@ -36,7 +38,10 @@ class TestFloatValue(unittest.TestCase):
 
     def test_sub(self) -> None:
         float_value: FloatValue = FloatValue(value="123.456")
-        self.assertEqual(float_value.sub(o=FloatValue(value="456.789")).get_value(), "-333.33299999999997")
+        self.assertEqual(
+            float_value.sub(o=FloatValue(value="456.789")).get_value(),
+            "-333.33299999999997",
+        )
 
     @typing.no_type_check
     def test_mul_null_other(self) -> None:
@@ -46,7 +51,9 @@ class TestFloatValue(unittest.TestCase):
 
     def test_mul(self) -> None:
         float_value: FloatValue = FloatValue(value="123.456")
-        self.assertEqual(float_value.mul(o=FloatValue(value="456.789")).get_value(), "56393.342784")
+        self.assertEqual(
+            float_value.mul(o=FloatValue(value="456.789")).get_value(), "56393.342784"
+        )
 
     @typing.no_type_check
     def test_truediv_null_other(self) -> None:
@@ -55,7 +62,9 @@ class TestFloatValue(unittest.TestCase):
 
     def test_truediv(self) -> None:
         float_value: FloatValue = FloatValue(value="5")
-        self.assertEqual(float_value.truediv(o=FloatValue(value="2")).get_value(), "2.5")
+        self.assertEqual(
+            float_value.truediv(o=FloatValue(value="2")).get_value(), "2.5"
+        )
 
     def test_floordiv(self) -> None:
         with self.assertRaises(NotImplementedError):

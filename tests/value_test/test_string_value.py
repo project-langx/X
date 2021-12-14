@@ -26,7 +26,9 @@ class TestStringValue(unittest.TestCase):
 
     def test_add(self) -> None:
         string_value: StringValue = StringValue(value="hello")
-        self.assertEqual(string_value.add(o=StringValue(value="world")).get_value(), "helloworld")
+        self.assertEqual(
+            string_value.add(o=StringValue(value="world")).get_value(), "helloworld"
+        )
 
     def test_sub(self) -> None:
         with self.assertRaises(NotImplementedError):
