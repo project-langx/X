@@ -1,17 +1,21 @@
-from typing import Dict, Optional
+from typing import Dict, Optional, Tuple
 
 
 class SymbolTable:
     def __init__(self) -> None:
-        self.__table: Dict[str, str] = {}
+        self.__table: Dict[int, Tuple[str, str]] = {}
+        self.__id_counter: int = 0
 
-    def add(self, id_name: str, value: str) -> None:
+    def add(self, id_name: str, dtype: str) -> None:
         assert id_name != None and id_name != ""
-        assert value != None
+        assert dtype != None
 
-        self.__table[id_name] = value
+        self.__id_counter += 1
+        self.__table[self.__id_counter] = (id_name, dtype)
 
-    def get(self, id_name: str) -> Optional[str]:
-        assert id_name != None and id_name != ""
+        return self.__id_counter
 
-        return self.__table.get(id_name)
+    def get(self, table_id: int) -> Optional[Tuple[str, str]]:
+        assert table_id != None and table_id != ""
+
+        return self.__table.get(table_id)

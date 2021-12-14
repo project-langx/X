@@ -7,16 +7,19 @@ from .node.binary_operator_node import BinaryOperatorNode
 from .node.program_node import ProgramNode
 from .node.print_node import PrintNode
 from .node.expr_node import ExprNode
+from .node.var_declaration_node import VarDeclNode
 from ..utils.error import ParseError
 from ..tokenizer.token import Token
 from ..tokenizer.token_type import TokenType
 from ..utils.check_class import CheckClass
+from ..table.symbol_table import SymbolTable
 
 
 class Parser(CheckClass):
-    def __init__(self, tokens: List[Token]) -> None:
-        super().__init__(tokens=tokens, check_empty_list=True)
+    def __init__(self, tokens: List[Token], symbol_table: SymbolTable) -> None:
+        super().__init__(tokens=tokens, symbol_table=symbol_table, check_empty_list=True)
         self.__tokens: List[Token] = tokens
+        self.__symbol_table: SymbolTable = symbol_table
 
         self.__current_token: int = 0
 
@@ -102,6 +105,16 @@ class Parser(CheckClass):
         expr, dtype = self.__sum()
         return ExprNode(expr=expr, dtype=dtype)
 
+    def __var_declaration(self) -> Node:
+        self.__expect(TokenType.VAR)
+        identifier: Token = self.__expect(TokenType.IDENTIFIER)
+        self.__expect(TokenType.ASSIGNMENT)
+        expr: Node = self.__expr()
+        
+        table_id = self.__symbol_table.add(id_name=identifier.value, dtype=expr.dtype)
+
+        return VarDeclNode(table_id=table_id, expr=expr)
+
     def __print(self) -> Node:
         self.__expect(TokenType.PRINT)
         self.__expect(TokenType.LEFT_PAREN)
@@ -115,6 +128,10 @@ class Parser(CheckClass):
             print_node: Node = self.__print()
             self.__expect(TokenType.NEWLINE)
             return print_node
+        elif self.__peek().type == TokenType.VAR:
+            var_decl_node: Node = self.__var_declaration()
+            self.__expect(TokenType.NEWLINE)
+            return var_decl_node
 
         raise ParseError("Empty expressions are not allowed")
 

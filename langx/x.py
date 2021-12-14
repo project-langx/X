@@ -15,6 +15,7 @@ from .decompiler.c.decompile import CDecompiler
 from .decompiler.cpp.decompile import CppDecompiler
 from .decompiler.java.decompile import JavaDecompiler
 from .decompiler.python.decompile import PyDecompiler
+from .table.symbol_table import SymbolTable
 
 
 def entry() -> None:
@@ -53,7 +54,8 @@ def entry() -> None:
             print(token)
         print("-" * 50)
 
-    ast_root: Node = Parser(tokens=tokens).parse()
+    symbol_table: SymbolTable = SymbolTable()
+    ast_root: Node = Parser(tokens=tokens, symbol_table=symbol_table).parse()
 
     if args.parse:
         print("-" * 50)
