@@ -16,18 +16,18 @@ class Tokenizer(CheckClass):
 
         self.__tokens: List[Token] = []
 
-    def __is_keyword(self) -> TokenType:
+    def __is_keyword(self) -> Tuple[TokenType, str]:
         while self.__source[self.__pointer].isalpha():
             self.__lexeme += self.__source[self.__pointer]
             self.__pointer += 1
         self.__pointer -= 1
 
         if self.__lexeme == "print":
-            return TokenType.PRINT
+            return TokenType.PRINT, ""
         elif self.__lexeme == "var":
-            return TokenType.VAR
+            return TokenType.VAR, ""
 
-        return TokenType.IDENTIFIER
+        return TokenType.IDENTIFIER, self.__lexeme
 
     def __is_string(self) -> TokenType:
         self.__pointer += 1
@@ -77,9 +77,16 @@ class Tokenizer(CheckClass):
         while self.__pointer < len(self.__source):
             self.__lexeme = ""
             if self.__source[self.__pointer].isalpha():
-                self.__tokens.append(
-                    Token(self.__is_keyword(), "", "", self.__line_num)
-                )
+                token_type, lexeme = self.__is_keyword()
+                
+                if token_type == TokenType.IDENTIFIER:
+                    self.__tokens.append(
+                        Token(token_type, "", lexeme, self.__line_num)
+                    )
+                else:
+                    self.__tokens.append(
+                        Token(token_type, "", "", self.__line_num)
+                    )
             elif self.__source[self.__pointer] == "(":
                 self.__tokens.append(
                     Token(TokenType.LEFT_PAREN, "", "", self.__line_num)
