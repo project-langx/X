@@ -1,9 +1,10 @@
-from typing import List, Union
+from typing import List, Optional
 
 from ..opcode.op_type import OpType
 from ..opcode.opcode import OpCode
 from ..utils.check_class import CheckClass
 from ..value.value import Value
+from ..memory.memory import Memory
 
 
 class VM(CheckClass):
@@ -12,6 +13,7 @@ class VM(CheckClass):
         self.__opcodes: List[OpCode] = opcodes
 
         self.__constant_pool: List[Value] = []
+        self.__memory: Memory = Memory()
 
     def __pop(self) -> Value:
         return self.__constant_pool.pop()
@@ -35,7 +37,7 @@ class VM(CheckClass):
             else:
                 self.__push(left / right)
 
-    def run(self) -> None:
+    def run(self, show_memory=False) -> Optional[str]:
         for opcode in self.__opcodes:
             if opcode.opcode == OpType.PRINT:
                 print(self.__pop().value)
@@ -43,3 +45,8 @@ class VM(CheckClass):
                 self.__push(Value(value=opcode.op_value, dtype=opcode.op_dtype))
             elif opcode.opcode in [OpType.ADD, OpType.SUB, OpType.MUL, OpType.DIV]:
                 self.__perform_binary_operation(opcode.opcode)
+            elif opcode.opcode == OpType.VAR:
+                self.__memory.push_to_memory(memory_location=opcode.op_value, value=self.__pop())
+
+        if show_memory:
+            return str(self.__memory)

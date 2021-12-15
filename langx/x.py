@@ -25,6 +25,7 @@ def entry() -> None:
     parser.add_argument("-p", "--parse", action="store_true", help="Print parse tree")
     parser.add_argument("-c", "--compile", action="store_true", help="Print opcodes")
     parser.add_argument("-s", "--symbol", action="store_true", help="Print symbol table")
+    parser.add_argument("-m", "--memory", action="store_true", help="Print memory")
     parser.add_argument("--decompile-c", action="store_true", help="Compile to C code")
     parser.add_argument(
         "--decompile-cpp", action="store_true", help="Compile to C++ code"
@@ -122,4 +123,9 @@ def entry() -> None:
 
         sys.exit()
 
-    VM(opcodes=opcodes).run()
+    memory_str = VM(opcodes=opcodes).run(show_memory=args.memory)
+
+    if args.memory and memory_str:
+        print("-" * 50)
+        print(memory_str)
+        print("-" * 50)
