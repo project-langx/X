@@ -19,3 +19,10 @@ class SymbolTable:
         assert table_id != None and table_id != ""
 
         return self.__table.get(table_id)
+
+    def __str__(self) -> str:
+        table_str: str = ""
+        for table_id, (id_name, dtype) in self.__table.items():
+            table_str += f"{table_id}: {id_name}, {dtype}"
+
+        return table_str

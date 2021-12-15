@@ -24,6 +24,7 @@ def entry() -> None:
     parser.add_argument("-t", "--tokens", action="store_true", help="Print tokens")
     parser.add_argument("-p", "--parse", action="store_true", help="Print parse tree")
     parser.add_argument("-c", "--compile", action="store_true", help="Print opcodes")
+    parser.add_argument("-s", "--symbol", action="store_true", help="Print symbol table")
     parser.add_argument("--decompile-c", action="store_true", help="Compile to C code")
     parser.add_argument(
         "--decompile-cpp", action="store_true", help="Compile to C++ code"
@@ -60,6 +61,11 @@ def entry() -> None:
     if args.parse:
         print("-" * 50)
         print(TreeWalker(root=ast_root).walk())
+        print("-" * 50)
+    
+    if args.symbol:
+        print("-" * 50)
+        print(symbol_table)
         print("-" * 50)
 
     opcodes: List[OpCode] = Compiler(ast_root=ast_root).compile()
