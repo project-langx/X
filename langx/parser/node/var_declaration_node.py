@@ -59,4 +59,4 @@ class VarDeclNode(CheckClass, Node):
 
         self.__expr.walk_and_compile(opcodes=opcodes)
 
-        opcodes.append(OpCode(op_type=OpType.VAR, op_value=self.table_id))
+        opcodes.append(OpCode(opcode=OpType.VAR, op_value=self.table_id, op_dtype=self.__expr.dtype))

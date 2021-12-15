@@ -8,3 +8,4 @@ class OpType(Enum):
     DIV: int = 3
     ADD: int = 4
     SUB: int = 5
+    VAR: int = 6
