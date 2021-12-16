@@ -16,6 +16,7 @@ from .decompiler.cpp.decompile import CppDecompiler
 from .decompiler.java.decompile import JavaDecompiler
 from .decompiler.python.decompile import PyDecompiler
 from .table.symbol_table import SymbolTable
+from .utils.error import TokenizerError, ParseError
 
 
 def entry() -> None:
@@ -48,7 +49,11 @@ def entry() -> None:
     with open(args.input, "r") as f:
         source: str = f.read()
 
-    tokens: List[Token] = Tokenizer(source).generate_tokens()
+    try:
+        tokens: List[Token] = Tokenizer(source).generate_tokens()
+    except TokenizerError as te:
+        print(te)
+        exit(1)
 
     if args.tokens:
         print("-" * 50)
@@ -57,7 +62,12 @@ def entry() -> None:
         print("-" * 50)
 
     symbol_table: SymbolTable = SymbolTable()
-    ast_root: Node = Parser(tokens=tokens, symbol_table=symbol_table).parse()
+
+    try:
+        ast_root: Node = Parser(tokens=tokens, symbol_table=symbol_table).parse()
+    except ParseError as pe:
+        print(pe)
+        exit(1)
 
     if args.parse:
         print("-" * 50)

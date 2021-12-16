@@ -129,7 +129,7 @@ class Parser(CheckClass):
         self.__expect(TokenType.ASSIGNMENT)
         expr: Node = self.__expr()
 
-        table_id = self.__symbol_table.add(id_name=identifier.value, dtype=expr.dtype)
+        table_id = self.__symbol_table.update(id_name=identifier.value, dtype=expr.dtype)
 
         return VarAssignNode(table_id=table_id, expr=expr)
 
