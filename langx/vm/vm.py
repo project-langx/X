@@ -47,6 +47,8 @@ class VM(CheckClass):
                 self.__perform_binary_operation(opcode.opcode)
             elif opcode.opcode == OpType.VAR:
                 self.__memory.push_to_memory(memory_location=opcode.op_value, value=self.__pop())
+            elif opcode.opcode == OpType.ASSIGN:
+                self.__memory.push_to_memory(memory_location=opcode.op_value, value=self.__pop())
 
         if show_memory:
             return str(self.__memory)
