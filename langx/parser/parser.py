@@ -9,6 +9,7 @@ from .node.print_node import PrintNode
 from .node.expr_node import ExprNode
 from .node.var_declaration_node import VarDeclNode
 from .node.var_assignment_node import VarAssignNode
+from .node.identifier_node import IdentifierNode
 from ..utils.error import ParseError
 from ..tokenizer.token import Token
 from ..tokenizer.token_type import TokenType
@@ -53,9 +54,20 @@ class Parser(CheckClass):
             number_token.dtype,
         )
 
+    def __identifier(self) -> Tuple[Node, str]:
+        identifier: Token = self.__expect(TokenType.IDENTIFIER)
+        table_id, dtype = self.__symbol_table.get_by_name(id_name=identifier.value)
+
+        if table_id == None and dtype == None:
+            raise ParseError(f"Undeclared variable '{identifier.value}'")
+
+        return IdentifierNode(value=table_id, dtype=dtype), dtype
+
     def __term(self) -> Tuple[Node, str]:
         if self.__peek().type == TokenType.NUMBER:
             return self.__number()
+        elif self.__peek().type == TokenType.IDENTIFIER:
+            return self.__identifier()
 
         return self.__string()
 

@@ -50,6 +50,15 @@ class SymbolTable:
 
         return self.__table.get(table_id)
 
+    def get_by_name(self, id_name: str) -> Optional[Tuple[int, str]]:
+        assert id_name != None and id_name != ""
+
+        for table_id, (id_name_, dtype) in self.__table.items():
+            if id_name == id_name_:
+                return (table_id, dtype)
+
+        return (None, None)
+
     def __str__(self) -> str:
         table_str: str = ""
         for table_id, (id_name, dtype) in self.__table.items():

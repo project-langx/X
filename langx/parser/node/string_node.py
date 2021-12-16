@@ -26,7 +26,7 @@ class StringNode(CheckClass, Node):
         if not isinstance(__o, StringNode):
             return False
 
-        return self.value == __o.value
+        return (self.value == __o.value and self.dtype == __o.dtype)
 
     def walk_and_print(self, tab_level: int) -> str:
         ast_string: str = self._add_tabs(tab_level=tab_level)
