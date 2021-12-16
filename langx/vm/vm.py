@@ -43,6 +43,8 @@ class VM(CheckClass):
                 print(self.__pop().value)
             elif opcode.opcode == OpType.LOAD:
                 self.__push(Value(value=opcode.op_value, dtype=opcode.op_dtype))
+            elif opcode.opcode == OpType.LOAD_VAR:
+                self.__push(self.__memory.get_from_memory(memory_location=opcode.op_value))
             elif opcode.opcode in [OpType.ADD, OpType.SUB, OpType.MUL, OpType.DIV]:
                 self.__perform_binary_operation(opcode.opcode)
             elif opcode.opcode == OpType.VAR:
