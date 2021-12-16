@@ -9,3 +9,4 @@ class OpType(Enum):
     ADD: int = 4
     SUB: int = 5
     VAR: int = 6
+    ASSIGN: int = 7

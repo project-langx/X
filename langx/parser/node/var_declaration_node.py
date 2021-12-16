@@ -38,7 +38,7 @@ class VarDeclNode(CheckClass, Node):
 
     def walk_and_print(self, tab_level: int) -> str:
         ast_string: str = self._add_tabs(tab_level=tab_level)
-        ast_string += "VarDeclNode(\n"
+        ast_string += f"{self.__class__.__name__}(\n"
         ast_string += self._add_tabs(tab_level=tab_level)
         ast_string += f"table_id={self.table_id}\n"
 

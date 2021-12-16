@@ -8,6 +8,7 @@ from .node.program_node import ProgramNode
 from .node.print_node import PrintNode
 from .node.expr_node import ExprNode
 from .node.var_declaration_node import VarDeclNode
+from .node.var_assignment_node import VarAssignNode
 from ..utils.error import ParseError
 from ..tokenizer.token import Token
 from ..tokenizer.token_type import TokenType
@@ -105,6 +106,14 @@ class Parser(CheckClass):
         expr, dtype = self.__sum()
         return ExprNode(expr=expr, dtype=dtype)
 
+    def __print(self) -> Node:
+        self.__expect(TokenType.PRINT)
+        self.__expect(TokenType.LEFT_PAREN)
+        expr: Node = self.__expr()
+        self.__expect(TokenType.RIGHT_PAREN)
+
+        return PrintNode(expr=expr)
+
     def __var_declaration(self) -> Node:
         self.__expect(TokenType.VAR)
         identifier: Token = self.__expect(TokenType.IDENTIFIER)
@@ -115,13 +124,14 @@ class Parser(CheckClass):
 
         return VarDeclNode(table_id=table_id, expr=expr)
 
-    def __print(self) -> Node:
-        self.__expect(TokenType.PRINT)
-        self.__expect(TokenType.LEFT_PAREN)
+    def __assign(self) -> Node:
+        identifier: Token = self.__expect(TokenType.IDENTIFIER)
+        self.__expect(TokenType.ASSIGNMENT)
         expr: Node = self.__expr()
-        self.__expect(TokenType.RIGHT_PAREN)
 
-        return PrintNode(expr=expr)
+        table_id = self.__symbol_table.add(id_name=identifier.value, dtype=expr.dtype)
+
+        return VarAssignNode(table_id=table_id, expr=expr)
 
     def __single_line_statement(self) -> Node:
         if self.__peek().type == TokenType.PRINT:
@@ -132,6 +142,10 @@ class Parser(CheckClass):
             var_decl_node: Node = self.__var_declaration()
             self.__expect(TokenType.NEWLINE)
             return var_decl_node
+        elif self.__peek().type == TokenType.IDENTIFIER:
+            assign_node: Node = self.__assign()
+            self.__expect(TokenType.NEWLINE)
+            return assign_node
 
         raise ParseError("Empty expressions are not allowed")
 

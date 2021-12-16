@@ -21,6 +21,6 @@ class Memory:
         memory_str: str = ""
 
         for memory_location, value in self.__memory.items():
-            memory_str += f"{memory_location}: {value.value}"
+            memory_str += f"{memory_location}: {value.value}\n"
 
         return memory_str
