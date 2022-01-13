@@ -4,7 +4,10 @@ from enum import Enum
 class OpType(Enum):
     PRINT: int = 0
     LOAD: int = 1
-    MUL: int = 2
-    DIV: int = 3
-    ADD: int = 4
-    SUB: int = 5
+    LOAD_VAR: int = 2
+    MUL: int = 3
+    DIV: int = 4
+    ADD: int = 5
+    SUB: int = 6
+    VAR: int = 7
+    ASSIGN: int = 8

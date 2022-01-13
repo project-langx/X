@@ -15,6 +15,8 @@ from .decompiler.c.decompile import CDecompiler
 from .decompiler.cpp.decompile import CppDecompiler
 from .decompiler.java.decompile import JavaDecompiler
 from .decompiler.python.decompile import PyDecompiler
+from .table.symbol_table import SymbolTable
+from .utils.error import TokenizerError, ParseError
 
 
 def entry() -> None:
@@ -23,6 +25,8 @@ def entry() -> None:
     parser.add_argument("-t", "--tokens", action="store_true", help="Print tokens")
     parser.add_argument("-p", "--parse", action="store_true", help="Print parse tree")
     parser.add_argument("-c", "--compile", action="store_true", help="Print opcodes")
+    parser.add_argument("-s", "--symbol", action="store_true", help="Print symbol table")
+    parser.add_argument("-m", "--memory", action="store_true", help="Print memory")
     parser.add_argument("--decompile-c", action="store_true", help="Compile to C code")
     parser.add_argument(
         "--decompile-cpp", action="store_true", help="Compile to C++ code"
@@ -45,7 +49,11 @@ def entry() -> None:
     with open(args.input, "r") as f:
         source: str = f.read()
 
-    tokens: List[Token] = Tokenizer(source).generate_tokens()
+    try:
+        tokens: List[Token] = Tokenizer(source).generate_tokens()
+    except TokenizerError as te:
+        print(te)
+        exit(1)
 
     if args.tokens:
         print("-" * 50)
@@ -53,11 +61,22 @@ def entry() -> None:
             print(token)
         print("-" * 50)
 
-    ast_root: Node = Parser(tokens=tokens).parse()
+    symbol_table: SymbolTable = SymbolTable()
+
+    try:
+        ast_root: Node = Parser(tokens=tokens, symbol_table=symbol_table).parse()
+    except ParseError as pe:
+        print(pe)
+        exit(1)
 
     if args.parse:
         print("-" * 50)
         print(TreeWalker(root=ast_root).walk())
+        print("-" * 50)
+    
+    if args.symbol:
+        print("-" * 50)
+        print(symbol_table)
         print("-" * 50)
 
     opcodes: List[OpCode] = Compiler(ast_root=ast_root).compile()
@@ -114,4 +133,9 @@ def entry() -> None:
 
         sys.exit()
 
-    VM(opcodes=opcodes).run()
+    memory_str = VM(opcodes=opcodes).run(show_memory=args.memory)
+
+    if args.memory and memory_str:
+        print("-" * 50)
+        print(memory_str)
+        print("-" * 50)

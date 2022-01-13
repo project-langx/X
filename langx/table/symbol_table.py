@@ -1,17 +1,67 @@
-from typing import Dict, Optional
+from typing import Dict, Optional, Tuple
+
+from ..utils.error import ParseError
 
 
 class SymbolTable:
     def __init__(self) -> None:
-        self.__table: Dict[str, str] = {}
+        self.__table: Dict[int, Tuple[str, str]] = {}
+        self.__id_counter: int = 0
 
-    def add(self, id_name: str, value: str) -> None:
+    def __get_id_by_name_dtype(self, id_name: str, dtype: str) -> Optional[int]:
         assert id_name != None and id_name != ""
-        assert value != None
+        assert dtype != None and dtype != ""
 
-        self.__table[id_name] = value
+        for table_id, (id_name_, dtype_) in self.__table.items():
+            if id_name == id_name_ and dtype == dtype_:
+                return table_id
 
-    def get(self, id_name: str) -> Optional[str]:
+        return None
+
+    def add(self, id_name: str, dtype: str) -> None:
+        assert id_name != None and id_name != ""
+        assert dtype != None
+
+        table_id: int = self.__get_id_by_name_dtype(id_name, dtype)
+
+        if table_id == None:
+            self.__id_counter += 1
+            self.__table[self.__id_counter] = (id_name, dtype)
+        else:
+            raise ParseError(message=f"Variable '{id_name}' redeclared in same scope")
+
+        return self.__id_counter
+
+    def update(self, id_name: str, dtype: str) -> None:
+        assert id_name != None and id_name != ""
+        assert dtype != None
+
+        table_id: int = self.__get_id_by_name_dtype(id_name, dtype)
+
+        if table_id != None:
+            self.__table[table_id] = (id_name, dtype)
+        else:
+            raise ParseError(message=f"Variable '{id_name}' not declared in this scope")
+
+        return self.__id_counter
+
+    def get(self, table_id: int) -> Optional[Tuple[str, str]]:
+        assert table_id != None and table_id != ""
+
+        return self.__table.get(table_id)
+
+    def get_by_name(self, id_name: str) -> Optional[Tuple[int, str]]:
         assert id_name != None and id_name != ""
 
-        return self.__table.get(id_name)
+        for table_id, (id_name_, dtype) in self.__table.items():
+            if id_name == id_name_:
+                return (table_id, dtype)
+
+        return (None, None)
+
+    def __str__(self) -> str:
+        table_str: str = ""
+        for table_id, (id_name, dtype) in self.__table.items():
+            table_str += f"{table_id}: {dtype} {id_name}\n"
+
+        return table_str
