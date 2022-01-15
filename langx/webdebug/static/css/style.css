@@ -1,0 +1,147 @@
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #FFD700;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    color: #FFD700;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    color: #FFD700;
+}
+:-moz-placeholder { /* Firefox 18- */
+    color: #FFD700;
+}
+
+body {
+    background-color: #222629;
+    /* overflow: hidden; */
+}
+
+.row {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.code_line {
+    /* background: #222629; */
+    color: #FFFFFF;
+}
+
+h1 {
+    color: white;
+    font-family: 'Monaco';
+    margin-top: 70px;
+    margin-bottom: 150px;
+}
+
+.form-control.input {
+    color: #FFD700;
+    background-color: transparent;
+    border-color: #474B4F;
+}
+
+.btn {
+    color: #6B6E70;
+    background-color: transparent;
+    padding: 20px 20px;
+    font-size: 15px;
+    border-radius: 10px;
+    border-color: #474B4F;
+}
+
+.btn:hover {
+    color: #D1B000;
+    background-color: transparent;
+    border: 0.2px solid #F0F0F0;
+    border-left: none;
+    border-top: none;
+    transition: height 0.5s linear, width 0.5s linear 0.5s;
+}
+
+.loader {
+    position: absolute;
+    display: flex;
+    padding: 100px;
+    align-items: center;
+    background: transparent;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+    animation: rotate 20s linear infinite;
+    filter: blur(4px) contrast(10);
+}
+
+/* @keyframes rotate {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+} */
+
+.particle {
+    background-color: #A38A00;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%; 
+}
+
+.particle:first-child,
+.particle:last-child {
+    width: 20px;
+    height: 20px;
+}
+
+.particle:nth-child(1),
+.particle:nth-child(3),
+.particle:nth-child(5),
+.particle:nth-child(7),
+.particle:nth-child(9) {
+    animation: pulse 1.3s ease-in-out infinite;
+}
+
+.particle:nth-child(3) {
+    animation-delay: 0.25s;
+}
+.particle:nth-child(5) {
+    animation-delay: 0.75s;
+}
+.particle:nth-child(7) {
+    animation-delay: 1.5s;
+}
+.particle:nth-child(9) {
+    animation-delay: 0.3s;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1)}
+    50% { transform: scale(1.6)}
+    70% { transform: scale(0.6)}
+    100% { transform: scale(1)}
+}
+
+/* .leftSpin {
+    animation: leftSpin 2.5s linear infinite;
+}
+
+@keyframes leftSpin {
+    from {
+        transform: rotate(0deg) translateX(50px);
+    }
+    to {
+        transform: rotate(360deg) translateX(50px);
+    }
+} */
+
+/* .rightSpin {
+    animation: rightSpin 2s linear infinite;
+}
+
+@keyframes rightSpin {
+    from {
+        transform: rotate(360deg) translateX(50px);
+    }
+    to {
+        transform: rotate(0deg) translateX(50px);
+    }
+} */

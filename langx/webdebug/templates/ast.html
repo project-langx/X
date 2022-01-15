@@ -2,14 +2,21 @@
 <html>
     <head>
         <title>X Debugger</title>
-
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     </head>
 
     <body>
-        <pre class="code_line">{{source}}</pre>
+        <div class="container">
+            <div class="row">
+                <pre class="code_line">{{source}}</pre>
+            </div>
 
-        <pre>{{ast}}</pre>
+            <div class="row">
+                <pre class="code_line">{{ast}}</pre>
+            </div>
+        </div>
 
         <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/sweetalert.min.js') }}"></script>

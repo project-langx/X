@@ -54,7 +54,12 @@ def generate_tokens():
         session["source"] = source
         session["tokens"] = [str(token) for token in tokens]
 
-        return jsonify({"status": "Success", "url": "/generate-tokens"})
+        return jsonify({
+            "icon": "success",
+            "title": "Success",
+            "text": "Tokens generated successfully!",
+            "url": "/generate-tokens"
+        })
 
 
 @app.route("/generate-ast", methods=["GET", "POST"])
@@ -76,7 +81,12 @@ def generate_ast():
         session["source"] = source
         session["ast"] = ast
 
-        return jsonify({"status": "Success", "url": "/generate-ast"})
+        return jsonify({
+            "icon": "success",
+            "title": "Success",
+            "text": "AST generated successfully!",
+            "url": "/generate-ast"
+        })
 
 
 @app.route("/generate-bytecode", methods=["GET", "POST"])
@@ -100,4 +110,9 @@ def generate_bytecode():
         session["source"] = source
         session["bytecode"] = "<br>".join([str(opcode) for opcode in opcodes])
 
-        return jsonify({"status": "Success", "url": "/generate-bytecode"})
+        return jsonify({
+            "icon": "success",
+            "title": "Success",
+            "text": "ByteCode generated successfully!",
+            "url": "/generate-bytecode"
+        })

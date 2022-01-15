@@ -2,22 +2,61 @@
 <html>
     <head>
         <title>X Debugger</title>
-
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     </head>
 
     <body>
-        <p>
-            <input type="text" class="input" id="file_path" placeholder="Enter file path to X code file">
-        </p>
+        <div class="loader">
+            <div class="particle"></div>
+            <div class="particle leftSpin"></div>
+            <div class="particle"></div>
+            <div class="particle rightSpin"></div>
+            <div class="particle"></div>
+            <div class="particle leftSpin"></div>
+            <div class="particle"></div>
+            <div class="particle rightSpin"></div>
+            <div class="particle"></div>
+        </div>
 
-        <p>
-            <input type="button" class="button" id="generate_tokens" value="Generate Tokens">
-            <input type="button" class="button" id="generate_ast" value="Generate AST">
-            <input type="button" class="button" id="generate_bytecode" value="Generate ByteCode">
-        </p>
+        <div class="container">
+            <div class="text-center">
+                <h1>XDB - XDeBugger</h1>
+            </div>
 
-        <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+            <div class="row">
+                <div class="col-sm-4">
+                </div>
+
+                <div class="col-sm-4">
+                    <input class="form-control input" type="text" id="file_path" placeholder="Enter file path to X code file">
+                </div>
+
+                <div class="col-sm-4">
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-4 form-group">
+                    <button type="button" class="btn btn-block shadow" id="generate_tokens">Generate Tokens</button>
+                </div>
+
+                <div class="col-sm-4 form-group">
+                    <button type="button" class="btn btn-block shadow" id="generate_ast">Generate AST</button>
+                </div>
+
+                <div class="col-sm-4 form-group">
+                    <button type="button" class="btn btn-block shadow" id="generate_bytecode">Generate ByteCode</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/sweetalert.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/fastquery.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
