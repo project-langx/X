@@ -1,9 +1,6 @@
 from flask import Flask, request, render_template, jsonify, session
 
-from ..tokenizer.tokenizer import Tokenizer
-from ..parser.parser import Parser
-from ..utils.tree_walker import TreeWalker
-from ..compiler.compiler import Compiler
+from .methods import get_tokens_and_source, get_ast_and_source, get_opcodes_and_source
 
 
 # Instantiate flask app
@@ -26,18 +23,14 @@ def index():
 def generate_tokens():
 
     if request.method == "GET":
-        source_lines = session.get("source").split("\n")
+        source_lines = []
         token_lines = []
-        token_line = ""
-        current_line_number = 1
-        for token in session.get("tokens"):
-            if int(token.split("=")[-1].split(")")[0]) == current_line_number:
-                token_line += f"{str(token)}<br>"
-            else:
-                token_lines.append(token_line)
-                token_line = ""
-                current_line_number += 1
-                token_line += f"{str(token)}<br>"
+
+        for source in session.get("source_tokens"):
+            source_lines.append(source['source'])
+
+        for tokens in session.get("source_tokens"):
+            token_lines.append("<br>".join(tokens['tokens']))
 
         return render_template(
             "tokens.html", source_lines=source_lines, token_lines=token_lines
@@ -46,13 +39,9 @@ def generate_tokens():
     elif request.method == "POST":
         file_path = request.form["file_path"]
 
-        with open(file_path, "r") as f:
-            source = f.read()
+        source_tokens = get_tokens_and_source(file_path=file_path)
 
-        tokens = Tokenizer(source).generate_tokens()
-
-        session["source"] = source
-        session["tokens"] = [str(token) for token in tokens]
+        session["source_tokens"] = source_tokens
 
         return jsonify({
             "icon": "success",
@@ -60,6 +49,18 @@ def generate_tokens():
             "text": "Tokens generated successfully!",
             "url": "/generate-tokens"
         })
+
+
+@app.route("/get-tokens", methods=["POST"])
+def get_tokens():
+
+    if request.method == "POST":
+        data = request.get_json()
+        file_path = data["file_path"]
+
+        source_tokens = get_tokens_and_source(file_path=file_path)
+
+        return jsonify({"source_tokens": source_tokens})
 
 
 @app.route("/generate-ast", methods=["GET", "POST"])
@@ -72,12 +73,8 @@ def generate_ast():
     elif request.method == "POST":
         file_path = request.form["file_path"]
 
-        with open(file_path, "r") as f:
-            source = f.read()
+        ast, source = get_ast_and_source(file_path=file_path)
 
-        tokens = Tokenizer(source).generate_tokens()
-        ast_root = Parser(tokens).parse()
-        ast = TreeWalker(ast_root).walk()
         session["source"] = source
         session["ast"] = ast
 
@@ -87,6 +84,18 @@ def generate_ast():
             "text": "AST generated successfully!",
             "url": "/generate-ast"
         })
+
+
+@app.route("/get-ast", methods=[ "POST"])
+def get_ast():
+
+    if request.method == "POST":
+        data = request.get_json()
+        file_path = data["file_path"]
+
+        ast, source = get_ast_and_source(file_path=file_path)
+
+        return jsonify({"ast": ast, "source": source})
 
 
 @app.route("/generate-bytecode", methods=["GET", "POST"])
@@ -101,12 +110,8 @@ def generate_bytecode():
     elif request.method == "POST":
         file_path = request.form["file_path"]
 
-        with open(file_path, "r") as f:
-            source = f.read()
+        opcodes, source = get_opcodes_and_source(file_path=file_path)
 
-        tokens = Tokenizer(source).generate_tokens()
-        ast_root = Parser(tokens).parse()
-        opcodes = Compiler(ast_root).compile()
         session["source"] = source
         session["bytecode"] = "<br>".join([str(opcode) for opcode in opcodes])
 
@@ -116,3 +121,15 @@ def generate_bytecode():
             "text": "ByteCode generated successfully!",
             "url": "/generate-bytecode"
         })
+
+
+@app.route("/get-bytecode", methods=["POST"])
+def get_bytecode():
+
+    if request.method == "POST":
+        data = request.get_json()
+        file_path = data["file_path"]
+
+        opcodes, source = get_opcodes_and_source(file_path=file_path)
+
+        return jsonify({"bytecode": opcodes, "source": source})
